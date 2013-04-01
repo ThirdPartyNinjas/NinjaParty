@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'NinjaParty' target in the 'NinjaParty' project
-//
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif

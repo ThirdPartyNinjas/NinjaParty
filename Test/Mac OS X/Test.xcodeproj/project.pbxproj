@@ -80,7 +80,6 @@
 			children = (
 				30952B7A1707F07300FB72ED /* Assets */,
 				30952B411707EE5C00FB72ED /* Frameworks */,
-				30952B861707F91A00FB72ED /* libNinjaParty.a */,
 				30952B401707EE5C00FB72ED /* Products */,
 				30952B481707EE5C00FB72ED /* Test */,
 				3095377B1708CC8900FB72ED /* Tests */,
@@ -107,6 +106,7 @@
 				30952B741707F02700FB72ED /* ForceFeedback.framework */,
 				30952B471707EE5C00FB72ED /* Foundation.framework */,
 				30952B781707F05300FB72ED /* IOKit.framework */,
+				30952B861707F91A00FB72ED /* libNinjaParty.a */,
 				3095373E1708C20700FB72ED /* OpenAL.framework */,
 				30952B761707F02E00FB72ED /* OpenGL.framework */,
 				309537601708C61000FB72ED /* Other Frameworks */,
@@ -310,7 +310,6 @@
 				INFOPLIST_FILE = "Test/Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"\"../../Dependencies/SDL/lib/Mac OS X\"",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/NinjaParty-fgwuotjxyazmbhfcvmwbpoguizdf/Build/Products/Debug\"",
 				);
 				OTHER_LDFLAGS = "-lSDL2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -333,7 +332,6 @@
 				INFOPLIST_FILE = "Test/Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"\"../../Dependencies/SDL/lib/Mac OS X\"",
-					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/NinjaParty-fgwuotjxyazmbhfcvmwbpoguizdf/Build/Products/Debug\"",
 				);
 				OTHER_LDFLAGS = "-lSDL2";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -1,5 +1,7 @@
 #include <string>
 
+#include <Foundation/Foundation.h>
+
 #include <NinjaParty/AssetManager.hpp>
 
 namespace NinjaParty

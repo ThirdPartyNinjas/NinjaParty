@@ -2,7 +2,7 @@
 #define NINJAPARTY_GAME_HPP
 
 #include <NinjaParty/Color.hpp>
-//#include <NinjaParty/ScreenManager.hpp>
+#include <NinjaParty/ScreenManager.hpp>
 
 namespace NinjaParty
 {
@@ -21,9 +21,6 @@ namespace NinjaParty
 		virtual void Update(float deltaSeconds);
 		virtual void Draw();
 		
-//		virtual void BeginAudioInterruption();
-//		virtual void EndAudioInterruption();
-
 		void ClearScreen(Color color);
 
 		void Exit() { exit = true; }
@@ -31,7 +28,17 @@ namespace NinjaParty
 
 		int GetScreenWidth() const { return screenWidth; }
 		int GetScreenHeight() const { return screenHeight; }
-		
+
+		virtual void BeginAudioInterruption() { }
+		virtual void EndAudioInterruption() { }
+        
+		virtual void TouchBegan(void *touchHandle, int tapCount, int x, int y) { }
+		virtual void TouchEnded(void *touchHandle, int x, int y) { }
+		virtual void TouchMoved(void *touchHandle, int x, int y) { }
+		virtual void TouchCancelled(void *touchHandle) { }
+
+        virtual void HandleTap(int x, int y) { }
+
 	private:
 		bool exit;
 		
@@ -39,7 +46,7 @@ namespace NinjaParty
 		int screenHeight;
 
 	protected:
-//		ScreenManager screenManager;
+		ScreenManager screenManager;
 	};
 }
 

@@ -5,7 +5,7 @@
 namespace NinjaParty
 {
 	Game::Game(int screenWidth, int screenHeight)
-		: exit(false), screenWidth(screenWidth), screenHeight(screenHeight)//, screenManager(this)
+		: exit(false), screenWidth(screenWidth), screenHeight(screenHeight), screenManager(this)
 	{
 	}
 	
@@ -23,14 +23,14 @@ namespace NinjaParty
 	
 	void Game::Update(float deltaSeconds)
 	{
-//		screenManager.Update(deltaSeconds);
+		screenManager.Update(deltaSeconds);
 	}
 	
 	void Game::Draw()
 	{
         ClearScreen(NinjaParty::Color::Black);
         
-//		screenManager.Draw();
+		screenManager.Draw();
 	}
 	
 //	void Game::BeginAudioInterruption()
