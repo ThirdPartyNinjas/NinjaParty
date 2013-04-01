@@ -18,6 +18,8 @@ namespace Tests
         TestGame(int screenWidth, int screenHeight)
             : NinjaParty::Game(screenWidth, screenHeight)
         {
+            time = 0;
+            inWalk = true;
         }
         
         void LoadContent()
@@ -31,6 +33,7 @@ namespace Tests
             spineAnimationPlayer.SetSkeletonData(skeletonData);
             spineAnimationPlayer.SetTexture(texture);
             spineAnimationPlayer.AddAnimation("walk", assetManager->LoadSpineAnimation("spineboy-walk.json", skeletonData), true);
+            spineAnimationPlayer.AddAnimation("junk", assetManager->LoadSpineAnimation("spineboy-junk.json", skeletonData), false);
             spineAnimationPlayer.Start("walk");
         }
         
@@ -41,6 +44,18 @@ namespace Tests
         void Update(float deltaSeconds)
         {
             spineAnimationPlayer.Update(deltaSeconds);
+            
+            time += deltaSeconds;
+            
+            if(time >= 2)
+            {
+                time -= 2;
+                if(inWalk)
+                    spineAnimationPlayer.Transition("junk", 0.2f);
+                else
+                    spineAnimationPlayer.Transition("walk", 0.2f);
+                inWalk = !inWalk;
+            }
         }
         
         void Draw()
@@ -58,5 +73,8 @@ namespace Tests
         
         NinjaParty::SpineAnimationPlayer spineAnimationPlayer;
         NinjaParty::Texture *texture;
+        
+        bool inWalk;
+        float time;
     };
 }
