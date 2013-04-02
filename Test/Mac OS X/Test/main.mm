@@ -11,7 +11,7 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 
-#define TEST_SPINE
+#define TEST_GLEED
 
 #ifdef TEST_SPRITEBATCH
 #include "../../Tests/SpriteBatch.hpp"
@@ -23,6 +23,8 @@
 #include "../../Tests/RenderTexture.hpp"
 #elif defined(TEST_AUDIO)
 #include "../../Tests/Audio.hpp"
+#elif defined(TEST_GLEED)
+#include "../../Tests/Gleed.hpp"
 #endif
 
 int main(int argc, char *argv[])
