@@ -16,10 +16,9 @@ Libraries:
 		- http://www.libsdl.org/
 		- Built from mercurial
 		- zlib license
-	spine-cpp
+	spine-c
 		- http://github.com/EsotericSoftware/spine-runtimes
-		- From github on Mar 30, 2013
-		- Removed json folders, since we use JsonCpp already
+		- From github on April 8, 2013
 		- Spine License - requires attribution
 	stb_image
 		- http://www.nothings.org/stb_image.c
