@@ -5,11 +5,7 @@
 #include <map>
 #include <utility>
 
-namespace spine
-{
-	class Animation;
-    class SkeletonData;
-}
+#include <spine/spine.h>
 
 namespace NinjaParty
 {
@@ -25,8 +21,8 @@ namespace NinjaParty
 
 	struct GleedLevel;
 	
-	struct SpineSkeletonData;
 	typedef spine::Animation SpineAnimation;
+    typedef spine::SkeletonData SpineSkeletonData;
 	
 	class Foobar
 	{
@@ -56,7 +52,7 @@ namespace NinjaParty
 		GleedLevel* LoadGleedLevel(const std::string &fileName);
 		
 		SpineSkeletonData* LoadSpineSkeletonData(const std::string &fileName, TextureDictionary *textureDictionary);
-		SpineAnimation* LoadSpineAnimation(const std::string &fileName, SpineSkeletonData *skeletonData);
+		SpineAnimation* LoadSpineAnimation(const std::string &fileName, const std::string &animationName, SpineSkeletonData *skeletonData);
 
 	private:
 		std::string GetRootPath() const; // get the platform specific path

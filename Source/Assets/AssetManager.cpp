@@ -6,6 +6,7 @@
 
 #include <pugixml.hpp>
 
+#include <spine/Animation.h>
 #include <spine/SkeletonData.h>
 
 #include <NinjaParty/AssetManager.hpp>
@@ -19,6 +20,11 @@
 #include <NinjaParty/SpriteAnimationPlayer.hpp>
 #include <NinjaParty/Texture.hpp>
 #include <NinjaParty/TextureDictionary.hpp>
+
+namespace spine
+{
+    SkeletonData* SkeletonData_load(const char *filePath, NinjaParty::TextureDictionary *textureDictionary);
+}
 
 namespace NinjaParty
 {
@@ -49,8 +55,15 @@ namespace NinjaParty
 		DeleteMapContents(fonts);
 		DeleteMapContents(deminaAnimations);
 		DeleteMapContents(spriteAnimations);
-		DeleteMapContents(spineSkeletons);
-		DeleteMapContents(spineAnimations);
+        
+        for(auto &iterator : spineSkeletons)
+        {
+            spine::SkeletonData_dispose(iterator.second);
+        }
+        for(auto &iterator : spineAnimations)
+        {
+            spine::Animation_dispose(iterator.second);
+        }
 	}
 	
 	Texture* AssetManager::LoadTexture(std::string const &fileName)
@@ -450,28 +463,24 @@ namespace NinjaParty
 		
 		if(iterator != spineSkeletons.end())
 			return iterator->second;
-		
-		SpineSkeletonData *spineSkeletonData = new SpineSkeletonData();
-		spineSkeletonData->skeletonLoader = new SpineSkeletonLoader(textureDictionary);
         
-        std::ifstream skeletonFile(assetPath + fileName);        
-		spineSkeletonData->skeletonData = spineSkeletonData->skeletonLoader->readSkeletonData(skeletonFile);
-		
+        SpineSkeletonData *spineSkeletonData = spine::SkeletonData_load((assetPath + fileName).c_str(), textureDictionary);
+
 		spineSkeletons[fileName] = spineSkeletonData;
 		return spineSkeletonData;
 	}
 	
-	SpineAnimation* AssetManager::LoadSpineAnimation(const std::string &fileName, SpineSkeletonData *skeletonData)
+	SpineAnimation* AssetManager::LoadSpineAnimation(const std::string &fileName, const std::string &animationName, SpineSkeletonData *skeletonData)
 	{
-		auto iterator = spineAnimations.find(fileName);
+        std::string animationLookup = fileName + "@" + animationName;
+		auto iterator = spineAnimations.find(animationLookup);
 		
 		if(iterator != spineAnimations.end())
 			return iterator->second;
+
+        SpineAnimation *spineAnimation = spine::SkeletonData_findAnimation(skeletonData, animationName.c_str());
         
-        std::ifstream animationFile(assetPath + fileName);
-        SpineAnimation *animation = skeletonData->skeletonLoader->readAnimation(animationFile, skeletonData->skeletonData);
-        
-        spineAnimations[fileName] = animation;
-        return animation;
+        spineAnimations[animationLookup] = spineAnimation;
+        return spineAnimation;
 	}
 }

@@ -29,11 +29,11 @@ namespace Tests
             
             NinjaParty::TextureDictionary *textureDictionary = assetManager->LoadTextureDictionary("Graphics.json");
             texture = assetManager->LoadTexture("Graphics.png");
-            NinjaParty::SpineSkeletonData *skeletonData = assetManager->LoadSpineSkeletonData("spineboy-skeleton.json", textureDictionary);
+            NinjaParty::SpineSkeletonData *skeletonData = assetManager->LoadSpineSkeletonData("spineboy.json", textureDictionary);
             spineAnimationPlayer.SetSkeletonData(skeletonData);
             spineAnimationPlayer.SetTexture(texture);
-            spineAnimationPlayer.AddAnimation("walk", assetManager->LoadSpineAnimation("spineboy-walk.json", skeletonData), true);
-            spineAnimationPlayer.AddAnimation("junk", assetManager->LoadSpineAnimation("spineboy-junk.json", skeletonData), false);
+            spineAnimationPlayer.AddAnimation("walk", assetManager->LoadSpineAnimation("spineboy.json", "walk", skeletonData), true);
+            spineAnimationPlayer.AddAnimation("jump", assetManager->LoadSpineAnimation("spineboy.json", "jump", skeletonData), false);
             spineAnimationPlayer.Start("walk");
         }
         
@@ -51,7 +51,7 @@ namespace Tests
             {
                 time -= 2;
                 if(inWalk)
-                    spineAnimationPlayer.Transition("junk", 0.2f);
+                    spineAnimationPlayer.Transition("jump", 0.2f);
                 else
                     spineAnimationPlayer.Transition("walk", 0.2f);
                 inWalk = !inWalk;

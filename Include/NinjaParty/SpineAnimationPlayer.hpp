@@ -3,11 +3,7 @@
 
 #include <map>
 
-#include <spine/Animation.h>
-#include <spine/BaseAttachmentLoader.h>
-#include <spine/BaseRegionAttachment.h>
-#include <spine/BaseSkeleton.h>
-#include <spine/BaseSkeletonJson.h>
+#include <spine/spine.h>
 
 #include "AnimationPlayer.hpp"
 
@@ -17,37 +13,9 @@ namespace NinjaParty
 	class TextureDictionary;
 	class TextureRegion;
     
-    struct SpineSkeletonData;
-	
+	typedef spine::SkeletonData SpineSkeletonData;
 	typedef spine::Animation SpineAnimation;
-
-	class SpineSkeleton: public spine::BaseSkeleton
-	{
-	public:
-		NinjaParty::Texture *texture;
-		
-		SpineSkeleton(spine::SkeletonData *skeletonData);
-        SpineSkeleton(SpineSkeletonData *spineSkeletonData);
-        
-		void Draw(NinjaParty::SpriteBatch *spriteBatch, const NinjaParty::Vector2 &position, const NinjaParty::Color &tintColor);
-	};
-	
-	class SpineSkeletonLoader: public spine::BaseSkeletonJson
-	{
-	public:
-		SpineSkeletonLoader(NinjaParty::TextureDictionary *textureDictionary);
-		SpineSkeletonLoader(spine::BaseAttachmentLoader *attachmentLoader);
-	};
-	
-	struct SpineSkeletonData
-	{
-		SpineSkeletonData();
-		~SpineSkeletonData();
-		
-        spine::SkeletonData *skeletonData;
-		SpineSkeletonLoader *skeletonLoader;
-	};
-	
+    
 	class SpineAnimationPlayer : public AnimationPlayer
 	{
 	public:
@@ -78,7 +46,8 @@ namespace NinjaParty
 		std::map<std::string, std::pair<spine::Animation*, bool>> animations;
 
         SpineSkeletonData *skeletonData;
-        std::unique_ptr<SpineSkeleton> spineSkeleton;
+        
+        spine::Skeleton *spineSkeleton;
 		spine::Animation *currentAnimation;
 		float currentAnimationTime;
         bool currentLoop;
@@ -87,6 +56,8 @@ namespace NinjaParty
 		float transitionTime;
 		float transitionTotalTime;
         bool transitionLoop;
+        
+        Texture *texture;
 	};
 }
 
