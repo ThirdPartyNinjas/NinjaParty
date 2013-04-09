@@ -5,7 +5,7 @@
 
 #import "ViewController.h"
 
-#define TEST_SPRITEBATCH
+#define TEST_SPINE
 
 #ifdef TEST_SPRITEBATCH
 #include "../../Tests/SpriteBatch.hpp"

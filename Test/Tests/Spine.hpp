@@ -4,6 +4,7 @@
 #include <NinjaParty/Color.hpp>
 #include <NinjaParty/Game.hpp>
 #include <NinjaParty/MathHelpers.hpp>
+#include <NinjaParty/Random.hpp>
 #include <NinjaParty/SpineAnimationPlayer.hpp>
 #include <NinjaParty/SpriteBatch.hpp>
 #include <NinjaParty/Texture.hpp>
@@ -32,8 +33,8 @@ namespace Tests
             NinjaParty::SpineSkeletonData *skeletonData = assetManager->LoadSpineSkeletonData("spineboy.json", textureDictionary);
             spineAnimationPlayer.SetSkeletonData(skeletonData);
             spineAnimationPlayer.SetTexture(texture);
-            spineAnimationPlayer.AddAnimation("walk", assetManager->LoadSpineAnimation("spineboy.json", "walk", skeletonData), true);
-            spineAnimationPlayer.AddAnimation("jump", assetManager->LoadSpineAnimation("spineboy.json", "jump", skeletonData), false);
+            spineAnimationPlayer.AddAnimation("walk", assetManager->LoadSpineAnimation("walk", skeletonData), true);
+            spineAnimationPlayer.AddAnimation("jump", assetManager->LoadSpineAnimation("jump", skeletonData), false);
             spineAnimationPlayer.Start("walk");
         }
         
@@ -43,13 +44,13 @@ namespace Tests
         
         void Update(float deltaSeconds)
         {
-            spineAnimationPlayer.Update(deltaSeconds);
+            NinjaParty::AnimationEvent animationEvent = spineAnimationPlayer.Update(deltaSeconds);
             
             time += deltaSeconds;
             
-            if(time >= 2)
+            if(time >= 2 || animationEvent.AnimationComplete)
             {
-                time -= 2;
+                time = 0;
                 if(inWalk)
                     spineAnimationPlayer.Transition("jump", 0.2f);
                 else

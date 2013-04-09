@@ -52,7 +52,7 @@ namespace NinjaParty
 		GleedLevel* LoadGleedLevel(const std::string &fileName);
 		
 		SpineSkeletonData* LoadSpineSkeletonData(const std::string &fileName, TextureDictionary *textureDictionary);
-		SpineAnimation* LoadSpineAnimation(const std::string &fileName, const std::string &animationName, SpineSkeletonData *skeletonData);
+		SpineAnimation* LoadSpineAnimation(const std::string &animationName, SpineSkeletonData *skeletonData);
 
 	private:
 		std::string GetRootPath() const; // get the platform specific path
@@ -73,7 +73,6 @@ namespace NinjaParty
 		std::map<std::string, GleedLevel*> gleedLevels;
 
 		std::map<std::string, SpineSkeletonData*> spineSkeletons;
-		std::map<std::string, SpineAnimation*> spineAnimations;
 	};
 }
 

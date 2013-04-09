@@ -299,7 +299,7 @@
 					../../Include,
 					../../Dependencies/boost/include,
 					../../Dependencies/Wm5,
-					"../../Dependencies/spine-cpp/include",
+					"../../Dependencies/spine-c/include",
 				);
 				INFOPLIST_FILE = "Test/Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -320,7 +320,7 @@
 					../../Include,
 					../../Dependencies/boost/include,
 					../../Dependencies/Wm5,
-					"../../Dependencies/spine-cpp/include",
+					"../../Dependencies/spine-c/include",
 				);
 				INFOPLIST_FILE = "Test/Test-Info.plist";
 				LIBRARY_SEARCH_PATHS = (

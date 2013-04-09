@@ -60,10 +60,6 @@ namespace NinjaParty
         {
             spine::SkeletonData_dispose(iterator.second);
         }
-        for(auto &iterator : spineAnimations)
-        {
-            spine::Animation_dispose(iterator.second);
-        }
 	}
 	
 	Texture* AssetManager::LoadTexture(std::string const &fileName)
@@ -470,17 +466,9 @@ namespace NinjaParty
 		return spineSkeletonData;
 	}
 	
-	SpineAnimation* AssetManager::LoadSpineAnimation(const std::string &fileName, const std::string &animationName, SpineSkeletonData *skeletonData)
+	SpineAnimation* AssetManager::LoadSpineAnimation(const std::string &animationName, SpineSkeletonData *skeletonData)
 	{
-        std::string animationLookup = fileName + "@" + animationName;
-		auto iterator = spineAnimations.find(animationLookup);
-		
-		if(iterator != spineAnimations.end())
-			return iterator->second;
-
         SpineAnimation *spineAnimation = spine::SkeletonData_findAnimation(skeletonData, animationName.c_str());
-        
-        spineAnimations[animationLookup] = spineAnimation;
         return spineAnimation;
 	}
 }

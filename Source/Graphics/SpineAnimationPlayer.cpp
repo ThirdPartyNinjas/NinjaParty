@@ -26,25 +26,19 @@ namespace spine
         return _readFile(path, length);
     }
     
-    struct NinjaSkeleton
+    void _Skeleton_dispose(Skeleton *skeleton)
     {
-        Skeleton super;
-    };
-    
-    void _NinjaSkeleton_dispose(Skeleton *skeleton)
-    {
-        NinjaSkeleton *self = SUB_CAST(NinjaSkeleton, skeleton);
-        _Skeleton_deinit(SUPER(self));
-        FREE(self);
+        _Skeleton_deinit(skeleton);
+        FREE(skeleton);
     }
 
     Skeleton* Skeleton_create(SkeletonData *data)
     {
-        NinjaSkeleton *self = NEW(NinjaSkeleton);
-        _Skeleton_init(SUPER(self), data);
-        SUPER(self)->flipY = 1;
-        VTABLE(Skeleton, self) ->dispose = _NinjaSkeleton_dispose;
-        return SUPER(self);
+        Skeleton *skeleton = NEW(Skeleton);
+        _Skeleton_init(skeleton, data);
+        skeleton->flipY = 1;
+        VTABLE(Skeleton, skeleton)->dispose = _Skeleton_dispose;
+        return skeleton;
     }
 
     struct TextureRegionAttachment
@@ -55,22 +49,14 @@ namespace spine
     
     void _TextureRegionAttachment_dispose(Attachment *attachment)
     {
-        TextureRegionAttachment *self = SUB_CAST(TextureRegionAttachment, SUB_CAST(RegionAttachment, attachment));
+        TextureRegionAttachment *self = SUB_CAST(TextureRegionAttachment, attachment);
         _RegionAttachment_deinit(SUPER(self));
         FREE(self);
     }
     
-    void _TextureRegionAttachment_draw(Attachment *attachment, Slot *slot)
-    {        
-        RegionAttachment *regionAttachment = (RegionAttachment*)attachment;
-        
-        TextureRegionAttachment *textureRegionAttachment = (TextureRegionAttachment*)attachment;
-    }
-    
-    void TextureRegionAttachment_drawSpriteBatch(Attachment *attachment, Slot *slot, NinjaParty::SpriteBatch *spriteBatch, const NinjaParty::Color &tintColor, NinjaParty::Texture *texture)
+    void TextureRegionAttachment_draw(Attachment *attachment, Slot *slot, NinjaParty::SpriteBatch *spriteBatch, const NinjaParty::Color &tintColor, NinjaParty::Texture *texture)
     {
         RegionAttachment *regionAttachment = (RegionAttachment*)attachment;
-        
         TextureRegionAttachment *textureRegionAttachment = (TextureRegionAttachment*)attachment;
         
         float offsetX = (regionAttachment->offset[0] + regionAttachment->offset[4]) / 2;
@@ -98,8 +84,7 @@ namespace spine
         self->textureRegion = textureRegion;
         _RegionAttachment_init(SUPER(self), name);
         VTABLE(Attachment, self)->dispose = _TextureRegionAttachment_dispose;
-        VTABLE(Attachment, self)->draw = _TextureRegionAttachment_draw;
-        return SUPER(SUPER(self));
+        return (Attachment*)self;
     }
     
     struct TextureRegionAttachmentLoader
@@ -171,45 +156,6 @@ namespace spine
 
 namespace NinjaParty
 {
-//	class RegionAttachment: public spine::BaseRegionAttachment
-//	{
-//	public:
-//		NinjaParty::Texture *texture;
-//		NinjaParty::TextureRegion *region;
-//		
-//		RegionAttachment(NinjaParty::TextureRegion *region)
-//            : region(region)
-//        {
-//        }
-//		
-//		virtual void updateWorldVertices(spine::Bone *bone) { }
-//		virtual void draw(spine::Slot *slot) { throw; }
-//        
-//		virtual void draw(NinjaParty::SpriteBatch *spriteBatch, spine::Slot *slot, const NinjaParty::Color &tintColor)
-//        {
-//            updateOffset();
-//            updateWorldVertices(slot->bone);
-//            
-//            float offsetX = (offset[0] + offset[4]) / 2;
-//            float offsetY = (offset[1] + offset[5]) / 2;
-//            
-//            float m00 = slot->bone->m00;
-//            float m01 = slot->bone->m01;
-//            float m11 = slot->bone->m11;
-//            float m10 = slot->bone->m10;
-//            
-//            float x = slot->bone->worldX;
-//            float y = slot->bone->worldY;
-//
-//            NinjaParty::TexturePair texturePair(((SpineSkeleton*)(slot->skeleton))->texture, *region);
-//            
-//            spriteBatch->Draw(texturePair,
-//                              NinjaParty::Vector2(offsetX * m00 + offsetY * m01 + x, offsetX * m10 + offsetY * m11 + y),
-//                              -(slot->bone->worldRotation + rotation) * 3.14159f / 180.0f,
-//                              NinjaParty::Color(slot->r * tintColor.R(), slot->g * tintColor.G(), slot->b * tintColor.B(), slot->a * tintColor.A()));
-//        }
-//	};
-    
 	SpineAnimationPlayer::SpineAnimationPlayer()
         : skeletonData(nullptr), spineSkeleton(nullptr), currentAnimationTime(0), currentAnimation(nullptr), transitionAnimation(nullptr), texture(nullptr)
 	{
@@ -357,13 +303,11 @@ namespace NinjaParty
         spriteBatch->SetBatchTransform(transform);
   
         // todo!
-//        spineSkeleton->Draw(spriteBatch, position, tintColor);
         for(int i=0; i<spineSkeleton->slotCount; i++)
         {
             if (spineSkeleton->slots[i]->attachment)
             {
-                //spine::Attachment_draw(spineSkeleton->slots[i]->attachment, spineSkeleton->slots[i]);
-                spine::TextureRegionAttachment_drawSpriteBatch(spineSkeleton->slots[i]->attachment, spineSkeleton->slots[i], spriteBatch, tintColor, texture);
+                spine::TextureRegionAttachment_draw(spineSkeleton->slots[i]->attachment, spineSkeleton->slots[i], spriteBatch, tintColor, texture);
             }
         }
 
