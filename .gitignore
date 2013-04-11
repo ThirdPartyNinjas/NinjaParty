@@ -7,3 +7,8 @@ ipch/
 *.sdf
 *.suo
 *.vcxproj.user
+.apk
+.ap_
+.class
+bin/
+gen/
