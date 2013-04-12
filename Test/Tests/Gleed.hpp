@@ -15,9 +15,9 @@ namespace Tests
         {
         }
         
-        void LoadContent()
+        void LoadContent(const std::string &assetPath, const std::string &assetArchivePath)
         {
-            assetManager.reset(new NinjaParty::AssetManager());
+            assetManager.reset(new NinjaParty::AssetManager(assetPath, assetArchivePath));
             
             gleedLevel = assetManager->LoadGleedLevel("TestLevel.gleed");
             

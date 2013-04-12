@@ -288,7 +288,7 @@ class TestView extends GLSurfaceView {
         	long currentTime = SystemClock.elapsedRealtime();
         	float deltaSeconds = (currentTime - previousTime) / 1000.0f;
         	previousTime = currentTime;
-        	
+
         	if(deltaSeconds > 1.0f)
         	{
         		deltaSeconds = 1.0f;
@@ -303,7 +303,8 @@ class TestView extends GLSurfaceView {
         	TestJni.init(width, height, apkPath);
         }
 
-        public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        public void onSurfaceCreated(GL10 gl, EGLConfig config)
+        {
             // Do nothing.
         }
     }

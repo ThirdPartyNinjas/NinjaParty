@@ -63,4 +63,26 @@ namespace NinjaParty
 		}
 		return texture;
 	}
+
+	Texture* Texture::FromBuffer(const unsigned char *buffer, int length, TextureRegion *textureRegion)
+	{
+		int width, height;
+		int textureId = LoadTextureFromBuffer(buffer, length, width, height);
+		
+		Texture *texture = new Texture();
+		texture->textureId = static_cast<unsigned int>(textureId);
+		texture->width = width;
+		texture->height = height;
+		
+		if(textureRegion != 0)
+		{
+			textureRegion->bounds.x = textureRegion->bounds.y = 0;
+			textureRegion->origin = Vector2(0.5f, 0.5f);
+			textureRegion->bounds.width = texture->GetWidth();
+			textureRegion->bounds.height = texture->GetHeight();
+			textureRegion->input = Vector2((float)texture->GetWidth(), (float)texture->GetHeight());
+			textureRegion->rotated = false;
+		}
+		return texture;
+	}
 }

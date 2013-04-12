@@ -1,0 +1,76 @@
+{"frames": [
+
+{
+	"filename": "guy_foot.png",
+	"frame": {"x":1,"y":209,"w":48,"h":22},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":37,"y":3,"w":48,"h":22},
+	"sourceSize": {"w":86,"h":26}
+},
+{
+	"filename": "guy_hand.png",
+	"frame": {"x":109,"y":52,"w":16,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":11,"w":16,"h":20},
+	"sourceSize": {"w":18,"h":32}
+},
+{
+	"filename": "guy_head.png",
+	"frame": {"x":1,"y":28,"w":62,"h":80},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":62,"h":80},
+	"sourceSize": {"w":64,"h":154}
+},
+{
+	"filename": "guy_lower_arm.png",
+	"frame": {"x":109,"y":1,"w":16,"h":50},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":39,"w":16,"h":50},
+	"sourceSize": {"w":18,"h":90}
+},
+{
+	"filename": "guy_lower_leg.png",
+	"frame": {"x":86,"y":1,"w":22,"h":70},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":59,"w":22,"h":70},
+	"sourceSize": {"w":24,"h":130}
+},
+{
+	"filename": "guy_torso.png",
+	"frame": {"x":82,"y":73,"w":44,"h":135},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":44,"h":135},
+	"sourceSize": {"w":46,"h":137}
+},
+{
+	"filename": "guy_upper_arm.png",
+	"frame": {"x":1,"y":91,"w":20,"h":58},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":47,"w":20,"h":58},
+	"sourceSize": {"w":22,"h":106}
+},
+{
+	"filename": "guy_upper_leg.png",
+	"frame": {"x":1,"y":1,"w":26,"h":84},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":75,"w":26,"h":84},
+	"sourceSize": {"w":28,"h":160}
+}],
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "demina_guy.png",
+	"format": "RGBA8888",
+	"size": {"w":128,"h":256},
+	"scale": "1",
+	"smartupdate": ""
+}
+}

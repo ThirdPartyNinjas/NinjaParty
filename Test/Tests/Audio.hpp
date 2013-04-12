@@ -18,9 +18,9 @@ namespace Tests
             timer = 0;
         }
         
-        void LoadContent()
+        void LoadContent(const std::string &assetPath, const std::string &assetArchivePath)
         {
-            assetManager.reset(new NinjaParty::AssetManager());
+            assetManager.reset(new NinjaParty::AssetManager(assetPath, assetArchivePath));
             audioRenderer.reset(new NinjaParty::AudioRenderer());
             
             soundEffect = assetManager->LoadSoundEffect("sound.wav");

@@ -3,14 +3,17 @@
 
 #include <string>
 #include <map>
+#include <memory>
 #include <utility>
 
 #include <spine/spine.h>
 
+struct zip;
+
 namespace NinjaParty
 {
-	class Song;
-	class SoundEffect;
+	// class Song;
+	// class SoundEffect;
 	
 	struct Font;
 	class Texture;
@@ -33,7 +36,7 @@ namespace NinjaParty
 	class AssetManager
 	{
 	public:
-		AssetManager(const std::string &assetPath = "Assets/");
+		AssetManager(const std::string &assetPath = "Assets/", const std::string &assetZipPath = "");
 		~AssetManager();
 		
 		std::string GetAssetPath() const { return assetPath; }
@@ -41,8 +44,8 @@ namespace NinjaParty
 		Texture* LoadTexture(const std::string &fileName);
 		TextureDictionary* LoadTextureDictionary(const std::string &fileName);
 		
-		Song* LoadSong(const std::string &fileName);
-		SoundEffect* LoadSoundEffect(const std::string &fileName);
+		// Song* LoadSong(const std::string &fileName);
+		// SoundEffect* LoadSoundEffect(const std::string &fileName);
 
 		Font* LoadFont(const std::string &fileName);
 
@@ -56,11 +59,16 @@ namespace NinjaParty
 
 	private:
 		std::string GetRootPath() const; // get the platform specific path
+		int DecompressArchiveFile(const std::string &fileName);
 		
 		std::string assetPath;
 
-		std::map<std::string, Song*> songs;
-		std::map<std::string, SoundEffect*> soundEffects;
+		zip *assetArchive;
+		std::unique_ptr<unsigned char[]> scratchMemory;
+		int scratchMemorySize;
+
+		// std::map<std::string, Song*> songs;
+		// std::map<std::string, SoundEffect*> soundEffects;
 
 		std::map<std::string, Texture*> textures;
 		std::map<std::string, TextureDictionary*> textureDictionaries;

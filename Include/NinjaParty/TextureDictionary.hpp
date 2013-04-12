@@ -13,6 +13,7 @@ class TextureDictionary
 {
 public:
 	static TextureDictionary* FromFile(const std::string &filename);
+	static TextureDictionary* FromBuffer(const unsigned char *buffer, int size);
 
 	bool ContainsTexture(const std::string &textureName);
 

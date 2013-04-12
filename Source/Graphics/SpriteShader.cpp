@@ -86,7 +86,31 @@ namespace NinjaParty
 	"{\n"
 	"	gl_FragColor = texture2D(sampler, v_texcoord) * v_color;\n"
 	"}\n";
-	
+
+#elif __ANDROID__
+	static const char vertexShaderSource[] =
+	"attribute vec4 position;\n"
+	"attribute vec4 color;\n"
+	"attribute vec2 texcoord;\n"
+	"varying highp vec4 v_color;\n"
+	"varying highp vec2 v_texcoord;\n"
+	"uniform mat4 projection;\n"
+	"void main()\n"
+	"{\n"
+	"	gl_Position = projection * position;\n"
+	"	v_color = color;\n"
+	"	v_texcoord = texcoord;\n"
+	"}\n";
+
+	static const char fragmentShaderSource[] =
+	"varying highp vec4 v_color;\n"
+	"varying highp vec2 v_texcoord;\n"
+	"uniform sampler2D sampler;\n"
+	"void main()\n"
+	"{\n"
+	"	gl_FragColor = texture2D(sampler, v_texcoord) * v_color;\n"
+	"}\n";
+
 #endif
 	
 	SpriteShader::SpriteShader()
@@ -96,7 +120,7 @@ namespace NinjaParty
 		const GLchar *vss = vertexShaderSource;		
 		const GLchar *fss = fragmentShaderSource;
 		
-		GLint logLength;
+		GLint logLength, status;
 
 		shaderId = glCreateProgram();
 	
@@ -105,13 +129,17 @@ namespace NinjaParty
 		glShaderSource(vertexShader, 1, &vss, nullptr);
 		glCompileShader(vertexShader);
 		
-		glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logLength);
-		if(logLength > 1)
+		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
+		if(status != GL_TRUE)
 		{
-			GLchar *log = (GLchar*)malloc(logLength);
-			glGetShaderInfoLog(vertexShader, logLength, &logLength, log);
-			printf("%s\n", log);
-			free(log);
+			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logLength);
+			if(logLength > 1)
+			{
+				GLchar *log = (GLchar*)malloc(logLength);
+				glGetShaderInfoLog(vertexShader, logLength, &logLength, log);
+				printf("%s\n", log);
+				free(log);
+			}
 			glDeleteShader(vertexShader);
 			glDeleteProgram(shaderId);
 			throw std::runtime_error("Vertex shader compile failed");
@@ -122,17 +150,21 @@ namespace NinjaParty
 		glShaderSource(fragmentShader, 1, const_cast<const GLchar**>(&fss), nullptr);
 		glCompileShader(fragmentShader);
 		
-		glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &logLength);
-		if(logLength > 1)
+		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
+		if(status != GL_TRUE)
 		{
-			GLchar *log = (GLchar*)malloc(logLength);
-			glGetShaderInfoLog(fragmentShader, logLength, &logLength, log);
-			printf("%s\n", log);
-			free(log);
+			glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &logLength);
+			if(logLength > 1)
+			{
+				GLchar *log = (GLchar*)malloc(logLength);
+				glGetShaderInfoLog(fragmentShader, logLength, &logLength, log);
+				printf("%s\n", log);
+				free(log);
+			}
 			glDeleteShader(fragmentShader);
 			glDeleteShader(vertexShader);
 			glDeleteProgram(shaderId);
-			throw std::runtime_error("Vertex shader compile failed");
+			throw std::runtime_error("Fragment shader compile failed");
 		}
 		
 		glAttachShader(shaderId, vertexShader);
@@ -144,13 +176,17 @@ namespace NinjaParty
 		
 		glLinkProgram(shaderId);
 		
-		glGetProgramiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
-		if(logLength > 1)
+		glGetShaderiv(shaderId, GL_LINK_STATUS, &status);
+		if(status != GL_TRUE)
 		{
-			GLchar *log = (GLchar*)malloc(logLength);
-			glGetProgramInfoLog(shaderId, logLength, &logLength, log);
-			printf("%s\n", log);
-			free(log);
+			glGetProgramiv(shaderId, GL_INFO_LOG_LENGTH, &logLength);
+			if(logLength > 1)
+			{
+				GLchar *log = (GLchar*)malloc(logLength);
+				glGetProgramInfoLog(shaderId, logLength, &logLength, log);
+				printf("%s\n", log);
+				free(log);
+			}
 			glDeleteShader(fragmentShader);
 			glDeleteShader(vertexShader);
 			glDeleteProgram(shaderId);

@@ -135,21 +135,27 @@ namespace spine
         return SUPER(self);
     }
     
-    SkeletonData* SkeletonData_load(const char *filePath, NinjaParty::TextureDictionary *textureDictionary)
+    SkeletonData* SkeletonData_loadBuffer(const unsigned char *buffer, int size, NinjaParty::TextureDictionary *textureDictionary)
     {
         AttachmentLoader *attachmentLoader = AttachmentLoader_create(textureDictionary);
         SkeletonJson *skeletonJson = SkeletonJson_createWithLoader(attachmentLoader);
         
-        int length;
-        char *data = spine::_Util_readFile(filePath, &length);
-        
-        SkeletonData *skeletonData = SkeletonJson_readSkeletonData(skeletonJson, data);
-        
-        FREE(data);
+        SkeletonData *skeletonData = SkeletonJson_readSkeletonData(skeletonJson, (const char*)buffer);
         
         SkeletonJson_dispose(skeletonJson);
         AttachmentLoader_dispose(attachmentLoader);
         
+        return skeletonData;
+    }
+
+    SkeletonData* SkeletonData_loadFile(const char *filePath, NinjaParty::TextureDictionary *textureDictionary)
+    {
+        int size;
+        const unsigned char *buffer = (const unsigned char*)spine::_Util_readFile(filePath, &size);
+
+        SkeletonData *skeletonData = SkeletonData_loadBuffer(buffer, size, textureDictionary);
+        FREE(buffer);
+
         return skeletonData;
     }
 }

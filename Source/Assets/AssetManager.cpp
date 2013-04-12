@@ -2,9 +2,16 @@
 #include <memory>
 #include <stdexcept>
 
+// hack:
+// todo: figure out a better solution, boost can't figure out endianness on Android
+#if __ANDROID__
+#define _LITTLE_ENDIAN
+#endif
+
 #include <boost/lexical_cast.hpp>
 
 #include <pugixml.hpp>
+#include <zip.h>
 
 #include <spine/Animation.h>
 #include <spine/SkeletonData.h>
@@ -14,8 +21,8 @@
 #include <NinjaParty/Font.hpp>
 #include <NinjaParty/GleedLevel.hpp>
 #include <NinjaParty/Path.hpp>
-#include <NinjaParty/Song.hpp>
-#include <NinjaParty/SoundEffect.hpp>
+//#include <NinjaParty/Song.hpp>
+//#include <NinjaParty/SoundEffect.hpp>
 #include <NinjaParty/SpineAnimationPlayer.hpp>
 #include <NinjaParty/SpriteAnimationPlayer.hpp>
 #include <NinjaParty/Texture.hpp>
@@ -23,14 +30,28 @@
 
 namespace spine
 {
-    SkeletonData* SkeletonData_load(const char *filePath, NinjaParty::TextureDictionary *textureDictionary);
+    SkeletonData* SkeletonData_loadFile(const char *filePath, NinjaParty::TextureDictionary *textureDictionary);
+    SkeletonData* SkeletonData_loadBuffer(const unsigned char *buffer, int size, NinjaParty::TextureDictionary *textureDictionary);
 }
 
 namespace NinjaParty
 {
-	AssetManager::AssetManager(const std::string &assetPath)
+	AssetManager::AssetManager(const std::string &assetPath, const std::string &assetZipPath)
 	{
 		this->assetPath = GetRootPath() + assetPath;
+
+		scratchMemorySize = 0;
+		assetArchive = nullptr;
+
+		if(!assetZipPath.empty())
+		{
+			int error;
+			assetArchive = zip_open(assetZipPath.c_str(), 0, &error);
+			if(assetArchive == nullptr)
+			{
+				throw std::runtime_error("Failed to open asset archive: " + assetZipPath);
+			}
+		}
 	}
 	
 	template <typename T>
@@ -48,8 +69,8 @@ namespace NinjaParty
 	
 	AssetManager::~AssetManager()
 	{
-		DeleteMapContents(songs);
-		DeleteMapContents(soundEffects);
+//		DeleteMapContents(songs);
+//		DeleteMapContents(soundEffects);
 		DeleteMapContents(textures);
 		DeleteMapContents(textureDictionaries);
 		DeleteMapContents(fonts);
@@ -60,8 +81,34 @@ namespace NinjaParty
         {
             spine::SkeletonData_dispose(iterator.second);
         }
+
+		if(assetArchive != nullptr)
+			zip_close(assetArchive);
 	}
-	
+
+	int AssetManager::DecompressArchiveFile(const std::string &fileName)
+	{
+		struct zip_stat st;
+		zip_stat_init(&st);
+		if(zip_stat(assetArchive, fileName.c_str(), 0, &st) == -1)
+			throw std::runtime_error(std::string("Failed to get archive stats for file: ") + fileName);
+
+		if(scratchMemorySize < st.size)
+		{
+			scratchMemory.reset(new unsigned char[st.size]);
+			scratchMemorySize = st.size;
+		}
+
+		zip_file *zipFile = zip_fopen(assetArchive, fileName.c_str(), 0);
+		if(zipFile == nullptr)
+			throw std::runtime_error(std::string("Failed to open archived file: ") + fileName);
+
+		zip_fread(zipFile, scratchMemory.get(), st.size);
+		zip_fclose(zipFile);
+
+		return st.size;
+	}
+
 	Texture* AssetManager::LoadTexture(std::string const &fileName)
 	{
 		auto iterator = textures.find(fileName);
@@ -69,9 +116,20 @@ namespace NinjaParty
 		if(iterator != textures.end())
 			return iterator->second;
 		
-		Texture *texture = Texture::FromFile(assetPath + fileName);
+		Texture *texture = nullptr;
+
+		if(assetArchive != nullptr)
+		{
+			int size = DecompressArchiveFile(assetPath + fileName);
+			texture = Texture::FromBuffer(scratchMemory.get(), size);
+		}
+		else
+		{
+			texture = Texture::FromFile(assetPath + fileName);
+		}
+
 		if(texture == nullptr)
-			return nullptr;
+			throw std::runtime_error(std::string("Failed to load texture: ") + fileName);
 		
 		textures[fileName] = texture;
 		return texture;
@@ -84,39 +142,49 @@ namespace NinjaParty
 		if(iterator != textureDictionaries.end())
 			return iterator->second;
 		
-		TextureDictionary *textureDictionary = TextureDictionary::FromFile(assetPath + fileName);
+		TextureDictionary *textureDictionary = nullptr;
+		if(assetArchive != nullptr)
+		{
+			int size = DecompressArchiveFile(assetPath + fileName);
+			textureDictionary = TextureDictionary::FromBuffer(scratchMemory.get(), size);
+		}
+		else
+		{
+			textureDictionary = TextureDictionary::FromFile(assetPath + fileName);
+		}
+
 		if(textureDictionary == nullptr)
-			return nullptr;
+			throw std::runtime_error(std::string("Failed to load TextureDictionary: ") + fileName);
 		
 		textureDictionaries[fileName] = textureDictionary;
 		return textureDictionary;
 	}
 
-	Song* AssetManager::LoadSong(const std::string &fileName)
-	{
-		auto iterator = songs.find(fileName);
+	// Song* AssetManager::LoadSong(const std::string &fileName)
+	// {
+	// 	auto iterator = songs.find(fileName);
 		
-		if(iterator != songs.end())
-			return iterator->second;
+	// 	if(iterator != songs.end())
+	// 		return iterator->second;
 		
-		Song *song = new Song(assetPath + fileName);
+	// 	Song *song = new Song(assetPath + fileName);
 		
-		songs[fileName] = song;
-		return song;
-	}
+	// 	songs[fileName] = song;
+	// 	return song;
+	// }
 	
-	SoundEffect* AssetManager::LoadSoundEffect(const std::string &fileName)
-	{
-		auto iterator = soundEffects.find(fileName);
+	// SoundEffect* AssetManager::LoadSoundEffect(const std::string &fileName)
+	// {
+	// 	auto iterator = soundEffects.find(fileName);
 		
-		if(iterator != soundEffects.end())
-			return iterator->second;
+	// 	if(iterator != soundEffects.end())
+	// 		return iterator->second;
 		
-		SoundEffect *soundEffect = new SoundEffect(assetPath + fileName);
+	// 	SoundEffect *soundEffect = new SoundEffect(assetPath + fileName);
 		
-		soundEffects[fileName] = soundEffect;
-		return soundEffect;
-	}
+	// 	soundEffects[fileName] = soundEffect;
+	// 	return soundEffect;
+	// }
 
 	Font* AssetManager::LoadFont(const std::string &fileName)
 	{
@@ -127,9 +195,19 @@ namespace NinjaParty
 		}
 
 		pugi::xml_document document;
-		pugi::xml_parse_result result = document.load_file((assetPath + fileName).c_str());
-			
-		if(!result)
+		pugi::xml_parse_result result;
+
+		if(assetArchive != nullptr)
+		{
+			int size = DecompressArchiveFile(assetPath + fileName);
+			result = document.load_buffer_inplace(scratchMemory.get(), size);
+		}
+		else
+		{
+			result = document.load_file((assetPath + fileName).c_str());
+		}
+
+		if(result.status != pugi::status_ok)
 			throw std::runtime_error(std::string("Failed to load font: ") + fileName);
 
 		Font *font = new Font();
@@ -175,72 +253,78 @@ namespace NinjaParty
 			int firstBoneCount = -1;
 
 			pugi::xml_document document;
-			pugi::xml_parse_result result = document.load_file((assetPath + fileName).c_str());
-			
-			if(result == true)
+			pugi::xml_parse_result result;
+
+			if(assetArchive != nullptr)
 			{
-				DeminaAnimation *deminaAnimation = new DeminaAnimation();
-				
-				pugi::xml_node animNode = document.child("Animation");
-				if(!animNode)
-					throw std::runtime_error(std::string("Failed to load animation: ") + fileName);
-				
-				deminaAnimation->frameRate = boost::lexical_cast<int>(animNode.child("FrameRate").child_value());
-				float invFrameRate = 1.0f / deminaAnimation->frameRate;
-				
-				deminaAnimation->loopFrame = boost::lexical_cast<int>(animNode.child("LoopFrame").child_value());
-				deminaAnimation->loopTime = invFrameRate * deminaAnimation->loopFrame;
-				
-				deminaAnimation->texture = texture;
-
-				for(pugi::xml_node textureNode = animNode.child("Texture"); textureNode; textureNode = textureNode.next_sibling("Texture"))
-				{
-					std::string textureName = textureNode.child_value();
-					deminaAnimation->textureRegions.push_back(textureDictionary->GetRegion(textureName));
-				}
-
-				for(pugi::xml_node keyNode = animNode.child("Keyframe"); keyNode; keyNode = keyNode.next_sibling("Keyframe"))
-				{
-					Keyframe keyframe;
-					
-					keyframe.VerticalFlip = keyNode.attribute("vflip").as_bool();
-					keyframe.HorizontalFlip = keyNode.attribute("hflip").as_bool();
-					keyframe.FrameNumber = keyNode.attribute("frame").as_int();
-					keyframe.FrameTime = invFrameRate * keyframe.FrameNumber;
-					keyframe.FrameTrigger = keyNode.attribute("trigger").value();
-					
-					for(pugi::xml_node boneNode = keyNode.child("Bone"); boneNode; boneNode = boneNode.next_sibling("Bone"))
-					{
-						Bone bone;
-						
-						bone.Name = boneNode.attribute("name").value();
-						bone.Visible = std::string(boneNode.child("Hidden").child_value()) != std::string("False");
-						bone.VerticalFlip = std::string(boneNode.child("TextureFlipVertical").child_value()) != std::string("False");
-						bone.HorizontalFlip = std::string(boneNode.child("TextureFlipHorizontal").child_value()) != std::string("False");
-						bone.TextureIndex = boost::lexical_cast<int>(boneNode.child("TextureIndex").child_value());
-						bone.ParentIndex = boost::lexical_cast<int>(boneNode.child("ParentIndex").child_value());
-						bone.Position.X() = boost::lexical_cast<float>(boneNode.child("Position").child("X").child_value());
-						bone.Position.Y() = boost::lexical_cast<float>(boneNode.child("Position").child("Y").child_value());
-						bone.Rotation = boost::lexical_cast<float>(boneNode.child("Rotation").child_value());
-						
-						keyframe.Bones.push_back(bone);
-					}
-					
-					if(firstBoneCount != -1 && keyframe.Bones.size() != firstBoneCount)
-						throw std::exception();
-					else
-						firstBoneCount = static_cast<int>(keyframe.Bones.size());
-					
-					deminaAnimation->keyframes.push_back(keyframe);
-				}
-				
-				deminaAnimations[fileName] = deminaAnimation;
-				return deminaAnimation;
+				int size = DecompressArchiveFile(assetPath + fileName);
+				result = document.load_buffer_inplace(scratchMemory.get(), size);
 			}
 			else
 			{
-				throw std::runtime_error(std::string("Failed to load animation: ") + fileName);
+				result = document.load_file((assetPath + fileName).c_str());
 			}
+
+			if(result.status != pugi::status_ok)
+				throw std::runtime_error(std::string("Failed to load DeminaAnimation: ") + fileName);
+			
+			DeminaAnimation *deminaAnimation = new DeminaAnimation();
+			
+			pugi::xml_node animNode = document.child("Animation");
+			if(!animNode)
+				throw std::runtime_error(std::string("Failed to load animation: ") + fileName);
+			
+			deminaAnimation->frameRate = boost::lexical_cast<int>(animNode.child("FrameRate").child_value());
+			float invFrameRate = 1.0f / deminaAnimation->frameRate;
+			
+			deminaAnimation->loopFrame = boost::lexical_cast<int>(animNode.child("LoopFrame").child_value());
+			deminaAnimation->loopTime = invFrameRate * deminaAnimation->loopFrame;
+			
+			deminaAnimation->texture = texture;
+
+			for(pugi::xml_node textureNode = animNode.child("Texture"); textureNode; textureNode = textureNode.next_sibling("Texture"))
+			{
+				std::string textureName = textureNode.child_value();
+				deminaAnimation->textureRegions.push_back(textureDictionary->GetRegion(textureName));
+			}
+
+			for(pugi::xml_node keyNode = animNode.child("Keyframe"); keyNode; keyNode = keyNode.next_sibling("Keyframe"))
+			{
+				Keyframe keyframe;
+				
+				keyframe.VerticalFlip = keyNode.attribute("vflip").as_bool();
+				keyframe.HorizontalFlip = keyNode.attribute("hflip").as_bool();
+				keyframe.FrameNumber = keyNode.attribute("frame").as_int();
+				keyframe.FrameTime = invFrameRate * keyframe.FrameNumber;
+				keyframe.FrameTrigger = keyNode.attribute("trigger").value();
+				
+				for(pugi::xml_node boneNode = keyNode.child("Bone"); boneNode; boneNode = boneNode.next_sibling("Bone"))
+				{
+					Bone bone;
+					
+					bone.Name = boneNode.attribute("name").value();
+					bone.Visible = std::string(boneNode.child("Hidden").child_value()) != std::string("False");
+					bone.VerticalFlip = std::string(boneNode.child("TextureFlipVertical").child_value()) != std::string("False");
+					bone.HorizontalFlip = std::string(boneNode.child("TextureFlipHorizontal").child_value()) != std::string("False");
+					bone.TextureIndex = boost::lexical_cast<int>(boneNode.child("TextureIndex").child_value());
+					bone.ParentIndex = boost::lexical_cast<int>(boneNode.child("ParentIndex").child_value());
+					bone.Position.X() = boost::lexical_cast<float>(boneNode.child("Position").child("X").child_value());
+					bone.Position.Y() = boost::lexical_cast<float>(boneNode.child("Position").child("Y").child_value());
+					bone.Rotation = boost::lexical_cast<float>(boneNode.child("Rotation").child_value());
+					
+					keyframe.Bones.push_back(bone);
+				}
+				
+				if(firstBoneCount != -1 && keyframe.Bones.size() != firstBoneCount)
+					throw std::exception();
+				else
+					firstBoneCount = static_cast<int>(keyframe.Bones.size());
+				
+				deminaAnimation->keyframes.push_back(keyframe);
+			}
+			
+			deminaAnimations[fileName] = deminaAnimation;
+			return deminaAnimation;
 		}
 	}
 
@@ -254,11 +338,21 @@ namespace NinjaParty
 		else
 		{
 			pugi::xml_document document;
-			pugi::xml_parse_result result = document.load_file((assetPath + fileName).c_str());
-			
+			pugi::xml_parse_result result;
+
+			if(assetArchive != nullptr)
+			{
+				int size = DecompressArchiveFile(assetPath + fileName);
+				result = document.load_buffer_inplace(scratchMemory.get(), size);
+			}
+			else
+			{
+				result = document.load_file((assetPath + fileName).c_str());
+			}
+
 			if(result.status != pugi::status_ok)
-				return nullptr;
-			
+				throw std::runtime_error(std::string("Failed to load SpriteAnimation: ") + fileName);
+
 			SpriteAnimation *spriteAnimation = new SpriteAnimation();
 			
 			pugi::xml_node animNode = document.child("SpriteAnimation");
@@ -291,10 +385,20 @@ namespace NinjaParty
 		else
 		{
 			pugi::xml_document document;
-			pugi::xml_parse_result result = document.load_file((assetPath + fileName).c_str());
+			pugi::xml_parse_result result;
 
-			if(!result)
-				throw std::runtime_error(std::string("Failed to load Gleed level: ") + fileName);
+			if(assetArchive != nullptr)
+			{
+				int size = DecompressArchiveFile(assetPath + fileName);
+				result = document.load_buffer_inplace(scratchMemory.get(), size);
+			}
+			else
+			{
+				result = document.load_file((assetPath + fileName).c_str());
+			}
+
+			if(result.status != pugi::status_ok)
+				throw std::runtime_error(std::string("Failed to load DeminaAnimation: ") + fileName);
 			
 			GleedLevel *gleedLevel = new GleedLevel();
 
@@ -460,7 +564,20 @@ namespace NinjaParty
 		if(iterator != spineSkeletons.end())
 			return iterator->second;
         
-        SpineSkeletonData *spineSkeletonData = spine::SkeletonData_load((assetPath + fileName).c_str(), textureDictionary);
+        SpineSkeletonData *spineSkeletonData = nullptr;
+
+        if(assetArchive != nullptr)
+        {
+			int size = DecompressArchiveFile(assetPath + fileName);
+        	spineSkeletonData = spine::SkeletonData_loadBuffer(scratchMemory.get(), size, textureDictionary);
+        }
+        else
+        {
+        	spineSkeletonData = spine::SkeletonData_loadFile((assetPath + fileName).c_str(), textureDictionary);
+        }
+
+        if(spineSkeletonData == nullptr)
+        	throw std::runtime_error(std::string("Failed to load SpineSkeletonData: ") + fileName);
 
 		spineSkeletons[fileName] = spineSkeletonData;
 		return spineSkeletonData;

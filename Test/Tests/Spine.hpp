@@ -23,9 +23,9 @@ namespace Tests
             inWalk = true;
         }
         
-        void LoadContent()
+        void LoadContent(const std::string &assetPath, const std::string &assetArchivePath)
         {
-            assetManager.reset(new NinjaParty::AssetManager());
+            assetManager.reset(new NinjaParty::AssetManager(assetPath, assetArchivePath));
             spriteBatch.reset(new NinjaParty::SpriteBatch(GetScreenWidth(), GetScreenHeight()));
             
             NinjaParty::TextureDictionary *textureDictionary = assetManager->LoadTextureDictionary("Graphics.json");

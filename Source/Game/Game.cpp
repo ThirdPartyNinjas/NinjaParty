@@ -13,7 +13,7 @@ namespace NinjaParty
 	{
 	}
 	
-	void Game::LoadContent()
+	void Game::LoadContent(const std::string &assetPath, const std::string &assetArchivePath)
 	{
 	}
 	

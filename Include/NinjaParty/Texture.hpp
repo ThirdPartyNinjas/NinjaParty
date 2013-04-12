@@ -26,6 +26,7 @@ namespace NinjaParty
 		void SetFilter(TextureFilter filterType);
 		
 		static Texture* FromFile(const std::string &fileName, TextureRegion *textureRegion = nullptr);
+		static Texture* FromBuffer(const unsigned char *buffer, int length, TextureRegion *textureRegion = nullptr);
 		
 	protected:
 		Texture();

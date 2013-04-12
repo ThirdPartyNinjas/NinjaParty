@@ -8,6 +8,10 @@ Libraries:
 		- http://jsoncpp.sourceforge.net/
 		- From SVN revision 252
 		- MIT License
+	libzip
+		- Modified version for android
+		- https://github.com/julienr/libzip-android
+		- BSD License
 	pugixml
 		- http://pugixml.org/
 		- Version 1.2

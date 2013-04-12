@@ -15,7 +15,7 @@ namespace NinjaParty
 		
 		Game& operator=(const Game&) = delete;
 
-		virtual void LoadContent();
+		virtual void LoadContent(const std::string &assetPath = "Assets/", const std::string &assetArchivePath = "");
 		virtual void UnloadContent();
 
 		virtual void Update(float deltaSeconds);
