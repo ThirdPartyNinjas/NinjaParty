@@ -12,7 +12,6 @@ ipch/
 *.class
 local.properties
 .classpath
-.cproject
 .project
 bin/
 gen/
