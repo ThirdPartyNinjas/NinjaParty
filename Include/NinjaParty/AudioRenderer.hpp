@@ -1,16 +1,16 @@
 #ifndef NINJAPARTY_AUDIORENDERER_HPP
 #define NINJAPARTY_AUDIORENDERER_HPP
 
+#include <functional>
 #include <list>
 #include <memory>
+#include <mutex>
 #include <thread>
 #include <stdint.h>
 
-#include <OpenAl/al.h>
-#include <OpenAl/alc.h>
-
-#include <functional>
 #include <boost/scoped_array.hpp>
+
+#include <NinjaParty/IncludeAL.h>
 
 // todo: Should this be changed to work on the main thread. If we provide an Update function
 // it can be called once per frame, and we could remove all the thread stuff in here.

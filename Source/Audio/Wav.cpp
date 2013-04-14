@@ -9,7 +9,7 @@
 
 namespace NinjaParty
 {
-	Wav::Wav(const std::string &fileName)
+	Wav::Wav(const std::string &fileName, int offset, int length)
 	{
 		FILE *in;
 		char chunk_name[5];
@@ -18,13 +18,19 @@ namespace NinjaParty
 		in = fopen(fileName.c_str(), "rb");
 		if(in == nullptr)
 		{
-			throw std::runtime_error(std::string("Wav loading failed: ") + fileName);
+			throw std::runtime_error(std::string("Wav loading failed"));
 		}
 		
+		fseek(in, offset, SEEK_SET);
+
 		while(1)
 		{
 			if(read_chars(in, chunk_name, 4) != 0)
-				break;
+			{
+				throw std::runtime_error(std::string("Wav loading failed"));
+			}
+
+			chunk_name[4] = '\0';
 			
 			if(strcmp(chunk_name, "RIFF") == 0)
 			{
@@ -39,12 +45,11 @@ namespace NinjaParty
 				parse_data(in, &fmt_chunk, nullptr, &sampleCount);
 				samples.reset(new int16_t[sampleCount]);
 				parse_data(in, &fmt_chunk, samples.get(), &sampleCount);
+				break;
 			}
 			else
 			{
 				skip_chunk(in);
-				//fclose(in);
-				//throw std::runtime_error(std::string("Wav loading failed: ") + fileName);
 			}
 		}
 		

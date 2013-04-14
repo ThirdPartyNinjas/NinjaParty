@@ -12,8 +12,8 @@ struct zip;
 
 namespace NinjaParty
 {
-	// class Song;
-	// class SoundEffect;
+	class Song;
+	class SoundEffect;
 	
 	struct Font;
 	class Texture;
@@ -44,8 +44,8 @@ namespace NinjaParty
 		Texture* LoadTexture(const std::string &fileName);
 		TextureDictionary* LoadTextureDictionary(const std::string &fileName);
 		
-		// Song* LoadSong(const std::string &fileName);
-		// SoundEffect* LoadSoundEffect(const std::string &fileName);
+		Song* LoadSong(const std::string &fileName);
+		SoundEffect* LoadSoundEffect(const std::string &fileName);
 
 		Font* LoadFont(const std::string &fileName);
 
@@ -60,15 +60,17 @@ namespace NinjaParty
 	private:
 		std::string GetRootPath() const; // get the platform specific path
 		int DecompressArchiveFile(const std::string &fileName);
+		int GetArchiveInfo(const std::string &fileName, int &offset, int &length);
 		
 		std::string assetPath;
+		std::string assetZipPath;
 
 		zip *assetArchive;
 		std::unique_ptr<unsigned char[]> scratchMemory;
 		int scratchMemorySize;
 
-		// std::map<std::string, Song*> songs;
-		// std::map<std::string, SoundEffect*> soundEffects;
+		std::map<std::string, Song*> songs;
+		std::map<std::string, SoundEffect*> soundEffects;
 
 		std::map<std::string, Texture*> textures;
 		std::map<std::string, TextureDictionary*> textureDictionaries;

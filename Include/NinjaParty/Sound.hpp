@@ -1,9 +1,9 @@
 #ifndef NINJAPARTY_SOUND_HPP
 #define NINJAPARTY_SOUND_HPP
 
-#include <OpenAL/al.h>
-
 #include <stdint.h>
+
+#include <NinjaParty/IncludeAL.h>
 
 namespace NinjaParty
 {

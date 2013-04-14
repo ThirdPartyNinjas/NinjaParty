@@ -15,7 +15,7 @@ namespace NinjaParty
 	class Song : public Sound
 	{
 	public:
-		Song(const std::string &fileName);
+		Song(const std::string &fileName, int offset = 0, int length = 0);
 		~Song();
 
 		bool GetAudioBuffer(ALuint &audioBuffer);

@@ -11,7 +11,7 @@ namespace NinjaParty
 	class Vorbis
 	{
 	public:
-		Vorbis(const std::string &fileName);
+		Vorbis(const std::string &fileName, int offset = 0, int length = 0);
 		~Vorbis();
 		
 		int ReadSamples(int16_t *samples, int count);

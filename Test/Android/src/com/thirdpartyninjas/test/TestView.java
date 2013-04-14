@@ -289,10 +289,8 @@ class TestView extends GLSurfaceView {
         	float deltaSeconds = (currentTime - previousTime) / 1000.0f;
         	previousTime = currentTime;
 
-        	if(deltaSeconds > 1.0f)
-        	{
-        		deltaSeconds = 1.0f;
-        	}
+        	if(deltaSeconds > 1 / 30.0f)
+        		deltaSeconds = 1 / 30.0f;
         	
         	TestJni.update(deltaSeconds);
         	TestJni.draw();

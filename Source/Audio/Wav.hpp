@@ -10,7 +10,7 @@ namespace NinjaParty
 	class Wav
 	{
 	public:
-		Wav(const std::string &fileName);
+		Wav(const std::string &fileName, int offset = 0, int length = 0);
 		~Wav();
 		
 		int16_t* GetSamples() const { return &samples[0]; }

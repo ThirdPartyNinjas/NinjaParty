@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (IILjava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_init
-  (JNIEnv *, jobject, jint, jint, jstring);
+  (JNIEnv *, jclass, jint, jint, jstring);
 
 /*
  * Class:     com_thirdpartyninjas_test_TestJni
@@ -21,7 +21,7 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_init
  * Signature: (F)V
  */
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_update
-  (JNIEnv *, jobject, jfloat);
+  (JNIEnv *, jclass, jfloat);
 
 /*
  * Class:     com_thirdpartyninjas_test_TestJni
@@ -29,7 +29,39 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_update
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_draw
-  (JNIEnv *, jobject);
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_thirdpartyninjas_test_TestJni
+ * Method:    touchDown
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_touchDown
+  (JNIEnv *, jclass, jint, jint, jint);
+
+/*
+ * Class:     com_thirdpartyninjas_test_TestJni
+ * Method:    touchUp
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_touchUp
+  (JNIEnv *, jclass, jint, jint, jint);
+
+/*
+ * Class:     com_thirdpartyninjas_test_TestJni
+ * Method:    touchMove
+ * Signature: (III)V
+ */
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_touchMove
+  (JNIEnv *, jclass, jint, jint, jint);
+
+/*
+ * Class:     com_thirdpartyninjas_test_TestJni
+ * Method:    touchCancel
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_touchCancel
+  (JNIEnv *, jclass, jint);
 
 #ifdef __cplusplus
 }

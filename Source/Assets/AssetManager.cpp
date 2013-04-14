@@ -13,6 +13,11 @@
 #include <pugixml.hpp>
 #include <zip.h>
 
+extern "C"
+{
+	#include <zipint.h>
+}
+
 #include <spine/Animation.h>
 #include <spine/SkeletonData.h>
 
@@ -21,8 +26,8 @@
 #include <NinjaParty/Font.hpp>
 #include <NinjaParty/GleedLevel.hpp>
 #include <NinjaParty/Path.hpp>
-//#include <NinjaParty/Song.hpp>
-//#include <NinjaParty/SoundEffect.hpp>
+#include <NinjaParty/Song.hpp>
+#include <NinjaParty/SoundEffect.hpp>
 #include <NinjaParty/SpineAnimationPlayer.hpp>
 #include <NinjaParty/SpriteAnimationPlayer.hpp>
 #include <NinjaParty/Texture.hpp>
@@ -39,6 +44,7 @@ namespace NinjaParty
 	AssetManager::AssetManager(const std::string &assetPath, const std::string &assetZipPath)
 	{
 		this->assetPath = GetRootPath() + assetPath;
+		this->assetZipPath = GetRootPath() + assetZipPath;
 
 		scratchMemorySize = 0;
 		assetArchive = nullptr;
@@ -46,7 +52,7 @@ namespace NinjaParty
 		if(!assetZipPath.empty())
 		{
 			int error;
-			assetArchive = zip_open(assetZipPath.c_str(), 0, &error);
+			assetArchive = zip_open(this->assetZipPath.c_str(), 0, &error);
 			if(assetArchive == nullptr)
 			{
 				throw std::runtime_error("Failed to open asset archive: " + assetZipPath);
@@ -69,8 +75,8 @@ namespace NinjaParty
 	
 	AssetManager::~AssetManager()
 	{
-//		DeleteMapContents(songs);
-//		DeleteMapContents(soundEffects);
+		DeleteMapContents(songs);
+		DeleteMapContents(soundEffects);
 		DeleteMapContents(textures);
 		DeleteMapContents(textureDictionaries);
 		DeleteMapContents(fonts);
@@ -108,6 +114,18 @@ namespace NinjaParty
 
 		return st.size;
 	}
+
+	int AssetManager::GetArchiveInfo(const std::string &fileName, int &offset, int &length)
+	{
+		struct zip_stat st;
+		zip_stat_init(&st);
+		if(zip_stat(assetArchive, fileName.c_str(), 0, &st) == -1)
+			throw std::runtime_error(std::string("Failed to get archive stats for file: ") + fileName);
+
+		length = st.size;
+		offset = _zip_file_get_offset(assetArchive, zip_name_locate(assetArchive, fileName.c_str(), 0));
+	}
+
 
 	Texture* AssetManager::LoadTexture(std::string const &fileName)
 	{
@@ -160,31 +178,59 @@ namespace NinjaParty
 		return textureDictionary;
 	}
 
-	// Song* AssetManager::LoadSong(const std::string &fileName)
-	// {
-	// 	auto iterator = songs.find(fileName);
+	Song* AssetManager::LoadSong(const std::string &fileName)
+	{
+		auto iterator = songs.find(fileName);
 		
-	// 	if(iterator != songs.end())
-	// 		return iterator->second;
+		if(iterator != songs.end())
+			return iterator->second;
 		
-	// 	Song *song = new Song(assetPath + fileName);
+		Song *song = nullptr;
+
+		if(assetArchive != nullptr)
+		{
+			int offset = 0, length = 0;
+			GetArchiveInfo(assetPath + fileName, offset, length);
+			song = new Song(assetZipPath, offset, length);
+		}
+		else
+		{
+			song = new Song(assetPath + fileName);
+		}
+
+		if(song == nullptr)
+			throw std::runtime_error(std::string("Failed to load Song: ") + fileName);
 		
-	// 	songs[fileName] = song;
-	// 	return song;
-	// }
+		songs[fileName] = song;
+		return song;
+	}
 	
-	// SoundEffect* AssetManager::LoadSoundEffect(const std::string &fileName)
-	// {
-	// 	auto iterator = soundEffects.find(fileName);
+	SoundEffect* AssetManager::LoadSoundEffect(const std::string &fileName)
+	{
+		auto iterator = soundEffects.find(fileName);
 		
-	// 	if(iterator != soundEffects.end())
-	// 		return iterator->second;
+		if(iterator != soundEffects.end())
+			return iterator->second;
 		
-	// 	SoundEffect *soundEffect = new SoundEffect(assetPath + fileName);
-		
-	// 	soundEffects[fileName] = soundEffect;
-	// 	return soundEffect;
-	// }
+		SoundEffect *soundEffect = nullptr;
+
+		if(assetArchive != nullptr)
+		{
+			int offset = 0, length = 0;
+			GetArchiveInfo(assetPath + fileName, offset, length);
+			soundEffect = new SoundEffect(assetZipPath, offset, length);
+		}
+		else
+		{
+			soundEffect = new SoundEffect(assetPath + fileName);
+		}
+
+		if(soundEffect == nullptr)
+			throw std::runtime_error(std::string("Failed to load SoundEffect: ") + fileName);
+
+		soundEffects[fileName] = soundEffect;
+		return soundEffect;
+	}
 
 	Font* AssetManager::LoadFont(const std::string &fileName)
 	{

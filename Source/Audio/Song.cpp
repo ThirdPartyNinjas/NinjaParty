@@ -7,11 +7,11 @@
 
 namespace NinjaParty
 {
-	Song::Song(const std::string &fileName)
+	Song::Song(const std::string &fileName, int offset, int length)
 	{
 		isStreaming = true;
 		
-		vorbis.reset(new Vorbis(fileName));
+		vorbis.reset(new Vorbis(fileName, offset, length));
 		
 		channels = vorbis->GetChannels();
 		sampleRate = vorbis->GetSampleRate();

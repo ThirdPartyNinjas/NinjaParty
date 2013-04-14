@@ -5,7 +5,7 @@ include $(CLEAR_VARS)
 D_PATH := ../../Dependencies
 
 LOCAL_MODULE := NinjaParty
-LOCAL_CPPFLAGS := -std=c++11
+LOCAL_CPPFLAGS := -std=c++11 -pthread
 LOCAL_CPP_FEATURES += exceptions rtti
 
 # boost
@@ -72,6 +72,9 @@ LOCAL_SRC_FILES +=\
 	$(D_PATH)/libzip/zip_unchange_archive.c \
 	$(D_PATH)/libzip/zip_unchange_data.c
 
+# OpenALSoft
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/OpenALSoft/include
+
 # pugixml
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/pugixml
 LOCAL_SRC_FILES += $(D_PATH)/pugixml/pugixml.cpp
@@ -121,7 +124,7 @@ LOCAL_SRC_FILES +=\
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../Include
 
-S_PATH := ../../SOURCE
+S_PATH := ../../Source
 
 # Assets
 LOCAL_SRC_FILES +=\
@@ -129,6 +132,15 @@ LOCAL_SRC_FILES +=\
 	$(S_PATH)/Assets/GetRootPath_Empty.cpp \
 	$(S_PATH)/Assets/Path.cpp
 
+# Audio
+LOCAL_SRC_FILES +=\
+	$(S_PATH)/Audio/AudioRenderer.cpp \
+	$(S_PATH)/Audio/Song.cpp \
+	$(S_PATH)/Audio/SoundEffect.cpp \
+	$(S_PATH)/Audio/SoundInstance.cpp \
+	$(S_PATH)/Audio/Vorbis.cpp \
+	$(S_PATH)/Audio/Wav.cpp
+	
 # Graphics
 LOCAL_SRC_FILES +=\
 	$(S_PATH)/Graphics/Camera.cpp \

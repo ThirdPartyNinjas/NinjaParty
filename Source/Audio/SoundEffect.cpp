@@ -1,14 +1,15 @@
+#include <NinjaParty/Random.hpp>
 #include <NinjaParty/SoundEffect.hpp>
 
 #include "Wav.hpp"
 
 namespace NinjaParty
 {
-	SoundEffect::SoundEffect(const std::string &fileName)
+	SoundEffect::SoundEffect(const std::string &fileName, int offset, int length)
 	{
 		isStreaming = false;
 		
-		Wav wav(fileName);
+		Wav wav(fileName, offset, length);
 		
 		alGenBuffers(1, &audioBuffer);
 		

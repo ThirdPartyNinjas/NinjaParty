@@ -1,14 +1,25 @@
 #include <stdexcept>
+#include <stdio.h>
 
 #include "Vorbis.hpp"
 
 namespace NinjaParty
 {
-	Vorbis::Vorbis(const std::string &fileName)
+	Vorbis::Vorbis(const std::string &fileName, int offset, int length)
 	{
 		int error;
 		
-		stbVorbisData = stb_vorbis_open_filename(const_cast<char*>(fileName.c_str()), &error, nullptr);
+		if(offset != 0)
+		{
+			FILE *file = fopen(fileName.c_str(), "rb");
+			fseek(file, offset, SEEK_SET);
+			int error;
+			stbVorbisData = stb_vorbis_open_file_section(file, 1, &error, nullptr, length);
+		}
+		else
+		{
+			stbVorbisData = stb_vorbis_open_filename(const_cast<char*>(fileName.c_str()), &error, nullptr);
+		}
 		if(!stbVorbisData)
 			throw std::runtime_error(std::string("Failed to open Vorbis file: ") + fileName);
 		

@@ -13,16 +13,9 @@
 #define  LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
-extern "C"
-{
-	JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_init(JNIEnv *, jobject, jint, jint, jstring);
-	JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_update(JNIEnv *, jobject, jfloat);
-	JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_draw(JNIEnv *, jobject);
-}
+#define TEST_TOUCH
 
-#define TEST_SPINE
-
-#ifdef TEST_SPRITEBATCH
+#ifdef TEST_SPRITE
 #include "../../Tests/SpriteBatch.hpp"
 #elif defined(TEST_SPINE)
 #include "../../Tests/Spine.hpp"
@@ -34,12 +27,14 @@ extern "C"
 #include "../../Tests/Audio.hpp"
 #elif defined(TEST_GLEED)
 #include "../../Tests/Gleed.hpp"
+#elif defined(TEST_TOUCH)
+#include "../../Tests/Touch.hpp"
 #endif
 
 std::string g_apkPath = "";
-Tests::TestGame *game;
+Tests::TestGame *game = nullptr;
 
-JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_init(JNIEnv *env, jobject, jint width, jint height, jstring javaApkPath)
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_init(JNIEnv *env, jclass, jint width, jint height, jstring javaApkPath)
 {
 	jboolean isCopy;
 	const char *nativeApkPath = env->GetStringUTFChars(javaApkPath, &isCopy);
@@ -51,8 +46,11 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_init(JNIEnv *env, 
 
 	try
 	{
-		game = new Tests::TestGame(width, height);
-		game->LoadContent("assets/", g_apkPath);
+		if(game == nullptr)
+		{
+			game = new Tests::TestGame(width, height);
+			game->LoadContent("assets/", g_apkPath);
+		}
 	}
 	catch(std::exception &exception)
 	{
@@ -60,15 +58,35 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_init(JNIEnv *env, 
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_update(JNIEnv *, jobject, jfloat deltaSeconds)
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_update(JNIEnv *, jclass, jfloat deltaSeconds)
 {
 	game->Update(deltaSeconds);
 }
 
-JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_draw(JNIEnv *, jobject)
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_draw(JNIEnv *, jclass)
 {
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	game->Draw();
+}
+
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_touchDown(JNIEnv *, jclass, jint id, jint x, jint y)
+{
+	game->TouchBegan((void*)id, 1, x, y);
+}
+
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_touchUp(JNIEnv *, jclass, jint id, jint x, jint y)
+{
+	game->TouchEnded((void*)id, x, y);
+}
+
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_touchMove(JNIEnv *, jclass, jint id, jint x, jint y)
+{
+	game->TouchMoved((void*)id, x, y);
+}
+
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_touchCancel(JNIEnv *, jclass, jint id)
+{
+	game->TouchCancelled((void*)id);
 }
