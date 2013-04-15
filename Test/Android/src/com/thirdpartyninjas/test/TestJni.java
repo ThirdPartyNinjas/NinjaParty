@@ -11,6 +11,9 @@ public class TestJni
 	public static native void update(float deltaSeconds);
 	public static native void draw();
 
+	public static native void pause();
+	public static native void resume();
+	
 	public static native void touchDown(int id, int x, int y);
 	public static native void touchUp(int id, int x, int y);
 	public static native void touchMove(int id, int x, int y);

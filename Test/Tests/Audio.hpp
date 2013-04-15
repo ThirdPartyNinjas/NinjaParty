@@ -32,7 +32,17 @@ namespace Tests
         void UnloadContent()
         {
         }
-        
+
+        void Pause()
+        {
+            audioRenderer->BeginAudioInterruption();
+        }
+
+        void Resume()
+        {
+            audioRenderer->EndAudioInterruption();
+        }
+
         void Update(float deltaSeconds)
         {
             timer += deltaSeconds;

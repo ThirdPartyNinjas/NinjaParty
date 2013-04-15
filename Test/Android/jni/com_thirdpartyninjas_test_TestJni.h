@@ -33,6 +33,22 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_draw
 
 /*
  * Class:     com_thirdpartyninjas_test_TestJni
+ * Method:    pause
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_pause
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_thirdpartyninjas_test_TestJni
+ * Method:    resume
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_resume
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_thirdpartyninjas_test_TestJni
  * Method:    touchDown
  * Signature: (III)V
  */

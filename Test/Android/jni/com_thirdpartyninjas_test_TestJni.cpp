@@ -13,7 +13,7 @@
 #define  LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
-#define TEST_TOUCH
+#define TEST_AUDIO
 
 #ifdef TEST_SPRITE
 #include "../../Tests/SpriteBatch.hpp"
@@ -51,6 +51,10 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_init(JNIEnv *env, 
 			game = new Tests::TestGame(width, height);
 			game->LoadContent("assets/", g_apkPath);
 		}
+		else
+		{
+			game->HandleLostGraphicsContext();
+		}
 	}
 	catch(std::exception &exception)
 	{
@@ -60,7 +64,8 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_init(JNIEnv *env, 
 
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_update(JNIEnv *, jclass, jfloat deltaSeconds)
 {
-	game->Update(deltaSeconds);
+	if(game)
+		game->Update(deltaSeconds);
 }
 
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_draw(JNIEnv *, jclass)
@@ -68,7 +73,20 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_draw(JNIEnv *, jcl
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	game->Draw();
+	if(game)
+		game->Draw();
+}
+
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_pause(JNIEnv *, jclass)
+{
+	if(game)
+		game->Pause();
+}
+
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_resume(JNIEnv *, jclass)
+{
+	if(game)
+		game->Resume();
 }
 
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_test_TestJni_touchDown(JNIEnv *, jclass, jint id, jint x, jint y)

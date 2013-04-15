@@ -29,8 +29,13 @@ namespace NinjaParty
 		int GetScreenWidth() const { return screenWidth; }
 		int GetScreenHeight() const { return screenHeight; }
 
+		virtual void Pause() { }
+		virtual void Resume() { }
+
 		virtual void BeginAudioInterruption() { }
 		virtual void EndAudioInterruption() { }
+
+		virtual void HandleLostGraphicsContext() { }
         
 		virtual void TouchBegan(void *touchHandle, int tapCount, int x, int y) { }
 		virtual void TouchEnded(void *touchHandle, int x, int y) { }

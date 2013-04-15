@@ -127,11 +127,11 @@ namespace NinjaParty
 	}
 
 
-	Texture* AssetManager::LoadTexture(std::string const &fileName)
+	Texture* AssetManager::LoadTexture(std::string const &fileName, bool allowReload)
 	{
 		auto iterator = textures.find(fileName);
 		
-		if(iterator != textures.end())
+		if(!allowReload && iterator != textures.end())
 			return iterator->second;
 		
 		Texture *texture = nullptr;

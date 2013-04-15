@@ -13,7 +13,36 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.opengles.GL10;
 
-class TestView extends GLSurfaceView {
+class TestView extends GLSurfaceView implements GLSurfaceView.Renderer
+{
+	protected long previousTime = 0;
+	protected String apkPath;
+	
+    public void onDrawFrame(GL10 gl)
+    {
+    	long currentTime = SystemClock.elapsedRealtime();
+    	float deltaSeconds = (currentTime - previousTime) / 1000.0f;
+    	previousTime = currentTime;
+
+    	if(deltaSeconds > 1 / 30.0f)
+    		deltaSeconds = 1 / 30.0f;
+    	
+    	TestJni.update(deltaSeconds);
+    	TestJni.draw();
+    }
+
+// todo: FIXME onSurfaceChanged gets called twice, but if we call init in onSurfaceCreated
+// properly reload the graphics on a lost graphics context
+    public void onSurfaceChanged(GL10 gl, int width, int height)
+    {
+    	TestJni.init(width, height, apkPath);
+    }
+
+    public void onSurfaceCreated(GL10 gl, EGLConfig config)
+    {
+//    	TestJni.init(getWidth(), getHeight(), apkPath);
+    }
+	
     private static String TAG = "GL2JNIView";
     private static final boolean DEBUG = false;
     
@@ -53,8 +82,8 @@ class TestView extends GLSurfaceView {
                              new ConfigChooser(5, 6, 5, 0, depth, stencil) );
 
         /* Set the renderer responsible for frame rendering */
-        Renderer renderer = new Renderer(getContext().getPackageCodePath());
-        setRenderer(renderer);
+        apkPath = getContext().getPackageCodePath();
+        setRenderer(this);
     }
 
     private static class ContextFactory implements GLSurfaceView.EGLContextFactory {
@@ -273,37 +302,37 @@ class TestView extends GLSurfaceView {
         private int[] mValue = new int[1];
     }
 
-    private static class Renderer implements GLSurfaceView.Renderer
-    {
-    	protected long previousTime = 0;
-    	protected String apkPath;
-    	
-    	public Renderer(String apkPath)
-    	{
-    		this.apkPath = apkPath;
-    	}
-    	
-        public void onDrawFrame(GL10 gl)
-        {
-        	long currentTime = SystemClock.elapsedRealtime();
-        	float deltaSeconds = (currentTime - previousTime) / 1000.0f;
-        	previousTime = currentTime;
-
-        	if(deltaSeconds > 1 / 30.0f)
-        		deltaSeconds = 1 / 30.0f;
-        	
-        	TestJni.update(deltaSeconds);
-        	TestJni.draw();
-        }
-
-        public void onSurfaceChanged(GL10 gl, int width, int height)
-        {
-        	TestJni.init(width, height, apkPath);
-        }
-
-        public void onSurfaceCreated(GL10 gl, EGLConfig config)
-        {
-            // Do nothing.
-        }
-    }
+//    private static class Renderer implements GLSurfaceView.Renderer
+//    {
+//    	protected long previousTime = 0;
+//    	protected String apkPath;
+//    	
+//    	public Renderer(String apkPath)
+//    	{
+//    		this.apkPath = apkPath;
+//    	}
+//    	
+//        public void onDrawFrame(GL10 gl)
+//        {
+//        	long currentTime = SystemClock.elapsedRealtime();
+//        	float deltaSeconds = (currentTime - previousTime) / 1000.0f;
+//        	previousTime = currentTime;
+//
+//        	if(deltaSeconds > 1 / 30.0f)
+//        		deltaSeconds = 1 / 30.0f;
+//        	
+//        	TestJni.update(deltaSeconds);
+//        	TestJni.draw();
+//        }
+//
+//        public void onSurfaceChanged(GL10 gl, int width, int height)
+//        {
+//        	TestJni.init(width, height, apkPath);
+//        }
+//
+//        public void onSurfaceCreated(GL10 gl, EGLConfig config)
+//        {
+//            // Do nothing.
+//        }
+//    }
 }

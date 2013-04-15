@@ -41,7 +41,7 @@ namespace NinjaParty
 		
 		std::string GetAssetPath() const { return assetPath; }
 		
-		Texture* LoadTexture(const std::string &fileName);
+		Texture* LoadTexture(const std::string &fileName, bool allowReload = false);
 		TextureDictionary* LoadTextureDictionary(const std::string &fileName);
 		
 		Song* LoadSong(const std::string &fileName);

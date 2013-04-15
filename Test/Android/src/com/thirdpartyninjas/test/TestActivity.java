@@ -14,6 +14,22 @@ public class TestActivity extends Activity implements OnTouchListener
 	TestView testView;
 	
 	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		testView.onPause();
+		TestJni.pause();
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		testView.onResume();
+		TestJni.resume();
+	}
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
