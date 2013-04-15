@@ -2,7 +2,7 @@
 #include <memory>
 #include <stdexcept>
 
-// hack:
+// FIXME hack:
 // todo: figure out a better solution, boost can't figure out endianness on Android
 #if __ANDROID__
 #define _LITTLE_ENDIAN
@@ -12,11 +12,7 @@
 
 #include <pugixml.hpp>
 #include <zip.h>
-
-extern "C"
-{
-	#include <zipint.h>
-}
+#include <zipint.h>
 
 #include <spine/Animation.h>
 #include <spine/SkeletonData.h>
@@ -102,7 +98,7 @@ namespace NinjaParty
 		if(scratchMemorySize < st.size)
 		{
 			scratchMemory.reset(new unsigned char[st.size]);
-			scratchMemorySize = st.size;
+			scratchMemorySize = static_cast<int>(st.size);
 		}
 
 		zip_file *zipFile = zip_fopen(assetArchive, fileName.c_str(), 0);
@@ -112,17 +108,17 @@ namespace NinjaParty
 		zip_fread(zipFile, scratchMemory.get(), st.size);
 		zip_fclose(zipFile);
 
-		return st.size;
+		return static_cast<int>(st.size);
 	}
 
-	int AssetManager::GetArchiveInfo(const std::string &fileName, int &offset, int &length)
+	void AssetManager::GetArchiveInfo(const std::string &fileName, int &offset, int &length)
 	{
 		struct zip_stat st;
 		zip_stat_init(&st);
 		if(zip_stat(assetArchive, fileName.c_str(), 0, &st) == -1)
 			throw std::runtime_error(std::string("Failed to get archive stats for file: ") + fileName);
 
-		length = st.size;
+		length = static_cast<int>(st.size);
 		offset = _zip_file_get_offset(assetArchive, zip_name_locate(assetArchive, fileName.c_str(), 0));
 	}
 

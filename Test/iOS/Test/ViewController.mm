@@ -17,6 +17,8 @@
 #include "../../Tests/RenderTexture.hpp"
 #elif defined(TEST_AUDIO)
 #include "../../Tests/Audio.hpp"
+#elif defined(TEST_TOUCH)
+#include "../../Tests/Touch.hpp"
 #endif
 
 @interface ViewController ()
@@ -80,7 +82,7 @@
     [view addGestureRecognizer:tapRecognizer];
 	
 	game = new Tests::TestGame(screenWidth, screenHeight);
-	game->LoadContent();
+	game->LoadContent("Assets/", "");
 }
 
 // This function was deprecated in iOS 6.0, but we need it for versions < 6.0

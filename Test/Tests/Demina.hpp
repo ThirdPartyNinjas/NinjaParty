@@ -35,6 +35,17 @@ namespace Tests
         void UnloadContent()
         {
         }
+
+        void HandleLostGraphicsContext()
+        {
+            spriteBatch.reset(new NinjaParty::SpriteBatch(GetScreenWidth(), GetScreenHeight()));
+            
+            NinjaParty::TextureDictionary *textureDictionary = assetManager->LoadTextureDictionary("demina_guy.json");
+            texture = assetManager->LoadTexture("demina_guy.png", true);
+            
+            deminaPlayer.AddAnimation("Walk", assetManager->LoadDeminaAnimation("guy_walk.anim", texture, textureDictionary));
+        }
+
         
         void Update(float deltaSeconds)
         {

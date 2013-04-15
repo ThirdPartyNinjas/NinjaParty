@@ -42,6 +42,13 @@ namespace Tests
         {
         }
         
+        void HandleLostGraphicsContext()
+        {
+            spriteBatch.reset(new NinjaParty::SpriteBatch(GetScreenWidth(), GetScreenHeight()));
+            texture = assetManager->LoadTexture("Graphics.png", true);
+            spineAnimationPlayer.SetTexture(texture);
+        }
+
         void Update(float deltaSeconds)
         {
             NinjaParty::AnimationEvent animationEvent = spineAnimationPlayer.Update(deltaSeconds);

@@ -313,7 +313,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"../../Dependencies/SDL/lib/Mac OS X\"",
 				);
-				OTHER_LDFLAGS = "-lSDL2";
+				OTHER_LDFLAGS = (
+					"-lSDL2",
+					"-lz",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -335,7 +338,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"../../Dependencies/SDL/lib/Mac OS X\"",
 				);
-				OTHER_LDFLAGS = "-lSDL2";
+				OTHER_LDFLAGS = (
+					"-lSDL2",
+					"-lz",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

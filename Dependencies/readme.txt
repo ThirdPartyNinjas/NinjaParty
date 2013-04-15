@@ -12,6 +12,10 @@ Libraries:
 		- Modified version for android
 		- https://github.com/julienr/libzip-android
 		- BSD License
+	OpenALSoft
+		- Modified version for android (build on OpenSL)
+		- https://github.com/AerialX/openal-soft-android
+		- LGPL
 	pugixml
 		- http://pugixml.org/
 		- Version 1.2
@@ -35,3 +39,7 @@ Libraries:
 		- http://www.geometrictools.com
 		- Subset of WildMagic 5.7
 		- Boost Software License
+    zlib
+    	- http://www.zlib.net
+    	- version 1.2.7
+    	- zlib license

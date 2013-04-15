@@ -34,6 +34,15 @@ namespace Tests
         {
         }
         
+        void HandleLostGraphicsContext()
+        {
+            spriteBatch.reset(new NinjaParty::SpriteBatch(GetScreenWidth(), GetScreenHeight()));
+            
+            texture = assetManager->LoadTexture("Star.png", true);
+            
+            renderTexture.reset(new NinjaParty::RenderTexture(GetScreenWidth() / 2, GetScreenHeight()));
+        }        
+        
         void Update(float deltaSeconds)
         {
             rotation += deltaSeconds * NinjaParty::PI;

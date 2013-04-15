@@ -40,6 +40,10 @@
 #define ZIP_EXTERN __declspec(dllimport)
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "zip.h"
 #include "config.h"
 
@@ -260,5 +264,9 @@ int _zip_replace(struct zip *, int, const char *, struct zip_source *);
 int _zip_set_name(struct zip *, int, const char *);
 int _zip_unchange(struct zip *, int, int);
 void _zip_unchange_data(struct zip_entry *);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* zipint.h */

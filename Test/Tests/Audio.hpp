@@ -35,14 +35,24 @@ namespace Tests
 
         void Pause()
         {
+            BeginAudioInterruption();
+        }
+        
+        void Resume()
+        {
+            EndAudioInterruption();
+        }
+
+        void BeginAudioInterruption()
+        {
             audioRenderer->BeginAudioInterruption();
         }
 
-        void Resume()
+        void EndAudioInterruption()
         {
             audioRenderer->EndAudioInterruption();
         }
-
+        
         void Update(float deltaSeconds)
         {
             timer += deltaSeconds;

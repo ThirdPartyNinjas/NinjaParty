@@ -60,7 +60,7 @@ namespace NinjaParty
 	private:
 		std::string GetRootPath() const; // get the platform specific path
 		int DecompressArchiveFile(const std::string &fileName);
-		int GetArchiveInfo(const std::string &fileName, int &offset, int &length);
+		void GetArchiveInfo(const std::string &fileName, int &offset, int &length);
 		
 		std::string assetPath;
 		std::string assetZipPath;

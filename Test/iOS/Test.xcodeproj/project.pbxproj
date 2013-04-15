@@ -53,6 +53,7 @@
 		3053A9111709E36200D58709 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		3053A9151709E3A200D58709 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		3053A9181709E3C100D58709 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		30F9BAF4171CA3F20053126D /* Touch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Touch.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +144,7 @@
 				3053A9081709DEA000D58709 /* RenderTexture.hpp */,
 				3053A9091709DEA000D58709 /* Spine.hpp */,
 				3053A90A1709DEA000D58709 /* SpriteBatch.hpp */,
+				30F9BAF4171CA3F20053126D /* Touch.hpp */,
 			);
 			name = Tests;
 			path = ../Tests;
@@ -306,6 +308,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/NinjaParty-fxwksivymfvbkbckihgyismkqhea/Build/Products/Debug-iphoneos\"",
 				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -327,6 +330,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/NinjaParty-fxwksivymfvbkbckihgyismkqhea/Build/Products/Debug-iphoneos\"",
 				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
