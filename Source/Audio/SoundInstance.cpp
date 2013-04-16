@@ -11,6 +11,14 @@ namespace NinjaParty
     {
     }
     
+    void SoundInstance::SetSound(NinjaParty::Sound *sound)
+    {
+        if(state != State::Stopped)
+            throw std::runtime_error("SoundInstance::SetSound cannot set sound when not stopped");
+        
+        this->sound = sound;
+    }
+    
     void SoundInstance::Play(int loopCount, float volume, float fadeInTime)
     {
         using namespace std::placeholders;

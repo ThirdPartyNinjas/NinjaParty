@@ -93,6 +93,7 @@ namespace NinjaParty
 						  bool flipVertical = false);
 		
 		void AddAnimation(const std::string &name, DeminaAnimation *deminaAnimation);
+		DeminaAnimation* GetAnimation(const std::string &name);
 		
 	protected:
 		void InsertUpdateOrderIndex(int boneIndex);

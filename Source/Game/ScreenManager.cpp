@@ -14,6 +14,14 @@ namespace NinjaParty
 	{
 	}
 	
+	void ScreenManager::ReloadGraphics()
+	{
+		for(auto &iterator : screens)
+		{
+			iterator->ReloadGraphics();
+		}
+	}
+
 	void ScreenManager::Update(float deltaSeconds)
 	{
 		screens.insert(screens.end(), screensToAdd.begin(), screensToAdd.end());

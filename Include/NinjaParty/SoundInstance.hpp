@@ -16,8 +16,10 @@ namespace NinjaParty
             Paused,
         };
         
-        SoundInstance(AudioRenderer *audioRenderer, Sound *sound);
+        SoundInstance(AudioRenderer *audioRenderer, Sound *sound = nullptr);
         ~SoundInstance();
+        
+        void SetSound(Sound *sound);
         
         void Play(int loopCount, float volume, float fadeInTime = 0);
         void Pause();

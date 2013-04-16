@@ -120,6 +120,14 @@ namespace NinjaParty
 		}
 	}
 
+	DeminaAnimation* DeminaAnimationPlayer::GetAnimation(const std::string &name)
+	{
+		if(animations.count(name) == 0)
+			return nullptr;
+
+		return animations[name];
+	}
+
 	AnimationEvent DeminaAnimationPlayer::Update(float deltaSeconds)
 	{
 		deltaSeconds *= timeScale;
