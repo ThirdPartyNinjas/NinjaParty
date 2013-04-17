@@ -146,7 +146,7 @@ namespace NinjaParty
 
         if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
         {
-            texture = Texture::FromFile(assetPath + fileName);
+            texture = Texture::FromFile(assetRootPath + fileName);
         }
         else
         {
@@ -172,7 +172,7 @@ namespace NinjaParty
         
         if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
         {
-            textureDictionary = TextureDictionary::FromFile(assetPath + fileName);
+            textureDictionary = TextureDictionary::FromFile(assetRootPath + fileName);
         }
         else
         {
@@ -198,7 +198,7 @@ namespace NinjaParty
 
         if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
         {
-			song = Song::FromFile(assetPath + fileName);
+			song = Song::FromFile(assetRootPath + fileName);
 		}
         else
         {
@@ -225,7 +225,7 @@ namespace NinjaParty
         
         if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
         {
-			soundEffect = SoundEffect::FromFile(assetPath + fileName);
+			soundEffect = SoundEffect::FromFile(assetRootPath + fileName);
 		}
         else
         {
@@ -251,7 +251,7 @@ namespace NinjaParty
 
         if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
         {
-			result = document.load_file((assetPath + fileName).c_str());
+			result = document.load_file((assetRootPath + fileName).c_str());
         }
 		else
 		{
@@ -304,7 +304,7 @@ namespace NinjaParty
         
         if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
         {
-			result = document.load_file((assetPath + fileName).c_str());
+			result = document.load_file((assetRootPath + fileName).c_str());
         }
 		else
 		{
@@ -387,7 +387,7 @@ namespace NinjaParty
         
         if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
         {
-			result = document.load_file((assetPath + fileName).c_str());
+			result = document.load_file((assetRootPath + fileName).c_str());
         }
 		else
 		{
@@ -430,7 +430,7 @@ namespace NinjaParty
         
         if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
         {
-			result = document.load_file((assetPath + fileName).c_str());
+			result = document.load_file((assetRootPath + fileName).c_str());
         }
 		else
 		{
@@ -607,7 +607,7 @@ namespace NinjaParty
 
         if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
         {
-			spineSkeletonData = spine::SkeletonData_loadFile((assetPath + fileName).c_str(), textureDictionary);
+			spineSkeletonData = spine::SkeletonData_loadFile((assetRootPath + fileName).c_str(), textureDictionary);
         }
 		else
 		{

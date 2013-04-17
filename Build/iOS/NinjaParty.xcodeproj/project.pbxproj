@@ -11,7 +11,6 @@
 		3053A8451709D5CD00D58709 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3053A7BA1709D5CC00D58709 /* pugixml.cpp */; };
 		3053A8561709D5CD00D58709 /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 3053A8271709D5CD00D58709 /* stb_image.c */; };
 		3053A8571709D5CD00D58709 /* stb_vorbis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3053A82B1709D5CD00D58709 /* stb_vorbis.c */; settings = {COMPILER_FLAGS = "-w"; }; };
-		3053A8581709D5CD00D58709 /* wav_reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 3053A82E1709D5CD00D58709 /* wav_reader.c */; };
 		3053A8591709D5CD00D58709 /* Wm5Assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3053A8321709D5CD00D58709 /* Wm5Assert.cpp */; };
 		3053A85A1709D5CD00D58709 /* Wm5Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3053A8341709D5CD00D58709 /* Wm5Math.cpp */; };
 		3053A85B1709D5CD00D58709 /* Wm5Matrix3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3053A8371709D5CD00D58709 /* Wm5Matrix3.cpp */; };
@@ -1418,8 +1417,6 @@
 		3053A82A1709D5CD00D58709 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		3053A82B1709D5CD00D58709 /* stb_vorbis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_vorbis.c; sourceTree = "<group>"; };
 		3053A82C1709D5CD00D58709 /* stb_vorbis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_vorbis.h; sourceTree = "<group>"; };
-		3053A82E1709D5CD00D58709 /* wav_reader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wav_reader.c; sourceTree = "<group>"; };
-		3053A82F1709D5CD00D58709 /* wav_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_reader.h; sourceTree = "<group>"; };
 		3053A8311709D5CD00D58709 /* LICENSE_1_0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_1_0.txt; sourceTree = "<group>"; };
 		3053A8321709D5CD00D58709 /* Wm5Assert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wm5Assert.cpp; sourceTree = "<group>"; };
 		3053A8331709D5CD00D58709 /* Wm5Assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wm5Assert.h; sourceTree = "<group>"; };
@@ -1649,7 +1646,6 @@
 				30AA25A917145C5000783D0B /* spine-c */,
 				3053A8261709D5CD00D58709 /* stb_image */,
 				3053A8291709D5CD00D58709 /* stb_vorbis */,
-				3053A82D1709D5CD00D58709 /* wav_reader */,
 				3053A8301709D5CD00D58709 /* Wm5 */,
 			);
 			name = Dependencies;
@@ -3754,15 +3750,6 @@
 			path = stb_vorbis;
 			sourceTree = "<group>";
 		};
-		3053A82D1709D5CD00D58709 /* wav_reader */ = {
-			isa = PBXGroup;
-			children = (
-				3053A82E1709D5CD00D58709 /* wav_reader.c */,
-				3053A82F1709D5CD00D58709 /* wav_reader.h */,
-			);
-			path = wav_reader;
-			sourceTree = "<group>";
-		};
 		3053A8301709D5CD00D58709 /* Wm5 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4149,7 +4136,6 @@
 				3053A8451709D5CD00D58709 /* pugixml.cpp in Sources */,
 				3053A8561709D5CD00D58709 /* stb_image.c in Sources */,
 				3053A8571709D5CD00D58709 /* stb_vorbis.c in Sources */,
-				3053A8581709D5CD00D58709 /* wav_reader.c in Sources */,
 				3053A8591709D5CD00D58709 /* Wm5Assert.cpp in Sources */,
 				3053A85A1709D5CD00D58709 /* Wm5Math.cpp in Sources */,
 				3053A85B1709D5CD00D58709 /* Wm5Matrix3.cpp in Sources */,
@@ -4328,7 +4314,6 @@
 					"../../Dependencies/spine-c/include",
 					../../Dependencies/stb_image,
 					../../Dependencies/stb_vorbis,
-					../../Dependencies/wav_reader,
 					../../Dependencies/Wm5,
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -4356,7 +4341,6 @@
 					"../../Dependencies/spine-c/include",
 					../../Dependencies/stb_image,
 					../../Dependencies/stb_vorbis,
-					../../Dependencies/wav_reader,
 					../../Dependencies/Wm5,
 				);
 				LIBRARY_SEARCH_PATHS = (

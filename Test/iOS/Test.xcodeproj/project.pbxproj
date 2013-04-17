@@ -26,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3050268D171F0A2800849BA3 /* Assets.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Assets.hpp; sourceTree = "<group>"; };
 		3053A8DA1709DCF100D58709 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3053A8DD1709DCF100D58709 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3053A8DF1709DCF100D58709 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -139,6 +140,7 @@
 		3053A9051709DEA000D58709 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3050268D171F0A2800849BA3 /* Assets.hpp */,
 				3053A9061709DEA000D58709 /* Audio.hpp */,
 				3053A9071709DEA000D58709 /* Demina.hpp */,
 				3053A9081709DEA000D58709 /* RenderTexture.hpp */,
