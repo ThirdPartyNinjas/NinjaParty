@@ -5,19 +5,21 @@
 
 #include "Vorbis.hpp"
 
+#define BUFFER_COUNT 3
+#define BUFFER_DIVISOR 10 // tenth of a second per buffer
+
 namespace NinjaParty
 {
-	Song::Song(const std::string &fileName, int offset, int length)
+	Song::Song(Vorbis *vorbis)
+        : vorbis(vorbis)
 	{
 		isStreaming = true;
-		
-		vorbis.reset(new Vorbis(fileName, offset, length));
 		
 		channels = vorbis->GetChannels();
 		sampleRate = vorbis->GetSampleRate();
 		
-		this->bufferCount = 3;
-		this->bufferSize = sampleRate * channels / 10;
+		this->bufferCount = BUFFER_COUNT;
+		this->bufferSize = sampleRate * channels / BUFFER_DIVISOR;
 
 		sections.reset(new SongSection[bufferCount]);		
 		for(int i=0; i<bufferCount; i++)
@@ -30,7 +32,7 @@ namespace NinjaParty
         scratchBuffer.reset(new int16_t[bufferSize]);
         duration = vorbis->GetDuration();
 	}
-	
+
 	Song::~Song()
 	{
 		for(int i=0; i<bufferCount; i++)
@@ -38,6 +40,16 @@ namespace NinjaParty
 			alDeleteBuffers(1, &sections[i].bufferId);
 		}
 	}
+    
+    Song* Song::FromFile(const std::string &fileName)
+    {
+        return new Song(Vorbis::FromFile(fileName));
+    }
+    
+    Song* Song::FromBuffer(unsigned char *buffer, int length)
+    {
+        return new Song(Vorbis::FromBuffer(buffer, length));
+    }
 	
 	bool Song::GetAudioBuffer(ALuint &audioBuffer)
 	{

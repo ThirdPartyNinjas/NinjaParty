@@ -11,7 +11,7 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 
-#define TEST_SPINE
+#define TEST_ASSETS
 
 #ifdef TEST_SPRITEBATCH
 #include "../../Tests/SpriteBatch.hpp"
@@ -25,6 +25,8 @@
 #include "../../Tests/Audio.hpp"
 #elif defined(TEST_GLEED)
 #include "../../Tests/Gleed.hpp"
+#elif defined(TEST_ASSETS)
+#include "../../Tests/Assets.hpp"
 #endif
 
 int main(int argc, char *argv[])
@@ -59,7 +61,7 @@ int main(int argc, char *argv[])
     bool run = true;
     
     Tests::TestGame game(1280, 720);
-    game.LoadContent("Assets/", "");
+    game.LoadContent("Assets/", "Assets.zip");
 
     float frequency = SDL_GetPerformanceFrequency();
     uint64_t previousTime = SDL_GetPerformanceCounter();

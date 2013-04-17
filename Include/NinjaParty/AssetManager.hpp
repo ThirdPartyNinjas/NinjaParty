@@ -8,8 +8,6 @@
 
 #include <spine/spine.h>
 
-struct zip;
-
 namespace NinjaParty
 {
 	class Song;
@@ -41,7 +39,7 @@ namespace NinjaParty
 		
 		std::string GetAssetPath() const { return assetPath; }
 		
-		Texture* LoadTexture(const std::string &fileName, bool allowReload = false);
+		Texture* LoadTexture(const std::string &fileName, bool forceReload = false);
 		TextureDictionary* LoadTextureDictionary(const std::string &fileName);
 		
 		Song* LoadSong(const std::string &fileName);
@@ -59,15 +57,16 @@ namespace NinjaParty
 
 	private:
 		std::string GetRootPath() const; // get the platform specific path
-		int DecompressArchiveFile(const std::string &fileName);
-		void GetArchiveInfo(const std::string &fileName, int &offset, int &length);
+        void CreateArchiveMap();
+        void DestroyArchiveMap();
 		
 		std::string assetPath;
+        std::string assetRootPath;
 		std::string assetZipPath;
-
-		zip *assetArchive;
-		std::unique_ptr<unsigned char[]> scratchMemory;
-		int scratchMemorySize;
+        
+        unsigned char *mappedAssetArchive;
+        int mappedMemoryLength;
+        std::map<std::string, std::pair<int, int>> archiveInfo;
 
 		std::map<std::string, Song*> songs;
 		std::map<std::string, SoundEffect*> soundEffects;

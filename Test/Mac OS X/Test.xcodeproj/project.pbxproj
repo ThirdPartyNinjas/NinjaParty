@@ -51,6 +51,7 @@
 		309537631708C61000FB72ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3095377C1708CD0500FB72ED /* SpriteBatch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SpriteBatch.hpp; sourceTree = "<group>"; };
 		3095377F1708D2FE00FB72ED /* Spine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Spine.hpp; sourceTree = "<group>"; };
+		30A10772171E72B400263A70 /* Assets.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Assets.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +147,7 @@
 		3095377B1708CC8900FB72ED /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				30A10772171E72B400263A70 /* Assets.hpp */,
 				300560061708EA6700A74272 /* Audio.hpp */,
 				300560071708ED6E00A74272 /* Demina.hpp */,
 				304A0AF5170B42FF006F5F8F /* Gleed.hpp */,

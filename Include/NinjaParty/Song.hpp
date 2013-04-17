@@ -15,7 +15,6 @@ namespace NinjaParty
 	class Song : public Sound
 	{
 	public:
-		Song(const std::string &fileName, int offset = 0, int length = 0);
 		~Song();
 
 		bool GetAudioBuffer(ALuint &audioBuffer);
@@ -25,8 +24,13 @@ namespace NinjaParty
 		
 		void Stop();
 		void Reset();
+        
+        static Song* FromFile(const std::string &fileName);
+        static Song* FromBuffer(unsigned char *buffer, int length);
 
 	private:
+        Song(Vorbis *vorbis);
+        
 		int bufferSize;
 		int bufferCount;
 		

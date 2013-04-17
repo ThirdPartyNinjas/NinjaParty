@@ -11,7 +11,6 @@ namespace NinjaParty
 	class Vorbis
 	{
 	public:
-		Vorbis(const std::string &fileName, int offset = 0, int length = 0);
 		~Vorbis();
 		
 		int ReadSamples(int16_t *samples, int count);
@@ -22,7 +21,12 @@ namespace NinjaParty
 		int GetSampleRate() const { return sampleRate; }
         float GetDuration() const { return duration; }
 		
+        static Vorbis* FromFile(const std::string &fileName);
+        static Vorbis* FromBuffer(unsigned char *buffer, int length);
+        
 	private:
+        Vorbis();
+        
 		stb_vorbis *stbVorbisData;
 		
 		int channels;
