@@ -11,7 +11,7 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 
-#define TEST_ASSETS
+#define TEST_SPINE
 
 #ifdef TEST_SPRITEBATCH
 #include "../../Tests/SpriteBatch.hpp"

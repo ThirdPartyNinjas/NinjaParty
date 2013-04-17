@@ -13,13 +13,19 @@ namespace NinjaParty
 	class SoundEffect : public Sound
 	{
 	public:
-		SoundEffect(const std::string &fileName, int offset = 0, int length = 0);
-		SoundEffect(int channels, int sampleRate, int16_t *samples, int sampleCount);
+//		SoundEffect(const std::string &fileName, int offset = 0, int length = 0);
+//		SoundEffect(int channels, int sampleRate, int16_t *samples, int sampleCount);
 		~SoundEffect();
 		
 		bool GetAudioBuffer(ALuint &audioBuffer);
 		
-	private:
+        static SoundEffect* FromFile(const std::string &fileName);
+        static SoundEffect* FromBuffer(unsigned char *buffer, int length);
+        static SoundEffect* FromSamples(int16_t *samples, int sampleCount, int channels, int sampleRate);
+
+private:
+        SoundEffect();
+        
 		ALuint audioBuffer;
 	};
 }

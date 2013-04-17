@@ -1,25 +1,32 @@
 #ifndef NINJAPARTY_WAVE_HPP
 #define NINJAPARTY_WAVE_HPP
 
+#include <memory>
 #include <string>
 #include <stdint.h>
-#include <boost/scoped_array.hpp>
 
 namespace NinjaParty
 {
 	class Wav
 	{
 	public:
-		Wav(const std::string &fileName, int offset = 0, int length = 0);
 		~Wav();
 		
-		int16_t* GetSamples() const { return &samples[0]; }
+        // interleaved channels
+		int16_t* GetSamples() const { return samples.get(); }
+
+        // sample count (per channel)
 		int GetSampleCount() const { return sampleCount; }
 		int GetSampleRate() const { return sampleRate; }
 		int GetChannels() const { return channels; }
 		
+        static Wav* FromFile(const std::string &fileName);
+        static Wav* FromBuffer(unsigned char *buffer, int length);
+        
 	private:
-		boost::scoped_array<int16_t> samples;
+        Wav();
+        
+		std::unique_ptr<int16_t[]> samples;
 		int sampleCount;
 		int channels;
 		int sampleRate;

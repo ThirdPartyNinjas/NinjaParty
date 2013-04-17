@@ -1286,8 +1286,6 @@
 		309536CE17080C0100FB72ED /* stb_image.h in Headers */ = {isa = PBXBuildFile; fileRef = 3095316817080BFD00FB72ED /* stb_image.h */; };
 		309536CF17080C0100FB72ED /* stb_vorbis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3095316B17080BFD00FB72ED /* stb_vorbis.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		309536D017080C0100FB72ED /* stb_vorbis.h in Headers */ = {isa = PBXBuildFile; fileRef = 3095316C17080BFD00FB72ED /* stb_vorbis.h */; };
-		309536D117080C0100FB72ED /* wav_reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 3095316E17080BFD00FB72ED /* wav_reader.c */; };
-		309536D217080C0100FB72ED /* wav_reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3095316F17080BFD00FB72ED /* wav_reader.h */; };
 		309536D317080C0100FB72ED /* Wm5Assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3095317217080BFD00FB72ED /* Wm5Assert.cpp */; };
 		309536D417080C0100FB72ED /* Wm5Assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 3095317317080BFD00FB72ED /* Wm5Assert.h */; };
 		309536D517080C0100FB72ED /* Wm5Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3095317417080BFD00FB72ED /* Wm5Math.cpp */; };
@@ -2749,8 +2747,6 @@
 		3095316A17080BFD00FB72ED /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		3095316B17080BFD00FB72ED /* stb_vorbis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_vorbis.c; sourceTree = "<group>"; };
 		3095316C17080BFD00FB72ED /* stb_vorbis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_vorbis.h; sourceTree = "<group>"; };
-		3095316E17080BFD00FB72ED /* wav_reader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wav_reader.c; sourceTree = "<group>"; };
-		3095316F17080BFD00FB72ED /* wav_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_reader.h; sourceTree = "<group>"; };
 		3095317117080BFD00FB72ED /* LICENSE_1_0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_1_0.txt; sourceTree = "<group>"; };
 		3095317217080BFD00FB72ED /* Wm5Assert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wm5Assert.cpp; sourceTree = "<group>"; };
 		3095317317080BFD00FB72ED /* Wm5Assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wm5Assert.h; sourceTree = "<group>"; };
@@ -2815,7 +2811,7 @@
 		309537311708C13000FB72ED /* Vorbis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Vorbis.hpp; sourceTree = "<group>"; };
 		309537321708C13000FB72ED /* Wav.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wav.cpp; sourceTree = "<group>"; };
 		309537331708C13000FB72ED /* Wav.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Wav.hpp; sourceTree = "<group>"; };
-		309537431708C36000FB72ED /* AssetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
+		309537431708C36000FB72ED /* AssetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		309537451708C36000FB72ED /* Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Path.cpp; sourceTree = "<group>"; };
 		309537501708C3AE00FB72ED /* Game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		309537511708C3AE00FB72ED /* GameScreen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameScreen.cpp; sourceTree = "<group>"; };
@@ -3064,7 +3060,6 @@
 				30D0AFFC1713B8B100BE5B0B /* spine-c */,
 				3095316617080BFD00FB72ED /* stb_image */,
 				3095316917080BFD00FB72ED /* stb_vorbis */,
-				3095316D17080BFD00FB72ED /* wav_reader */,
 				3095317017080BFD00FB72ED /* Wm5 */,
 			);
 			name = Dependencies;
@@ -5169,15 +5164,6 @@
 			path = stb_vorbis;
 			sourceTree = "<group>";
 		};
-		3095316D17080BFD00FB72ED /* wav_reader */ = {
-			isa = PBXGroup;
-			children = (
-				3095316E17080BFD00FB72ED /* wav_reader.c */,
-				3095316F17080BFD00FB72ED /* wav_reader.h */,
-			);
-			path = wav_reader;
-			sourceTree = "<group>";
-		};
 		3095317017080BFD00FB72ED /* Wm5 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6659,7 +6645,6 @@
 				3095367217080C0000FB72ED /* pugixml.hpp in Headers */,
 				309536CE17080C0100FB72ED /* stb_image.h in Headers */,
 				309536D017080C0100FB72ED /* stb_vorbis.h in Headers */,
-				309536D217080C0100FB72ED /* wav_reader.h in Headers */,
 				309536D417080C0100FB72ED /* Wm5Assert.h in Headers */,
 				309536D617080C0100FB72ED /* Wm5Math.h in Headers */,
 				309536D817080C0100FB72ED /* Wm5Matrix3.h in Headers */,
@@ -6800,7 +6785,6 @@
 				3095367117080C0000FB72ED /* pugixml.cpp in Sources */,
 				309536CD17080C0100FB72ED /* stb_image.c in Sources */,
 				309536CF17080C0100FB72ED /* stb_vorbis.c in Sources */,
-				309536D117080C0100FB72ED /* wav_reader.c in Sources */,
 				309536D317080C0100FB72ED /* Wm5Assert.cpp in Sources */,
 				309536D517080C0100FB72ED /* Wm5Math.cpp in Sources */,
 				309536D717080C0100FB72ED /* Wm5Matrix3.cpp in Sources */,
@@ -6976,7 +6960,6 @@
 					"../../Dependencies/spine-c/include",
 					../../Dependencies/stb_image,
 					../../Dependencies/stb_vorbis,
-					../../Dependencies/wav_reader,
 					../../Dependencies/Wm5,
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -7004,7 +6987,6 @@
 					"../../Dependencies/spine-c/include",
 					../../Dependencies/stb_image,
 					../../Dependencies/stb_vorbis,
-					../../Dependencies/wav_reader,
 					../../Dependencies/Wm5,
 				);
 				LIBRARY_SEARCH_PATHS = (
