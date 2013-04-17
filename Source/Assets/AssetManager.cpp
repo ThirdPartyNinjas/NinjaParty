@@ -56,7 +56,7 @@ namespace NinjaParty
 	{
 		this->assetPath = assetPath;
         this->assetRootPath = GetRootPath() + assetPath;
-        this->assetZipPath = assetRootPath + assetZipPath;
+        this->assetZipPath = assetZipPath;
 
         mappedAssetArchive = nullptr;
         mappedMemoryLength = 0;

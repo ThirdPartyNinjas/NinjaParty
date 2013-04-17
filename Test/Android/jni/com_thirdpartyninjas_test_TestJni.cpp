@@ -29,6 +29,8 @@
 #include "../../Tests/Gleed.hpp"
 #elif defined(TEST_TOUCH)
 #include "../../Tests/Touch.hpp"
+#elif defined(TEST_ASSETS)
+#include "../../Tests/Assets.hpp"
 #endif
 
 std::string g_apkPath = "";

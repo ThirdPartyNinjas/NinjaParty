@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     bool run = true;
     
     Tests::TestGame game(1280, 720);
-    game.LoadContent("Assets/", "Assets.zip");
+    game.LoadContent("Assets/", "Assets/Assets.zip");
 
     float frequency = SDL_GetPerformanceFrequency();
     uint64_t previousTime = SDL_GetPerformanceCounter();

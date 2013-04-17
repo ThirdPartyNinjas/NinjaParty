@@ -8,6 +8,13 @@
 #include <NinjaParty/Texture.hpp>
 #include <NinjaParty/Vector2.hpp>
 
+#if defined(__ANDROID__)
+#include <android/log.h>
+#define  LOG_TAG "NinjaPartyTest"
+#define  LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+#define  LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#endif
+
 namespace Tests
 {
     class TestGame : public NinjaParty::Game
@@ -50,6 +57,9 @@ namespace Tests
             catch(std::exception &exception)
             {
                 printf("Caught exception: %s\n", exception.what());
+#if defined(__ANDROID__)     
+                LOGE("Caught exception: %s", exception.what());
+#endif
             }
         }
         

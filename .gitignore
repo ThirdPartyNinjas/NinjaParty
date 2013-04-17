@@ -14,9 +14,12 @@ local.properties
 .classpath
 .project
 bin/
+obj/
 gen/
 *.o
 *.o.d
 *.a
 *.so
 *.prefs
+gdb.setup
+gdbserver

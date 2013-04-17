@@ -84,7 +84,7 @@
     [view addGestureRecognizer:tapRecognizer];
 	
 	game = new Tests::TestGame(screenWidth, screenHeight);
-	game->LoadContent("Assets/", "Assets.zip");
+	game->LoadContent("Assets/", "Assets/Assets.zip");
 }
 
 // This function was deprecated in iOS 6.0, but we need it for versions < 6.0

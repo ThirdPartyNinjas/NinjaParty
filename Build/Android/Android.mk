@@ -109,10 +109,6 @@ LOCAL_SRC_FILES += $(D_PATH)/stb_image/stb_image.c
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/stb_vorbis
 LOCAL_SRC_FILES += $(D_PATH)/stb_vorbis/stb_vorbis.c
 
-# wav_reader
-LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/wav_reader
-LOCAL_SRC_FILES += $(D_PATH)/wav_reader/wav_reader.c
-
 # Wm5
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/Wm5
 LOCAL_SRC_FILES +=\
