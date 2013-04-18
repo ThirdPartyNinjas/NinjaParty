@@ -249,6 +249,8 @@ namespace NinjaParty
 
 	void AudioRenderer::BeginAudioInterruption()
 	{
+		updateMutex.lock();
+
 		interrupted = true;
 		
 		for(int i=0; i<maxAudioSources; i++)
@@ -264,11 +266,17 @@ namespace NinjaParty
 		
 		alcMakeContextCurrent(nullptr);
 		alcSuspendContext(audioContext);
+
+		updateMutex.unlock();
 	}
 	
 	void AudioRenderer::EndAudioInterruption()
 	{
+		updateMutex.lock();
+
 		interrupted = false;
+		alcMakeContextCurrent(audioContext);
+		alcProcessContext(audioContext);
 		
 		for(int i=0; i<maxAudioSources; i++)
 		{
@@ -280,9 +288,8 @@ namespace NinjaParty
 				audioNode.state = AudioNodeState::Playing;
 			}
 		}
-		
-		alcMakeContextCurrent(audioContext);
-		alcProcessContext(audioContext);
+
+		updateMutex.unlock();
 	}
 	
 	void AudioRenderer::UpdateThreadFunction()
