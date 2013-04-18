@@ -15,6 +15,12 @@ namespace NinjaParty
 		
 		Game& operator=(const Game&) = delete;
 
+		virtual void SetResolution(int screenWidth, int screenHeight)
+		{
+			this->screenWidth = screenWidth;
+			this->screenHeight = screenHeight;
+		}
+
 		virtual void LoadContent(const std::string &assetPath = "Assets/", const std::string &assetArchivePath = "");
 		virtual void UnloadContent();
 

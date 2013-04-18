@@ -137,7 +137,10 @@ namespace NinjaParty
 		if(iterator != textures.end())
         {
             if(forceReload)
+            {
+            	iterator->second->Invalidate();
                 delete iterator->second;
+            }
             else
                 return iterator->second;
         }

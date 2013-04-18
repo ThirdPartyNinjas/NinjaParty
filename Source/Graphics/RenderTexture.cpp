@@ -13,7 +13,6 @@ namespace NinjaParty
 		this->height = height;
 		
 		glGenTextures(1, &textureId);
-		
 		glBindTexture(GL_TEXTURE_2D, textureId);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -36,7 +35,8 @@ namespace NinjaParty
 	
 	RenderTexture::~RenderTexture()
 	{
-		glDeleteFramebuffers(1, &frameBufferObject);
+		if(frameBufferObject != 0)
+			glDeleteFramebuffers(1, &frameBufferObject);
 	}
 	
 	void RenderTexture::Bind()

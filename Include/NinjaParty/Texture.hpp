@@ -25,6 +25,10 @@ namespace NinjaParty
 		
 		void SetFilter(TextureFilter filterType);
 		
+		// Called when OpenGL context is lost.
+		// The texture id is invalid, so we don't want glDeleteTextures called
+		virtual void Invalidate() { textureId = 0; }
+
 		static Texture* FromFile(const std::string &fileName, TextureRegion *textureRegion = nullptr);
 		static Texture* FromBuffer(const unsigned char *buffer, int length, TextureRegion *textureRegion = nullptr);
 		

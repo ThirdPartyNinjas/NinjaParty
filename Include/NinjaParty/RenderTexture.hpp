@@ -14,6 +14,7 @@ namespace NinjaParty
 		void Bind();
 		void Unbind();
 		
+		virtual void Invalidate() { Texture::Invalidate(); frameBufferObject = 0; }
 	private:
 		unsigned int frameBufferObject;
 		int fbo;
