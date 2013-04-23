@@ -10,15 +10,15 @@
 #include <NinjaParty/TextureRegion.hpp>
 
 namespace spine
-{
-    RegionAttachment *RegionAttachment_create(const char *name, AtlasRegion *region)
+{    
+    void _AtlasPage_createTexture(AtlasPage*, const char*)
     {
-        throw std::runtime_error("Exception caught:\n\tFunction not implemented: RegionAttachment_create.");
+        throw std::runtime_error("_AtlasPage_createTexture not supported");
     }
 
-    AtlasPage* AtlasPage_create(const char *name, const char *path)
+    void _AtlasPage_disposeTexture(AtlasPage*)
     {
-        throw std::runtime_error("Exception caught:\n\tFunction not implemented: AtlasPage_create.");
+        throw std::runtime_error("_AtlasPage_disposeTexture not supported");
     }
     
     char* _Util_readFile(const char *path, int *length)
@@ -26,33 +26,11 @@ namespace spine
         return _readFile(path, length);
     }
     
-    void _Skeleton_dispose(Skeleton *skeleton)
-    {
-        _Skeleton_deinit(skeleton);
-        FREE(skeleton);
-    }
-
-    Skeleton* Skeleton_create(SkeletonData *data)
-    {
-        Skeleton *skeleton = NEW(Skeleton);
-        _Skeleton_init(skeleton, data);
-        skeleton->flipY = 1;
-        VTABLE(Skeleton, skeleton)->dispose = _Skeleton_dispose;
-        return skeleton;
-    }
-
     struct TextureRegionAttachment
     {
         RegionAttachment super;
         NinjaParty::TextureRegion textureRegion;
     };
-    
-    void _TextureRegionAttachment_dispose(Attachment *attachment)
-    {
-        TextureRegionAttachment *self = SUB_CAST(TextureRegionAttachment, attachment);
-        _RegionAttachment_deinit(SUPER(self));
-        FREE(self);
-    }
     
     void TextureRegionAttachment_draw(Attachment *attachment, Slot *slot, NinjaParty::SpriteBatch *spriteBatch, const NinjaParty::Color &tintColor, NinjaParty::Texture *texture)
     {
@@ -77,14 +55,28 @@ namespace spine
                           -(slot->bone->worldRotation + regionAttachment->rotation) * 3.14159f / 180.0f,
                           NinjaParty::Color(slot->r * tintColor.R(), slot->g * tintColor.G(), slot->b * tintColor.B(), slot->a * tintColor.A()));
     }
-    
-    Attachment* Attachment_create(const char *name, NinjaParty::TextureRegion textureRegion)
+
+    void TextureRegionAttachment_dispose(Attachment *attachment)
     {
-        TextureRegionAttachment *self = NEW(TextureRegionAttachment);
-        self->textureRegion = textureRegion;
-        _RegionAttachment_init(SUPER(self), name);
-        VTABLE(Attachment, self)->dispose = _TextureRegionAttachment_dispose;
-        return (Attachment*)self;
+        TextureRegionAttachment *textureRegionAttachment = (TextureRegionAttachment*)attachment;
+        _Attachment_deinit(attachment);
+        FREE(textureRegionAttachment);
+    }
+    
+    TextureRegionAttachment* TextureRegionAttachment_create(const char *name, NinjaParty::TextureRegion textureRegion)
+    {
+        TextureRegionAttachment *textureRegionAttachment = NEW(TextureRegionAttachment);
+        RegionAttachment *regionAttachment = (RegionAttachment*)textureRegionAttachment;
+        Attachment *attachment = (Attachment*)textureRegionAttachment;
+        
+        textureRegionAttachment->textureRegion = textureRegion;
+        
+        regionAttachment->scaleX = 1.0f;
+        regionAttachment->scaleY = 1.0f;
+
+        _Attachment_init(attachment, name, ATTACHMENT_REGION, &TextureRegionAttachment_dispose);
+
+        return textureRegionAttachment;
     }
     
     struct TextureRegionAttachmentLoader
@@ -92,54 +84,51 @@ namespace spine
         AttachmentLoader super;
         NinjaParty::TextureDictionary *textureDictionary;
     };
-    
-    Attachment* _TextureRegionAttachmentLoader_newAttachment(AttachmentLoader *attachmentLoader, AttachmentType type, const char *name)
+
+    Attachment* TextureRegionAttachmentLoader_newAttachment(AttachmentLoader *attachmentLoader, Skin *skin, AttachmentType type, const char *name)
     {
-        TextureRegionAttachmentLoader *self = SUB_CAST(TextureRegionAttachmentLoader, attachmentLoader);
+        TextureRegionAttachmentLoader *textureRegionAttachmentLoader = (TextureRegionAttachmentLoader*)attachmentLoader;
+        
         switch(type)
         {
             case ATTACHMENT_REGION:
-            {
-                if(!self->textureDictionary->ContainsTexture(std::string(name) + ".png"))
+                if(!textureRegionAttachmentLoader->textureDictionary->ContainsTexture(std::string(name) + ".png"))
                 {
                     _AttachmentLoader_setError(attachmentLoader, "Region not found: ", name);
                     return nullptr;
                 }
 
-                return Attachment_create(name, self->textureDictionary->GetRegion(std::string(name) + ".png"));
-            }
+                return (Attachment*)TextureRegionAttachment_create(name, textureRegionAttachmentLoader->textureDictionary->GetRegion(std::string(name) + ".png"));
             default:
-            {
-                char buffer[16];
-                sprintf(buffer, "%d", type);
-                _AttachmentLoader_setError(attachmentLoader, "Unknown attachment type: ", buffer);
+                _AttachmentLoader_setUnknownTypeError(attachmentLoader, type);
                 return nullptr;
-            }
         }
     }
-    
-	void _TextureRegionAttachmentLoader_dispose(AttachmentLoader *attachmentLoader)
+
+	void TextureRegionAttachmentLoader_dispose(AttachmentLoader *attachmentLoader)
     {
-        TextureRegionAttachmentLoader* self = SUB_CAST(TextureRegionAttachmentLoader, attachmentLoader);
-        _AttachmentLoader_deinit(SUPER(self));
-        FREE(self);
+        TextureRegionAttachmentLoader *textureRegionAttachmentLoader = (TextureRegionAttachmentLoader*)attachmentLoader;
+        _AttachmentLoader_deinit(attachmentLoader);
+        FREE(textureRegionAttachmentLoader);
     }
     
-    AttachmentLoader* AttachmentLoader_create(NinjaParty::TextureDictionary *textureDictionary)
+    TextureRegionAttachmentLoader* TextureRegionAttachmentLoader_create(NinjaParty::TextureDictionary *textureDictionary)
     {
-        TextureRegionAttachmentLoader *self = NEW(TextureRegionAttachmentLoader);
-        self->textureDictionary = textureDictionary;
-        _AttachmentLoader_init(SUPER(self));
-        VTABLE(AttachmentLoader, self)->dispose = _TextureRegionAttachmentLoader_dispose;
-        VTABLE(AttachmentLoader, self)->newAttachment = _TextureRegionAttachmentLoader_newAttachment;
-        return SUPER(self);
+        TextureRegionAttachmentLoader *textureRegionAttachmentLoader = NEW(TextureRegionAttachmentLoader);
+        AttachmentLoader *attachmentLoader = (AttachmentLoader*)textureRegionAttachmentLoader;
+        
+        textureRegionAttachmentLoader->textureDictionary = textureDictionary;
+        _AttachmentLoader_init(attachmentLoader, &TextureRegionAttachmentLoader_dispose, &TextureRegionAttachmentLoader_newAttachment);
+        
+        return textureRegionAttachmentLoader;
     }
     
     SkeletonData* SkeletonData_loadBuffer(const unsigned char *buffer, int size, NinjaParty::TextureDictionary *textureDictionary)
     {
-        AttachmentLoader *attachmentLoader = AttachmentLoader_create(textureDictionary);
-        SkeletonJson *skeletonJson = SkeletonJson_createWithLoader(attachmentLoader);
+        TextureRegionAttachmentLoader *textureRegionAttachmentLoader = TextureRegionAttachmentLoader_create(textureDictionary);
+        AttachmentLoader *attachmentLoader = (AttachmentLoader*)textureRegionAttachmentLoader;
         
+        SkeletonJson *skeletonJson = SkeletonJson_createWithLoader(attachmentLoader);
         SkeletonData *skeletonData = SkeletonJson_readSkeletonData(skeletonJson, (const char*)buffer);
         
         SkeletonJson_dispose(skeletonJson);
@@ -308,7 +297,6 @@ namespace NinjaParty
         
         spriteBatch->SetBatchTransform(transform);
   
-        // todo!
         for(int i=0; i<spineSkeleton->slotCount; i++)
         {
             if (spineSkeleton->slots[i]->attachment)
@@ -331,6 +319,7 @@ namespace NinjaParty
         if(spineSkeleton != nullptr)
             spine::Skeleton_dispose(spineSkeleton);
         spineSkeleton = spine::Skeleton_create(skeletonData);
+        spineSkeleton->flipY = 1;
     }
     
     void SpineAnimationPlayer::SetTexture(Texture *texture)

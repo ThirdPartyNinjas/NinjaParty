@@ -15,6 +15,11 @@
 #define  LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 #endif
 
+// Note: This test is pretty much brute force.
+//   Load up all of the assets every update, then free them again.
+//   We're loading them two ways from an archive and from files (except on Android where it's archive only)
+//   Running it with valgrind or Instruments is great for tracking down memory leaks
+
 namespace Tests
 {
     class TestGame : public NinjaParty::Game
@@ -27,40 +32,8 @@ namespace Tests
         
         void LoadContent(const std::string &assetPath, const std::string &assetArchivePath)
         {
-            try
-            {
-                // test from archive
-                assetManager.reset(new NinjaParty::AssetManager(assetPath, assetArchivePath));
-                NinjaParty::Texture *texture = assetManager->LoadTexture("Graphics.png");
-                NinjaParty::TextureDictionary *textureDictionary = assetManager->LoadTextureDictionary("Graphics.json");
-                NinjaParty::Song *song = assetManager->LoadSong("song.ogg");
-                NinjaParty::SoundEffect *soundEffect = assetManager->LoadSoundEffect("sound.wav");
-                NinjaParty::DeminaAnimation *deminaAnimation = assetManager->LoadDeminaAnimation("guy_walk.anim", texture, textureDictionary);
-                NinjaParty::SpineSkeletonData *spineSkeletonData = assetManager->LoadSpineSkeletonData("spineboy.json", textureDictionary);
-                NinjaParty::Font *font = assetManager->LoadFont("Arial_40.fnt");
-                NinjaParty::GleedLevel *gleedLevel = assetManager->LoadGleedLevel("TestLevel.gleed");
-                
-                assetManager.reset(new NinjaParty::AssetManager(assetPath, ""));
-                
-                // test from folder
-#if !defined(__ANDROID__) // android is archive-only
-                texture = assetManager->LoadTexture("Graphics.png");
-                textureDictionary = assetManager->LoadTextureDictionary("Graphics.json");
-                song = assetManager->LoadSong("song.ogg");
-                soundEffect = assetManager->LoadSoundEffect("sound.wav");
-                deminaAnimation = assetManager->LoadDeminaAnimation("guy_walk.anim", texture, textureDictionary);
-                spineSkeletonData = assetManager->LoadSpineSkeletonData("spineboy.json", textureDictionary);
-                font = assetManager->LoadFont("Arial_40.fnt");
-                gleedLevel = assetManager->LoadGleedLevel("TestLevel.gleed");
-#endif
-            }
-            catch(std::exception &exception)
-            {
-                printf("Caught exception: %s\n", exception.what());
-#if defined(__ANDROID__)     
-                LOGE("Caught exception: %s", exception.what());
-#endif
-            }
+            this->assetPath = assetPath;
+            this->assetArchivePath = assetArchivePath;
         }
         
         void UnloadContent()
@@ -69,6 +42,39 @@ namespace Tests
         
         void Update(float deltaSeconds)
         {
+            try
+            {
+                // test from archive
+                assetManager.reset(new NinjaParty::AssetManager(assetPath, assetArchivePath));
+                NinjaParty::Texture *texture = assetManager->LoadTexture("Graphics.png");
+                NinjaParty::TextureDictionary *textureDictionary = assetManager->LoadTextureDictionary("Graphics.json");
+                assetManager->LoadSong("song.ogg");
+                assetManager->LoadSoundEffect("sound.wav");
+                assetManager->LoadDeminaAnimation("guy_walk.anim", texture, textureDictionary);
+                assetManager->LoadSpineSkeletonData("spineboy.json", textureDictionary);
+                assetManager->LoadFont("Arial_40.fnt");
+                assetManager->LoadGleedLevel("TestLevel.gleed");
+                
+#if !defined(__ANDROID__) // android is archive-only
+                // test from folder
+                assetManager.reset(new NinjaParty::AssetManager(assetPath, ""));
+                texture = assetManager->LoadTexture("Graphics.png");
+                textureDictionary = assetManager->LoadTextureDictionary("Graphics.json");
+                assetManager->LoadSong("song.ogg");
+                assetManager->LoadSoundEffect("sound.wav");
+                assetManager->LoadDeminaAnimation("guy_walk.anim", texture, textureDictionary);
+                assetManager->LoadSpineSkeletonData("spineboy.json", textureDictionary);
+                assetManager->LoadFont("Arial_40.fnt");
+                assetManager->LoadGleedLevel("TestLevel.gleed");
+#endif
+            }
+            catch(std::exception &exception)
+            {
+                printf("Caught exception: %s\n", exception.what());
+#if defined(__ANDROID__)
+                LOGE("Caught exception: %s", exception.what());
+#endif
+            }
         }
         
         void Draw()
@@ -78,5 +84,7 @@ namespace Tests
         
     private:
         std::unique_ptr<NinjaParty::AssetManager> assetManager;
+        std::string assetPath;
+        std::string assetArchivePath;
     };
 }

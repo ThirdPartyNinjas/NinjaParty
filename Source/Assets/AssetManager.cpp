@@ -56,7 +56,7 @@ namespace NinjaParty
 	{
 		this->assetPath = assetPath;
         this->assetRootPath = GetRootPath() + assetPath;
-        this->assetZipPath = assetZipPath;
+        this->assetZipPath = GetRootPath() + assetZipPath;
 
         mappedAssetArchive = nullptr;
         mappedMemoryLength = 0;
@@ -74,6 +74,7 @@ namespace NinjaParty
 		DeleteMapContents(fonts);
 		DeleteMapContents(deminaAnimations);
 		DeleteMapContents(spriteAnimations);
+        DeleteMapContents(gleedLevels);
         
         for(auto &iterator : spineSkeletons)
             spine::SkeletonData_dispose(iterator.second);
