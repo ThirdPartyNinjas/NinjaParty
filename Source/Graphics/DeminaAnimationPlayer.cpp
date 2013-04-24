@@ -249,8 +249,13 @@ namespace NinjaParty
 			bool bvf = currentAnimation->keyframes[currentKeyframeIndex].Bones[i].VerticalFlip;
 			bool bhf = currentAnimation->keyframes[currentKeyframeIndex].Bones[i].HorizontalFlip;
 
-			spriteBatch->Draw(TexturePair(currentAnimation->texture, currentAnimation->textureRegions[currentAnimation->keyframes[currentKeyframeIndex].Bones[i].TextureIndex]),
-							  Vector2::ZERO, 0, tintColor, Vector2(bhf ? -1.0f : 1.0f, bvf ? -1.0f : 1.0f),
+            spriteBatch->Draw(currentAnimation->texture,
+                              currentAnimation->textureRegions[currentAnimation->keyframes[currentKeyframeIndex].Bones[i].TextureIndex],
+                              Vector2::ZERO,
+                              Vector2(0.5f, 0.5f),
+                              0,
+                              tintColor,
+                              Vector2(bhf ? -1.0f : 1.0f, bvf ? -1.0f : 1.0f),
 							  CreateTranslationMatrix(position.X(), position.Y()) * CreateRotationMatrix(rotation) * scaleMatrix * boneTransforms[i].Transform);
 		}
 	}

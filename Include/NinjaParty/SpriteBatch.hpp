@@ -44,13 +44,15 @@ namespace NinjaParty
 				  const Vector2 &scale = Vector2(1, 1),
 				  const Matrix3 &transformMatrix = Matrix3::IDENTITY);
 
-		void Draw(const TexturePair &texturePair,
-				  const Vector2 &position,
-				  const float rotation = 0,
-				  const Color &color = Color::White,
-				  const Vector2 &scale = Vector2(1, 1),
-				  const Matrix3 &transformMatrix = Matrix3::IDENTITY);
-		
+        void Draw(Texture *texture,
+                  const TextureRegion &textureRegion,
+                  const Vector2 &position,
+                  const Vector2 &origin = Vector2::ZERO,
+                  const float rotation = 0.0f,
+                  const Color &color = Color::White,
+                  const Vector2 &scale = Vector2::ONE,
+                  const Matrix3 &transformMatrix = Matrix3::IDENTITY);
+                  
 		void DrawString(Font *font, Texture *texture, const std::string &s, const Vector2 &position, const Color &color);
 
 		void DrawString(Font *font,

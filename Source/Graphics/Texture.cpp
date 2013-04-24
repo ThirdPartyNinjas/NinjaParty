@@ -55,10 +55,14 @@ namespace NinjaParty
 		if(textureRegion != nullptr)
 		{
 			textureRegion->bounds.x = textureRegion->bounds.y = 0;
-			textureRegion->origin = Vector2(0.5f, 0.5f);
+            textureRegion->originTopLeft = Vector2::ZERO;
+            textureRegion->originBottomRight = Vector2(1.0f, 1.0f);
+			textureRegion->originCenter = Vector2(0.5f, 0.5f);
 			textureRegion->bounds.width = texture->GetWidth();
 			textureRegion->bounds.height = texture->GetHeight();
-			textureRegion->input = Vector2((float)texture->GetWidth(), (float)texture->GetHeight());
+            
+            // todo: input
+            
 			textureRegion->rotated = false;
 		}
 		return texture;
@@ -77,10 +81,14 @@ namespace NinjaParty
 		if(textureRegion != 0)
 		{
 			textureRegion->bounds.x = textureRegion->bounds.y = 0;
-			textureRegion->origin = Vector2(0.5f, 0.5f);
+            textureRegion->originTopLeft = Vector2::ZERO;
+            textureRegion->originBottomRight = Vector2(1.0f, 1.0f);
+			textureRegion->originCenter = Vector2(0.5f, 0.5f);
 			textureRegion->bounds.width = texture->GetWidth();
 			textureRegion->bounds.height = texture->GetHeight();
-			textureRegion->input = Vector2((float)texture->GetWidth(), (float)texture->GetHeight());
+            
+            // todo: input
+            
 			textureRegion->rotated = false;
 		}
 		return texture;

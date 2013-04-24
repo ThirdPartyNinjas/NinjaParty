@@ -48,10 +48,10 @@ namespace spine
         float x = slot->bone->worldX;
         float y = slot->bone->worldY;
         
-        NinjaParty::TexturePair texturePair(texture, textureRegionAttachment->textureRegion);
-        
-        spriteBatch->Draw(texturePair,
+        spriteBatch->Draw(texture,
+                          textureRegionAttachment->textureRegion,
                           NinjaParty::Vector2(offsetX * m00 + offsetY * m01 + x, offsetX * m10 + offsetY * m11 + y),
+                          NinjaParty::Vector2(0.5f, 0.5f),
                           -(slot->bone->worldRotation + regionAttachment->rotation) * 3.14159f / 180.0f,
                           NinjaParty::Color(slot->r * tintColor.R(), slot->g * tintColor.G(), slot->b * tintColor.B(), slot->a * tintColor.A()));
     }
@@ -88,6 +88,7 @@ namespace spine
     Attachment* TextureRegionAttachmentLoader_newAttachment(AttachmentLoader *attachmentLoader, Skin *skin, AttachmentType type, const char *name)
     {
         TextureRegionAttachmentLoader *textureRegionAttachmentLoader = (TextureRegionAttachmentLoader*)attachmentLoader;
+        RegionAttachment *regionAttachment;
         
         switch(type)
         {
@@ -97,8 +98,23 @@ namespace spine
                     _AttachmentLoader_setError(attachmentLoader, "Region not found: ", name);
                     return nullptr;
                 }
+                
+            {
+                NinjaParty::TextureRegion textureRegion = textureRegionAttachmentLoader->textureDictionary->GetRegion(std::string(name) + ".png");
+                regionAttachment = (RegionAttachment*)TextureRegionAttachment_create(name, textureRegion);
+                
+                // todo: fix this stuff. It doesn't work with trimmed images
+                
+                regionAttachment->regionOffsetX = textureRegion.input.x;
+                regionAttachment->regionOffsetY = textureRegion.input.y;
+                regionAttachment->regionWidth = textureRegion.bounds.width;
+                regionAttachment->regionHeight = textureRegion.bounds.height;
+                regionAttachment->regionOriginalWidth = textureRegion.input.width;
+                regionAttachment->regionOriginalHeight = textureRegion.input.height;
+            }
 
-                return (Attachment*)TextureRegionAttachment_create(name, textureRegionAttachmentLoader->textureDictionary->GetRegion(std::string(name) + ".png"));
+                return (Attachment*)regionAttachment;
+                
             default:
                 _AttachmentLoader_setUnknownTypeError(attachmentLoader, type);
                 return nullptr;

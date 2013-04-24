@@ -42,8 +42,6 @@ namespace NinjaParty
 		
 		TextureFilter filterType;
 	};
-
-	typedef std::pair<Texture*, TextureRegion> TexturePair;
 }
 
 #endif//NINJAPARTY_TEXTURE_HPP

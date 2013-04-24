@@ -15,6 +15,8 @@
 
 #ifdef TEST_SPRITEBATCH
 #include "../../Tests/SpriteBatch.hpp"
+#elif defined(TEST_TEXTUREDICTIONARY)
+#include "../../Tests/TextureDictionary.hpp"
 #elif defined(TEST_SPINE)
 #include "../../Tests/Spine.hpp"
 #elif defined(TEST_DEMINA)

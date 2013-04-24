@@ -107,6 +107,12 @@ namespace NinjaParty
 		const Vector2 &scale, const Color &tintColor, bool flipHorizontal, bool flipVertical)
 	{
 		// todo: flips?
-		spriteBatch->Draw(TexturePair(currentAnimation->texture, currentAnimation->frames[currentFrame]), position, rotation, tintColor, scale);
+        spriteBatch->Draw(currentAnimation->texture,
+                          currentAnimation->frames[currentFrame],
+                          position,
+                          Vector2(0.5f, 0.5f),
+                          rotation,
+                          tintColor,
+                          scale);
 	}
 }

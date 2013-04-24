@@ -1,0 +1,20 @@
+{"frames": [
+
+{
+	"filename": "arrow.png",
+	"frame": {"x":1,"y":1,"w":50,"h":78},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":32,"y":8,"w":50,"h":78},
+	"sourceSize": {"w":100,"h":100}
+}],
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "regiontest.png",
+	"format": "RGBA8888",
+	"size": {"w":64,"h":128},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a68144e895a9da122dc7ff6eb069e6f4$"
+}
+}

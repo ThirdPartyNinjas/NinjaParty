@@ -28,6 +28,7 @@
 		300560051708DFB400A74272 /* RenderTexture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderTexture.hpp; sourceTree = "<group>"; wrapsLines = 0; };
 		300560061708EA6700A74272 /* Audio.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Audio.hpp; sourceTree = "<group>"; };
 		300560071708ED6E00A74272 /* Demina.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Demina.hpp; sourceTree = "<group>"; };
+		30069492172842B900ADB82B /* TextureDictionary.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureDictionary.hpp; sourceTree = "<group>"; };
 		304A0AF5170B42FF006F5F8F /* Gleed.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Gleed.hpp; sourceTree = "<group>"; };
 		30952B3F1707EE5C00FB72ED /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30952B421707EE5C00FB72ED /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -147,6 +148,7 @@
 		3095377B1708CC8900FB72ED /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				30069492172842B900ADB82B /* TextureDictionary.hpp */,
 				30A10772171E72B400263A70 /* Assets.hpp */,
 				300560061708EA6700A74272 /* Audio.hpp */,
 				300560071708ED6E00A74272 /* Demina.hpp */,

@@ -1,4 +1,5 @@
 #include <NinjaParty/Font.hpp>
+#include <NinjaParty/MathHelpers.hpp>
 #include <NinjaParty/SpriteBatch.hpp>
 #include <NinjaParty/Vector3.hpp>
 
@@ -138,26 +139,25 @@ namespace NinjaParty
 		vertices[activeVertices++].v = (float)(sourceRectangle->y + sourceRectangle->height) / textureHeight;
 	}
 	
-	void SpriteBatch::Draw(const TexturePair &texturePair,
+    void SpriteBatch::Draw(Texture *texture,
+						   const TextureRegion &textureRegion,
 						   const Vector2 &position,
+						   const Vector2 &originInput,
 						   const float rotation,
 						   const Color &color,
 						   const Vector2 &scale,
 						   const Matrix3 &transformMatrix)
 	{
-		Texture *texture = texturePair.first;
-		const Rectangle *sourceRectangle = &texturePair.second.bounds;
-		const Vector2 &origin = texturePair.second.origin;
-		
 		if(activeVertices == maxVertices || (currentTextureId != 0 && currentTextureId != texture->GetTextureId()))
 			DrawBuffer();
 		
 		currentTextureId = texture->GetTextureId();
 		
-		Rectangle textureRect(0, 0, texture->GetWidth(), texture->GetHeight());
+		const Rectangle *sourceRectangle = &textureRegion.bounds;
+		Vector2 origin;
 		
-		if(sourceRectangle == nullptr)
-			sourceRectangle = &textureRect;
+		origin.X() = Lerp(textureRegion.originTopLeft.X(), textureRegion.originBottomRight.X(), originInput.X());
+		origin.Y() = Lerp(textureRegion.originTopLeft.Y(), textureRegion.originBottomRight.Y(), originInput.Y());
 		
 		int width = sourceRectangle->width;
 		int height = sourceRectangle->height;
@@ -167,7 +167,7 @@ namespace NinjaParty
 		
 		Vector3 v;
 		Matrix3 transform = batchTransform * transformMatrix * CreateTranslationMatrix(position.X(), position.Y()) *
-            CreateRotationMatrix(rotation) * CreateScaleMatrix(scale.X(), scale.Y());
+		CreateRotationMatrix(rotation) * CreateScaleMatrix(scale.X(), scale.Y());
 		
 		v.X() = -width * origin.X();
 		v.Y() = -height * origin.Y();
@@ -180,7 +180,7 @@ namespace NinjaParty
 		vertices[activeVertices].g = color.G();
 		vertices[activeVertices].b = color.B();
 		vertices[activeVertices].a = color.A();
-		if(texturePair.second.rotated)
+		if(textureRegion.rotated)
 		{
 			vertices[activeVertices].u = (float)(sourceRectangle->x + sourceRectangle->height) / textureWidth;
 			vertices[activeVertices++].v = (float)sourceRectangle->y / textureHeight;
@@ -201,7 +201,7 @@ namespace NinjaParty
 		vertices[activeVertices].g = color.G();
 		vertices[activeVertices].b = color.B();
 		vertices[activeVertices].a = color.A();
-		if(texturePair.second.rotated)
+		if(textureRegion.rotated)
 		{
 			vertices[activeVertices].u = (float)(sourceRectangle->x + sourceRectangle->height) / textureWidth;
 			vertices[activeVertices++].v = (float)(sourceRectangle->y + sourceRectangle->width) / textureHeight;
@@ -222,7 +222,7 @@ namespace NinjaParty
 		vertices[activeVertices].g = color.G();
 		vertices[activeVertices].b = color.B();
 		vertices[activeVertices].a = color.A();
-		if(texturePair.second.rotated)
+		if(textureRegion.rotated)
 		{
 			vertices[activeVertices].u = (float)sourceRectangle->x / textureWidth;
 			vertices[activeVertices++].v = (float)sourceRectangle->y / textureHeight;
@@ -248,7 +248,7 @@ namespace NinjaParty
 		vertices[activeVertices].g = color.G();
 		vertices[activeVertices].b = color.B();
 		vertices[activeVertices].a = color.A();
-		if(texturePair.second.rotated)
+		if(textureRegion.rotated)
 		{
 			vertices[activeVertices].u = (float)sourceRectangle->x / textureWidth;
 			vertices[activeVertices++].v = (float)(sourceRectangle->y + sourceRectangle->width) / textureHeight;
@@ -257,8 +257,9 @@ namespace NinjaParty
 		{
 			vertices[activeVertices].u = (float)(sourceRectangle->x + sourceRectangle->width) / textureWidth;
 			vertices[activeVertices++].v = (float)(sourceRectangle->y + sourceRectangle->height) / textureHeight;
-		}
+		}		
 	}
+    
 
 	void SpriteBatch::DrawString(Font *font, Texture *texture, const std::string &s, const Vector2 &position, const Color &color)
 	{
