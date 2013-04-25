@@ -88,7 +88,6 @@ namespace spine
     Attachment* TextureRegionAttachmentLoader_newAttachment(AttachmentLoader *attachmentLoader, Skin *skin, AttachmentType type, const char *name)
     {
         TextureRegionAttachmentLoader *textureRegionAttachmentLoader = (TextureRegionAttachmentLoader*)attachmentLoader;
-        RegionAttachment *regionAttachment;
         
         switch(type)
         {
@@ -98,22 +97,23 @@ namespace spine
                     _AttachmentLoader_setError(attachmentLoader, "Region not found: ", name);
                     return nullptr;
                 }
-                
-            {
-                NinjaParty::TextureRegion textureRegion = textureRegionAttachmentLoader->textureDictionary->GetRegion(std::string(name) + ".png");
-                regionAttachment = (RegionAttachment*)TextureRegionAttachment_create(name, textureRegion);
-                
-                // todo: fix this stuff. It doesn't work with trimmed images
-                
-                regionAttachment->regionOffsetX = textureRegion.input.x;
-                regionAttachment->regionOffsetY = textureRegion.input.y;
-                regionAttachment->regionWidth = textureRegion.bounds.width;
-                regionAttachment->regionHeight = textureRegion.bounds.height;
-                regionAttachment->regionOriginalWidth = textureRegion.input.width;
-                regionAttachment->regionOriginalHeight = textureRegion.input.height;
-            }
-
-                return (Attachment*)regionAttachment;
+                else
+                {
+                    NinjaParty::TextureRegion textureRegion = textureRegionAttachmentLoader->textureDictionary->GetRegion(std::string(name) + ".png");
+                    RegionAttachment *regionAttachment = (RegionAttachment*)TextureRegionAttachment_create(name, textureRegion);
+                    
+                    // note: We already take care of finding the center of the original image
+                    //  So just pass the size of the original data here
+                    
+                    regionAttachment->regionOffsetX = 0;
+                    regionAttachment->regionOffsetY = 0;
+                    regionAttachment->regionWidth = textureRegion.input.width;
+                    regionAttachment->regionHeight = textureRegion.input.height;
+                    regionAttachment->regionOriginalWidth = textureRegion.input.width;
+                    regionAttachment->regionOriginalHeight = textureRegion.input.height;
+                    
+                    return (Attachment*)regionAttachment;
+                }
                 
             default:
                 _AttachmentLoader_setUnknownTypeError(attachmentLoader, type);
