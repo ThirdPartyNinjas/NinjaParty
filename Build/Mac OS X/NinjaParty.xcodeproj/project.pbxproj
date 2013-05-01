@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300DAA151730B33F006285B4 /* Keyboard.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 300DAA141730B33F006285B4 /* Keyboard.hpp */; };
 		30952B8A1707FA4200FB72ED /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30952B891707FA2D00FB72ED /* Color.cpp */; };
 		30952B8E1707FDB900FB72ED /* SpriteShader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30952B8D1707FDB900FB72ED /* SpriteShader.hpp */; };
 		30952B901707FDCF00FB72ED /* SpriteShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30952B8F1707FDCF00FB72ED /* SpriteShader.cpp */; };
@@ -1458,6 +1459,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		300DAA141730B33F006285B4 /* Keyboard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Keyboard.hpp; sourceTree = "<group>"; };
 		30952B061707732700FB72ED /* libNinjaParty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNinjaParty.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		30952B651707EED600FB72ED /* Test.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Test.xcodeproj; path = "../../Test/Mac OS X/Test.xcodeproj"; sourceTree = "<group>"; };
 		30952B7E1707F56100FB72ED /* Color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Color.hpp; sourceTree = "<group>"; };
@@ -2978,6 +2980,7 @@
 				309536E71708942C00FB72ED /* GameScreen.hpp */,
 				309536E91708944100FB72ED /* GleedLevel.hpp */,
 				30952B851707F82C00FB72ED /* IncludeGL.h */,
+				300DAA141730B33F006285B4 /* Keyboard.hpp */,
 				30952B9B1707FF7200FB72ED /* LoadTexture.hpp */,
 				309536EB1708954C00FB72ED /* MathHelpers.hpp */,
 				309536ED1708955F00FB72ED /* Matrix3.hpp */,
@@ -6702,6 +6705,7 @@
 				30F9BA46171C9F550053126D /* config.h in Headers */,
 				30F9BA48171C9F550053126D /* zip.h in Headers */,
 				30F9BA7E171C9F550053126D /* zipint.h in Headers */,
+				300DAA151730B33F006285B4 /* Keyboard.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

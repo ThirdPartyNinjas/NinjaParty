@@ -2,6 +2,7 @@
 #define NINJAPARTY_GAME_HPP
 
 #include <NinjaParty/Color.hpp>
+#include <NinjaParty/Keyboard.hpp>
 #include <NinjaParty/ScreenManager.hpp>
 
 namespace NinjaParty
@@ -49,6 +50,9 @@ namespace NinjaParty
 		virtual void TouchCancelled(void *touchHandle) { }
 
         virtual void HandleTap(int x, int y) { }
+        
+        void KeyEvent(Key key, KeyState keyState);
+        KeyboardState GetKeyboardState() const { return keyboardState; }
 
 	private:
 		bool exit;
@@ -58,6 +62,8 @@ namespace NinjaParty
 
 	protected:
 		ScreenManager screenManager;
+        
+        KeyboardState keyboardState;
 	};
 }
 

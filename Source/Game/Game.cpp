@@ -33,19 +33,14 @@ namespace NinjaParty
 		screenManager.Draw();
 	}
 	
-//	void Game::BeginAudioInterruption()
-//	{
-//		
-//	}
-//	
-//	void Game::EndAudioInterruption()
-//	{
-//		
-//	}
-	
 	void Game::ClearScreen(Color color)
 	{
 		glClearColor(color.R(), color.G(), color.B(), color.A());
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
+
+    void Game::KeyEvent(Key key, KeyState keyState)
+    {
+        keyboardState.keys[(int)key] = keyState;
+    }
 }
