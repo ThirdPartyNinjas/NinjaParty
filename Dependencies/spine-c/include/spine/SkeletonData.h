@@ -35,7 +35,7 @@
 namespace spine {extern "C" {
 #endif
 
-typedef struct {
+typedef struct SkeletonData {
 	int boneCount;
 	BoneData** bones;
 

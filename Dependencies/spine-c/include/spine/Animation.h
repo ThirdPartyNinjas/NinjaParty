@@ -34,7 +34,7 @@ extern "C" {
 typedef struct Timeline Timeline;
 struct Skeleton;
 
-typedef struct {
+typedef struct Animation {
 	const char* const name;
 	float duration;
 

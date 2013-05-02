@@ -6,7 +6,11 @@
 #include <memory>
 #include <utility>
 
-#include <spine/spine.h>
+namespace spine
+{
+    struct Animation;
+    struct SkeletonData;
+}
 
 namespace NinjaParty
 {
