@@ -3,9 +3,14 @@
 
 #include <map>
 
-#include <spine/spine.h>
-
 #include "AnimationPlayer.hpp"
+
+namespace spine
+{
+	struct Animation;
+	struct Skeleton;
+	struct SkeletonData;
+}
 
 namespace NinjaParty
 {
@@ -13,14 +18,15 @@ namespace NinjaParty
 	class TextureDictionary;
 	class TextureRegion;
     
-	typedef spine::SkeletonData SpineSkeletonData;
 	typedef spine::Animation SpineAnimation;
+	typedef spine::Skeleton SpineSkeleton;
+	typedef spine::SkeletonData SpineSkeletonData;
     
 	class SpineAnimationPlayer : public AnimationPlayer
 	{
 	public:
 		SpineAnimationPlayer();
-		~SpineAnimationPlayer();
+		virtual ~SpineAnimationPlayer();
 		
 		virtual void Start(const std::string &name, bool allowRestart = false);
 		virtual void Transition(const std::string &name, float transitionDelay);
@@ -43,12 +49,12 @@ namespace NinjaParty
         void SetSkin(const std::string &skinName);
         
 	protected:
-		std::map<std::string, std::pair<spine::Animation*, bool>> animations;
+		std::map<std::string, std::pair<SpineAnimation*, bool>> animations;
 
         SpineSkeletonData *skeletonData;
         
-        spine::Skeleton *spineSkeleton;
-		spine::Animation *currentAnimation;
+        SpineSkeleton *spineSkeleton;
+		SpineAnimation *currentAnimation;
 		float currentAnimationTime;
         bool currentLoop;
         
