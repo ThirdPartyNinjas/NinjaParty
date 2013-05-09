@@ -442,6 +442,17 @@ Matrix3<Real>& Matrix3<Real>::operator/= (Real scalar)
 }
 //----------------------------------------------------------------------------
 template <typename Real>
+Vector2<Real> Matrix3<Real>::operator* (const Vector2<Real>& vec) const
+{
+	// treat the "third" compontent of the vector2 as 1.0f
+    return Vector2<Real>
+    (
+        mEntry[0]*vec[0] + mEntry[1]*vec[1] + mEntry[2]*1.0f,
+        mEntry[3]*vec[0] + mEntry[4]*vec[1] + mEntry[5]*1.0f
+    );
+}
+//----------------------------------------------------------------------------
+template <typename Real>
 Vector3<Real> Matrix3<Real>::operator* (const Vector3<Real>& vec) const
 {
     return Vector3<Real>
