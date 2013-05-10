@@ -311,7 +311,7 @@ namespace NinjaParty
                     NinjaParty::CreateRotationMatrix(rotation) *
                     NinjaParty::CreateScaleMatrix(scale.X() * (flipHorizontal ? -1 : 1), scale.Y() * (flipVertical ? -1 : 1));
         
-        spriteBatch->SetBatchTransform(transform);
+        spriteBatch->SetBatchTransform(currentTransform * transform);
   
         for(int i=0; i<spineSkeleton->slotCount; i++)
         {
