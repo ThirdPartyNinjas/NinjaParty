@@ -3,6 +3,9 @@
 
 #include <algorithm>
 
+#include "Juggler.hpp"
+#include "MathHelpers.hpp"
+
 namespace NinjaParty
 {
 	enum class TweenFunction
@@ -29,21 +32,42 @@ namespace NinjaParty
 	float EaseOut(float time, TweenFunction tweenFunction);
 	float EaseInOut(float time, TweenFunction tweenFunction);
 	
-	class Tween
+	template <typename T>
+	class Tween : public IJugglable
 	{
 	public:
-		Tween();
-		Tween(float tweenDuration, TweenType tweenType, TweenFunction tweenFunction);
+		Tween(T &reference, const T &start, const T& finish, float duration, TweenType type, TweenFunction function)
+			: reference(reference), start(start), finish(finish), position(0.0f), duration(duration), function(function)
+		{
+			switch(type)
+			{
+				case TweenType::EaseIn:
+					this->type = &EaseIn;
+					break;
+				case TweenType::EaseOut:
+					this->type = &EaseOut;
+					break;
+				case TweenType::EaseInOut:
+					this->type = &EaseInOut;
+					break;
+			}
+		}
+
+		virtual void Update(float deltaSeconds)
+		{
+			position = std::min(duration, position + deltaSeconds);
+			reference = Lerp(start, finish, type(position / duration, function));
+		}
 		
-		void Reset(float tweenDuration, TweenType tweenType, TweenFunction tweenFunction);
-		float Update(float deltaSeconds);
+		virtual float GetPosition() const { return position; }
+		virtual void SetPosition(float position) { this->position = position; }
 		
-		float GetPosition() const { return std::min(duration, position); }
-		void SetPosition(float position) { this->position = position; }
-		
-		bool IsComplete() const { return position >= duration; }
+		virtual bool IsComplete() const { return position >= duration; }
 	
 	protected:
+		T &reference;
+		T start;
+		T finish;
 		float position;
 		float duration;
 		TweenFunction function;
