@@ -4,13 +4,15 @@
 #include <functional>
 #include <queue>
 
+#include "Juggler.hpp"
+
 namespace NinjaParty
 {
     typedef std::function<void ()> Action;
     typedef std::function<bool ()> Condition;
     typedef std::function<bool (float)> TimedCondition;
 
-    class TaskQueue
+    class TaskQueue : public IJugglable
     {
     public:
         bool IsComplete() const;
