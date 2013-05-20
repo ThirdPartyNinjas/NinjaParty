@@ -2,11 +2,15 @@
 #define NINJAPARTY_PATH_HPP
 
 #include <string>
+#include <vector>
 
 namespace NinjaParty
 {
 	namespace Path
 	{
+		// split a string on an input delimiter
+		void split(std::vector<std::string>& output, const std::string &input, const std::string &delimiter);
+
 		// combine two paths, the second relative to the first
 		// path1: foo/bar/blah
 		// path2: ../../asdf/fdsa

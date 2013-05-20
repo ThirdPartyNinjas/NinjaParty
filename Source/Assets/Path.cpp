@@ -9,7 +9,7 @@ namespace NinjaParty
 	{
 		// This code comes from a stackoverflow.com answer by Mr.Ree
 		// http://stackoverflow.com/questions/53849/how-do-i-tokenize-a-string-in-c/325000#325000
-		static void split(std::vector<std::string>& output, const std::string &input, const std::string &delimiter)
+		void split(std::vector<std::string>& output, const std::string &input, const std::string &delimiter)
 		{
 			size_t start = 0, end = 0;
 			

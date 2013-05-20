@@ -24,7 +24,8 @@ namespace NinjaParty
 		int height;
 	};
 	
-	void MeasureString(Font *font, std::string string, NinjaParty::Vector2 &maximum);
+	void MeasureString(Font *font, const std::string &string, NinjaParty::Vector2 &maximum);
+	std::string WordWrapString(Font *font, const std::string &string, float width);
 }
 
 #endif//NINJAPARTY_FONT_HPP
