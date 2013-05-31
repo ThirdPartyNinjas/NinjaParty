@@ -43,7 +43,10 @@ namespace NinjaParty
 		virtual void EndAudioInterruption() { }
 
 		virtual void HandleLostGraphicsContext() { }
-        
+
+		virtual void TextInput(const std::string &text) { }
+		virtual void TextBackspace() { }
+
 		virtual void TouchBegan(void *touchHandle, int tapCount, int x, int y) { }
 		virtual void TouchEnded(void *touchHandle, int x, int y) { }
 		virtual void TouchMoved(void *touchHandle, int x, int y) { }

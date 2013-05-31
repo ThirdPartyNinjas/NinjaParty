@@ -7,29 +7,43 @@
 
 namespace NinjaParty
 {
-	struct IJugglable
+	class Juggler;
+	
+	class Jugglable
 	{
-		virtual ~IJugglable() { }
+	public:
+		Jugglable();
+		virtual ~Jugglable();
+		
 		virtual void Update(float deltaSeconds) = 0;
 		virtual bool IsComplete() const = 0;
+
+	protected:
+		friend class Juggler;
+		Juggler *juggler;
 	};
 	
 	class Juggler
 	{
 	public:
-		void Add(IJugglable *item) { Add(std::shared_ptr<IJugglable>(item)); }
-		void Add(std::shared_ptr<IJugglable> item) { items.push_back(item); }
+		void Add(Jugglable *item) { Add(std::shared_ptr<Jugglable>(item)); }
+		void Add(std::shared_ptr<Jugglable> item) { item->juggler = this; items.push_back(item); }
+		
+		void Remove(Jugglable *item)
+		{
+			items.remove_if([&](std::shared_ptr<Jugglable> p){return p.get() == item;});
+		}
 		
 		void Update(float deltaSeconds)
 		{
 			for(auto &i : items)
 				i->Update(deltaSeconds);
 			
-			items.remove_if([](std::shared_ptr<IJugglable> p){return p->IsComplete();});
+			items.remove_if([](std::shared_ptr<Jugglable> p){return p->IsComplete();});
 		}
 		
 	protected:
-		std::list<std::shared_ptr<IJugglable>> items;
+		std::list<std::shared_ptr<Jugglable>> items;
 	};
 }
 

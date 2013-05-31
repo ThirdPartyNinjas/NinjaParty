@@ -64,6 +64,7 @@
 		3053A8CC1709D6F000D58709 /* Tween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3053A8AB1709D6F000D58709 /* Tween.cpp */; };
 		3053A8CD1709D6F000D58709 /* Vector2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3053A8AC1709D6F000D58709 /* Vector2.cpp */; };
 		3053A8D01709D8F400D58709 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3053A8CF1709D8F400D58709 /* Foundation.framework */; };
+		30DAE424175695F80038A279 /* Juggler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DAE423175695F80038A279 /* Juggler.cpp */; };
 		30F9BABB171CA1F00053126D /* mkstemp.c in Sources */ = {isa = PBXBuildFile; fileRef = 30F9BA83171CA1EF0053126D /* mkstemp.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		30F9BABC171CA1F00053126D /* zip_add.c in Sources */ = {isa = PBXBuildFile; fileRef = 30F9BA85171CA1EF0053126D /* zip_add.c */; };
 		30F9BABD171CA1F00053126D /* zip_add_dir.c in Sources */ = {isa = PBXBuildFile; fileRef = 30F9BA86171CA1EF0053126D /* zip_add_dir.c */; };
@@ -1543,6 +1544,9 @@
 		3053A8AC1709D6F000D58709 /* Vector2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector2.cpp; sourceTree = "<group>"; };
 		3053A8CF1709D8F400D58709 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3053A8FA1709DD8C00D58709 /* Test.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Test.xcodeproj; path = ../../Test/iOS/Test.xcodeproj; sourceTree = "<group>"; };
+		30DAE421175695C50038A279 /* Keyboard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Keyboard.hpp; sourceTree = "<group>"; };
+		30DAE423175695F80038A279 /* Juggler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Juggler.cpp; sourceTree = "<group>"; };
+		30DAE425175696270038A279 /* Juggler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Juggler.hpp; sourceTree = "<group>"; };
 		30F9BA81171CA1EF0053126D /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		30F9BA82171CA1EF0053126D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		30F9BA83171CA1EF0053126D /* mkstemp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mkstemp.c; sourceTree = "<group>"; };
@@ -3868,6 +3872,8 @@
 				3053A8691709D6A000D58709 /* GameScreen.hpp */,
 				3053A86A1709D6A000D58709 /* GleedLevel.hpp */,
 				3053A86B1709D6A000D58709 /* IncludeGL.h */,
+				30DAE425175696270038A279 /* Juggler.hpp */,
+				30DAE421175695C50038A279 /* Keyboard.hpp */,
 				3053A86C1709D6A000D58709 /* LoadTexture.hpp */,
 				3053A86D1709D6A000D58709 /* MathHelpers.hpp */,
 				3053A86E1709D6A000D58709 /* Matrix3.hpp */,
@@ -3940,6 +3946,7 @@
 			children = (
 				3053A8961709D6F000D58709 /* Game.cpp */,
 				3053A8971709D6F000D58709 /* GameScreen.cpp */,
+				30DAE423175695F80038A279 /* Juggler.cpp */,
 				3053A8981709D6F000D58709 /* ScreenManager.cpp */,
 				3053A8991709D6F000D58709 /* TaskManager.cpp */,
 			);
@@ -4245,6 +4252,7 @@
 				3034E39817261DCF00068F48 /* Skin.c in Sources */,
 				3034E39917261DCF00068F48 /* Slot.c in Sources */,
 				3034E39A17261DCF00068F48 /* SlotData.c in Sources */,
+				30DAE424175695F80038A279 /* Juggler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

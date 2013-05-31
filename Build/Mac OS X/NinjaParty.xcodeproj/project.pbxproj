@@ -1353,6 +1353,7 @@
 		309537571708C3EE00FB72ED /* TaskManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309537531708C3AE00FB72ED /* TaskManager.cpp */; };
 		309537591708C47C00FB72ED /* GetRootPath_Empty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 309537581708C47C00FB72ED /* GetRootPath_Empty.cpp */; };
 		3095377E1708CEF700FB72ED /* AssetManager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3095377D1708CEF700FB72ED /* AssetManager.hpp */; };
+		30AEFF3917550B0F00664B49 /* Juggler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30AEFF3817550B0F00664B49 /* Juggler.cpp */; };
 		30D0B0261713B8B100BE5B0B /* Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 30D0AFFF1713B8B100BE5B0B /* Animation.h */; };
 		30D0B0271713B8B100BE5B0B /* AnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = 30D0B0001713B8B100BE5B0B /* AnimationState.h */; };
 		30D0B0281713B8B100BE5B0B /* AnimationStateData.h in Headers */ = {isa = PBXBuildFile; fileRef = 30D0B0011713B8B100BE5B0B /* AnimationStateData.h */; };
@@ -2823,6 +2824,7 @@
 		309537531708C3AE00FB72ED /* TaskManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TaskManager.cpp; sourceTree = "<group>"; };
 		309537581708C47C00FB72ED /* GetRootPath_Empty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetRootPath_Empty.cpp; sourceTree = "<group>"; };
 		3095377D1708CEF700FB72ED /* AssetManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AssetManager.hpp; sourceTree = "<group>"; };
+		30AEFF3817550B0F00664B49 /* Juggler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Juggler.cpp; sourceTree = "<group>"; };
 		30D0AFFF1713B8B100BE5B0B /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		30D0B0001713B8B100BE5B0B /* AnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationState.h; sourceTree = "<group>"; };
 		30D0B0011713B8B100BE5B0B /* AnimationStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationStateData.h; sourceTree = "<group>"; };
@@ -5227,6 +5229,7 @@
 			children = (
 				309537501708C3AE00FB72ED /* Game.cpp */,
 				309537511708C3AE00FB72ED /* GameScreen.cpp */,
+				30AEFF3817550B0F00664B49 /* Juggler.cpp */,
 				309537521708C3AE00FB72ED /* ScreenManager.cpp */,
 				309537531708C3AE00FB72ED /* TaskManager.cpp */,
 			);
@@ -6891,6 +6894,7 @@
 				30F9BA7B171C9F550053126D /* zip_unchange_all.c in Sources */,
 				30F9BA7C171C9F550053126D /* zip_unchange_archive.c in Sources */,
 				30F9BA7D171C9F550053126D /* zip_unchange_data.c in Sources */,
+				30AEFF3917550B0F00664B49 /* Juggler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

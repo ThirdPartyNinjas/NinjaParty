@@ -12,7 +12,7 @@ namespace NinjaParty
     typedef std::function<bool ()> Condition;
     typedef std::function<bool (float)> TimedCondition;
 
-    class TaskQueue : public IJugglable
+    class TaskQueue : public Jugglable
     {
     public:
         bool IsComplete() const;

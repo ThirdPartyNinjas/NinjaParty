@@ -9,6 +9,7 @@ namespace NinjaParty
 	void MeasureString(Font *font, const std::string &string, NinjaParty::Vector2 &maximum)
 	{
 		float x = 0, y = 0;
+		float maxHeight = 0;
 
 		maximum = Vector2::ZERO;
 
@@ -17,6 +18,7 @@ namespace NinjaParty
 			if(string[i] == '\n')
 			{
 				y += font->height;
+				maxHeight = 0;
 			}
 			else if(string[i] == '\r')
 			{
@@ -27,13 +29,14 @@ namespace NinjaParty
 				CharacterData &cd = (font->characters.count(string[i]) == 1) ? font->characters[string[i]] : font->characters[' '];
 
 				x += cd.advanceX;
+				maxHeight = std::max<float>(maxHeight, cd.height);
 			}
 
 			maximum.X() = std::max<float>(maximum.X(), x);
 			maximum.Y() = y;
 		}
 		
-		maximum.Y() += font->height;
+		maximum.Y() += maxHeight;//font->height;
 	}
 	
 	std::string WordWrapString(Font *font, const std::string &string, float width)

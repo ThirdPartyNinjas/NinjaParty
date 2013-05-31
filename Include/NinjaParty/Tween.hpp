@@ -33,7 +33,7 @@ namespace NinjaParty
 	float EaseInOut(float time, TweenFunction tweenFunction);
 	
 	template <typename T>
-	class Tween : public IJugglable
+	class Tween : public Jugglable
 	{
 	public:
 		Tween(T &reference, const T &start, const T& finish, float duration, TweenType type, TweenFunction function)
