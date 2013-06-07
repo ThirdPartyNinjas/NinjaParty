@@ -156,6 +156,7 @@ LOCAL_SRC_FILES +=\
 LOCAL_SRC_FILES +=\
 	$(S_PATH)/Game/Game.cpp \
 	$(S_PATH)/Game/GameScreen.cpp \
+	$(S_PATH)/Game/Juggler.cpp \
 	$(S_PATH)/Game/ScreenManager.cpp \
 	$(S_PATH)/Game/TaskManager.cpp
 

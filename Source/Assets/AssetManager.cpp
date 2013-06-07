@@ -273,7 +273,8 @@ namespace NinjaParty
 		if(!rootNode)
 			throw std::runtime_error(std::string("Failed to load font: ") + fileName);
 
-		font->height = rootNode.child("common").attribute("lineHeight").as_int();
+		font->size = rootNode.child("info").attribute("size").as_int();
+		font->lineHeight = rootNode.child("common").attribute("lineHeight").as_int();
 		
 		pugi::xml_node charsNode = rootNode.child("chars");
 

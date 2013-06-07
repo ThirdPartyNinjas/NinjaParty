@@ -41,24 +41,24 @@ namespace NinjaParty
 
     static int16_t read_int16(FILE *file)
     {
-        int16_t i = read_int8(file);
-        i += static_cast<int16_t>(read_int8(file)) << 8;
+        int16_t i = read_uint8(file);
+        i |= static_cast<int16_t>(read_uint8(file)) << 8;
         return i;
     }
     
     static uint16_t read_uint16(FILE *file)
     {
         uint16_t i = read_uint8(file);
-        i += static_cast<uint16_t>(read_uint8(file)) << 8;
+        i |= static_cast<uint16_t>(read_uint8(file)) << 8;
         return i;
     }
 
     static uint32_t read_uint32(FILE *file)
     {
         uint32_t i = read_uint8(file);
-        i += static_cast<uint32_t>(read_uint8(file)) << 8;
-        i += static_cast<uint32_t>(read_uint8(file)) << 16;
-        i += static_cast<uint32_t>(read_uint8(file)) << 24;
+        i |= static_cast<uint32_t>(read_uint8(file)) << 8;
+        i |= static_cast<uint32_t>(read_uint8(file)) << 16;
+        i |= static_cast<uint32_t>(read_uint8(file)) << 24;
         return i;
     }
 
@@ -88,24 +88,24 @@ namespace NinjaParty
     
     static int16_t read_int16(unsigned char **position, unsigned char *end)
     {
-        int16_t i = read_int8(position, end);
-        i += static_cast<int16_t>(read_int8(position, end)) << 8;
+        int16_t i = read_uint8(position, end);
+        i |= static_cast<int16_t>(read_uint8(position, end)) << 8;
         return i;
     }
     
     static uint16_t read_uint16(unsigned char **position, unsigned char *end)
     {
         uint16_t i = read_uint8(position, end);
-        i += static_cast<uint16_t>(read_uint8(position, end)) << 8;
+        i |= static_cast<uint16_t>(read_uint8(position, end)) << 8;
         return i;
     }
     
     static uint32_t read_uint32(unsigned char **position, unsigned char *end)
     {
         uint32_t i = read_uint8(position, end);
-        i += static_cast<uint32_t>(read_uint8(position, end)) << 8;
-        i += static_cast<uint32_t>(read_uint8(position, end)) << 16;
-        i += static_cast<uint32_t>(read_uint8(position, end)) << 24;
+        i |= static_cast<uint32_t>(read_uint8(position, end)) << 8;
+        i |= static_cast<uint32_t>(read_uint8(position, end)) << 16;
+        i |= static_cast<uint32_t>(read_uint8(position, end)) << 24;
         return i;
     }
     

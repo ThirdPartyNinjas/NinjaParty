@@ -274,7 +274,7 @@ namespace NinjaParty
 		{
 			if(s[i] == '\n')
 			{
-				y += font->height;
+				y += font->lineHeight;
 				continue;
 			}
 			if(s[i] == '\r')
@@ -394,7 +394,7 @@ namespace NinjaParty
 		{
 			if(s[i] == '\n')
 			{
-				y += font->height;
+				y += font->lineHeight;
 				continue;
 			}
 			if(s[i] == '\r')

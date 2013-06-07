@@ -17,7 +17,7 @@ namespace NinjaParty
 		{
 			if(string[i] == '\n')
 			{
-				y += font->height;
+				y += font->lineHeight;
 				maxHeight = 0;
 			}
 			else if(string[i] == '\r')

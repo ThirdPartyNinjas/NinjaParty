@@ -21,7 +21,7 @@ namespace NinjaParty
 	struct Font
 	{
 		std::map<int16_t, CharacterData> characters;
-		int height;
+		int size, lineHeight;
 	};
 	
 	void MeasureString(Font *font, const std::string &string, NinjaParty::Vector2 &maximum);
