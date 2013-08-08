@@ -29,6 +29,7 @@ namespace NinjaParty
 		// The texture id is invalid, so we don't want glDeleteTextures called
 		virtual void Invalidate() { textureId = 0; }
 
+		static Texture* FromOpenGL(unsigned int textureId, int width, int height, TextureFilter textureFilter = TextureFilter::Linear);
 		static Texture* FromFile(const std::string &fileName, TextureRegion *textureRegion = nullptr);
 		static Texture* FromBuffer(const unsigned char *buffer, int length, TextureRegion *textureRegion = nullptr);
 		

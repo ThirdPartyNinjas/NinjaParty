@@ -2,11 +2,11 @@
 #include <memory>
 #include <stdexcept>
 
-// FIXME hack:
-// todo: figure out a better solution, boost can't figure out endianness on Android
-#if __ANDROID__
-#define _LITTLE_ENDIAN
-#endif
+//// FIXME hack:
+//// todo: figure out a better solution, boost can't figure out endianness on Android
+//#if __ANDROID__
+//#define _LITTLE_ENDIAN
+//#endif
 
 #include <boost/lexical_cast.hpp>
 

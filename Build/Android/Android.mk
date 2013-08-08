@@ -1,6 +1,30 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := curl
+LOCAL_SRC_FILES := ../../Dependencies/curl/lib/Android/libcurl.a
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../Dependencies/curl/include
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := crypto
+LOCAL_SRC_FILES := ../../Dependencies/openssl/lib/Android/libcrypto.a
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../Dependencies/openssl/include
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := ssl
+LOCAL_SRC_FILES := ../../Dependencies/openssl/lib/Android/libssl.a
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../Dependencies/openssl/include
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := freetype
+LOCAL_SRC_FILES := ../../Dependencies/freetype/lib/Android/libfreetype.a
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../Dependencies/freetype/include
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
 
 D_PATH := ../../Dependencies
 
@@ -11,9 +35,22 @@ LOCAL_CPP_FEATURES += exceptions rtti
 # boost
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(D_PATH)/boost/include
 
+# curl
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/curl/include
+#LOCAL_LD_FLAGS += -L$(LOCAL_PATH)/$(D_PATH)/curl/lib/Android
+#LOCAL_STATIC_LIBRARIES += curl
+
+# imageresampler
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/imageresampler
+LOCAL_SRC_FILES := $(D_PATH)/imageresampler/resampler.cpp
+
+# jpgd
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/jpgd
+LOCAL_SRC_FILES += $(D_PATH)/jpgd/jpgd.cpp
+
 # JsonCpp
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/JsonCpp
-LOCAL_SRC_FILES := $(D_PATH)/JsonCpp/jsoncpp.cpp
+LOCAL_SRC_FILES += $(D_PATH)/JsonCpp/jsoncpp.cpp
 
 # libzip
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/libzip
@@ -74,6 +111,11 @@ LOCAL_SRC_FILES +=\
 
 # OpenALSoft
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/OpenALSoft/include
+
+# openssl
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/openssl/include
+#LOCAL_LD_FLAGS += -L$(LOCAL_PATH)/$(D_PATH)/openssl/lib/Android
+#LOCAL_STATIC_LIBRARIES += crypto ssl
 
 # pugixml
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(D_PATH)/pugixml
@@ -160,6 +202,10 @@ LOCAL_SRC_FILES +=\
 	$(S_PATH)/Game/ScreenManager.cpp \
 	$(S_PATH)/Game/TaskManager.cpp
 
+# Internet
+LOCAL_SRC_FILES +=\
+	$(S_PATH)/Internet/HttpRequestManager.cpp
+
 # Math
 LOCAL_SRC_FILES +=\
 	$(S_PATH)/Math/Matrix3.cpp \
@@ -167,4 +213,9 @@ LOCAL_SRC_FILES +=\
 	$(S_PATH)/Math/Tween.cpp \
 	$(S_PATH)/Math/Vector2.cpp
 
+LOCAL_STATIC_LIBRARIES += curl ssl crypto OpenAL freetype
+
 include $(BUILD_STATIC_LIBRARY)
+
+include $(LOCAL_PATH)/../../Dependencies/OpenALSoft/Android.mk
+

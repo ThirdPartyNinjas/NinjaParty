@@ -44,6 +44,6 @@ LOCAL_SRC_FILES +=\
 	Alc/backends/android.c \
 	Alc/backends/wave.c
 	
-LOCAL_LDLIBS += -lOpenSLES
+#LOCAL_LDLIBS += -lOpenSLES
 
 include $(BUILD_STATIC_LIBRARY)

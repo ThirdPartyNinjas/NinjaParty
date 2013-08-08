@@ -8,8 +8,6 @@
 #include <thread>
 #include <stdint.h>
 
-#include <boost/scoped_array.hpp>
-
 #include <NinjaParty/IncludeAL.h>
 
 // todo: Should this be changed to work on the main thread. If we provide an Update function
@@ -24,13 +22,44 @@ namespace NinjaParty
 		Looped,
 		Error
 	};
-
+	
 	typedef uint32_t AudioReference;
 	typedef std::function<void (const AudioReference&, AudioEventType)> AudioCallback;
 	
 	class Sound;
-	struct AudioNode;
 	
+	enum class AudioNodeState
+	{
+		Empty,
+		Playing,
+		InterruptedPlaying,
+		Paused,
+		StreamEnding
+	};
+	
+	enum class AudioFadeState
+	{
+		None,
+		FadeIn,
+		FadeOut,
+	};
+	
+	struct AudioNode
+	{
+		Sound *sound;
+		AudioNodeState state;
+		ALuint audioSource;
+		int playsRemaining;
+		float volume;
+		
+		float fadeTime;
+		float fadeDuration;
+		AudioFadeState fadeState;
+		
+		AudioReference audioReference;
+		AudioCallback audioCallback;
+	};
+
 	class AudioRenderer
 	{
 	public:
@@ -69,7 +98,7 @@ namespace NinjaParty
 
 		AudioReference currentAudioReference;
 
-		boost::scoped_array<AudioNode> audioNodes;
+		std::unique_ptr<AudioNode[]> audioNodes;
 	};
 }
 

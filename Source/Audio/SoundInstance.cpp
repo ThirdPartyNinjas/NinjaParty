@@ -55,8 +55,6 @@ namespace NinjaParty
     
     void SoundInstance::Callback(const AudioReference &reference, AudioEventType eventType)
     {
-        assert(reference == audioReference);
-        
         if(eventType == AudioEventType::Complete)
         {
             state = State::Stopped;

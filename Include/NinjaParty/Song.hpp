@@ -4,8 +4,6 @@
 #include <memory>
 #include <string>
 
-#include <boost/scoped_array.hpp>
-
 #include <NinjaParty/Sound.hpp>
 
 namespace NinjaParty
@@ -42,7 +40,7 @@ namespace NinjaParty
 		
         std::unique_ptr<int16_t[]> scratchBuffer;
 		std::unique_ptr<Vorbis> vorbis;
-		boost::scoped_array<SongSection> sections;
+		std::unique_ptr<SongSection[]> sections;
 	};
 }
 

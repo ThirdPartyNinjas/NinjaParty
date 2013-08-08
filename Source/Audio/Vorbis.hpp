@@ -4,7 +4,7 @@
 #include <string>
 #include <stdint.h>
 
-#include <stb_vorbis.h>
+struct stb_vorbis;
 
 namespace NinjaParty
 {

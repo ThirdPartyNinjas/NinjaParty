@@ -1,6 +1,8 @@
 #include <stdexcept>
 #include <stdio.h>
 
+#include <stb_vorbis.h>
+
 #include "Vorbis.hpp"
 
 namespace NinjaParty

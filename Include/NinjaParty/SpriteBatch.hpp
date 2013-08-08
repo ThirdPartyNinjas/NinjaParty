@@ -52,7 +52,17 @@ namespace NinjaParty
                   const Color &color = Color::White,
                   const Vector2 &scale = Vector2::ONE,
                   const Matrix3 &transformMatrix = Matrix3::IDENTITY);
-                  
+		
+		void DrawNineSlice(Texture *texture,
+						   const TextureRegion &textureRegion,
+						   const Vector2 &position,
+						   const Vector2 &dimensions,
+						   const Vector2 &topLeftSlice,
+						   const Vector2 &bottomRightSlice,
+						   const Vector2 &origin = Vector2::ZERO,
+						   const float rotation = 0,
+						   const Color &color = Color::White);
+		
 		void DrawString(Font *font, Texture *texture, const std::string &s, const Vector2 &position, const Color &color);
 
 		void DrawString(Font *font,

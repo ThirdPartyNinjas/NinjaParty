@@ -39,6 +39,16 @@ namespace NinjaParty
 		}
 	}
 
+	Texture* Texture::FromOpenGL(unsigned int textureId, int width, int height, TextureFilter textureFilter)
+	{
+		Texture *texture = new Texture();
+		texture->textureId = textureId;
+		texture->width = width;
+		texture->height = height;
+		texture->SetFilter(textureFilter);
+		return texture;
+	}
+
 	Texture* Texture::FromFile(const std::string &fileName, TextureRegion *textureRegion)
 	{
 		int width, height;

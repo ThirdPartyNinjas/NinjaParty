@@ -34,6 +34,11 @@ namespace NinjaParty
 			items.remove_if([&](std::shared_ptr<Jugglable> p){return p.get() == item;});
 		}
 		
+		void RemoveAll()
+		{
+			items.clear();
+		}
+		
 		void Update(float deltaSeconds)
 		{
 			for(auto &i : items)

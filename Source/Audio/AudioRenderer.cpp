@@ -8,38 +8,6 @@
 
 namespace NinjaParty
 {
-	enum class AudioNodeState
-	{
-		Empty,
-		Playing,
-		InterruptedPlaying,
-		Paused,
-		StreamEnding
-	};
-	
-	enum class AudioFadeState
-	{
-		None,
-		FadeIn,
-		FadeOut,
-	};
-	
-	struct AudioNode
-	{
-		Sound *sound;
-		AudioNodeState state;
-		ALuint audioSource;
-		int playsRemaining;
-		float volume;
-		
-		float fadeTime;
-		float fadeDuration;
-		AudioFadeState fadeState;
-		
-		AudioReference audioReference;
-		AudioCallback audioCallback;
-	};
-	
 	void* ThreadHelperFunction(void *param)
 	{
 		AudioRenderer *audioRenderer = static_cast<AudioRenderer*>(param);

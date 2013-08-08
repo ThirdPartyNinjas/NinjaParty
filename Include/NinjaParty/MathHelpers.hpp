@@ -7,6 +7,7 @@ namespace NinjaParty
 	const float PIOVERTWO = PI / 2.0f;
 	const float PIOVERFOUR = PI / 4.0f;
 	const float PIOVEREIGHT = PI / 8.0f;
+	const float TWOPI = PI * 2.0f;
 	
 	template <typename T>
 	T Lerp(const T &a, const T &b, float t)

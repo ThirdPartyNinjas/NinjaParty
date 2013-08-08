@@ -42,6 +42,7 @@ namespace NinjaParty
 		~AssetManager();
 		
 		std::string GetAssetPath() const { return assetPath; }
+		std::string GetAssetRootPath() const { return assetRootPath; }
 		
 		Texture* LoadTexture(const std::string &fileName, bool forceReload = false);
 		TextureDictionary* LoadTextureDictionary(const std::string &fileName);

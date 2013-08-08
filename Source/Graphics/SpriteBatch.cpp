@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include <NinjaParty/Font.hpp>
 #include <NinjaParty/MathHelpers.hpp>
 #include <NinjaParty/SpriteBatch.hpp>
@@ -260,6 +262,173 @@ namespace NinjaParty
 		}		
 	}
     
+	void SpriteBatch::DrawNineSlice(Texture *texture,
+									const TextureRegion &textureRegion,
+									const Vector2 &position,
+									const Vector2 &dimensions,
+									const Vector2 &topLeftSlice,
+									const Vector2 &bottomRightSlice,
+									const Vector2 &origin,
+									const float rotation,
+									const Color &color)
+	{
+		if(textureRegion.rotated)
+		{
+			throw std::runtime_error("Nine Slice doesn't support rotated texture atlases yet");
+		}
+		else
+		{
+			Matrix3 transform = CreateTranslationMatrix(position.X(), position.Y()) *
+				CreateRotationMatrix(rotation) *
+				CreateTranslationMatrix(-origin.X() * dimensions.X(), -origin.Y() * dimensions.Y());
+			
+			float xScale = (dimensions.X() - topLeftSlice.X() - bottomRightSlice.X()) /
+				(float)(textureRegion.bounds.width - topLeftSlice.X() - bottomRightSlice.X());
+			float yScale = (dimensions.Y() - topLeftSlice.Y() - bottomRightSlice.Y()) /
+				(float)(textureRegion.bounds.height - topLeftSlice.Y() - bottomRightSlice.Y());
+			
+			float xMid = textureRegion.bounds.width - topLeftSlice.X() - bottomRightSlice.X();
+			float yMid = textureRegion.bounds.height - topLeftSlice.Y() - bottomRightSlice.Y();
+			float xMidScaled = dimensions.X() - topLeftSlice.X() - bottomRightSlice.X();
+			float yMidScaled = dimensions.Y() - topLeftSlice.Y() - bottomRightSlice.Y();
+			
+			
+			// top left
+			Rectangle rectangle(textureRegion.bounds.x,
+								textureRegion.bounds.y,
+								topLeftSlice.X(),
+								topLeftSlice.Y());
+			
+			Draw(texture,
+				 Vector2::ZERO,
+				 &rectangle,
+				 Vector2::ZERO,
+				 0,
+				 color,
+				 Vector2(1.0f, 1.0f),
+				 transform);
+
+			// top mid
+			rectangle = Rectangle(textureRegion.bounds.x + topLeftSlice.X(),
+								  textureRegion.bounds.y,
+								  xMid,
+								  topLeftSlice.Y());
+			
+			Draw(texture,
+				 Vector2(topLeftSlice.X(), 0),
+				 &rectangle,
+				 Vector2::ZERO,
+				 0,
+				 color,
+				 Vector2(xScale, 1.0f),
+				 transform);
+
+			// top right
+			rectangle = Rectangle(textureRegion.bounds.x + topLeftSlice.X() + xMid,
+								  textureRegion.bounds.y,
+								  bottomRightSlice.X(),
+								  topLeftSlice.Y());
+			
+			Draw(texture,
+				 Vector2(topLeftSlice.X() + xMidScaled, 0),
+				 &rectangle,
+				 Vector2::ZERO,
+				 0,
+				 color,
+				 Vector2(1.0f, 1.0f),
+				 transform);
+			
+			// center left
+			rectangle = Rectangle(textureRegion.bounds.x,
+								  textureRegion.bounds.y + topLeftSlice.Y(),
+								  topLeftSlice.X(),
+								  yMid);
+			
+			Draw(texture,
+				 Vector2(0, topLeftSlice.Y()),
+				 &rectangle,
+				 Vector2::ZERO,
+				 0,
+				 color,
+				 Vector2(1.0f, yScale),
+				 transform);
+			
+			// center mid
+			rectangle = Rectangle(textureRegion.bounds.x + topLeftSlice.X(),
+								  textureRegion.bounds.y + topLeftSlice.Y(),
+								  xMid,
+								  yMid);
+			
+			Draw(texture,
+				 Vector2(topLeftSlice.X(), topLeftSlice.Y()),
+				 &rectangle,
+				 Vector2::ZERO,
+				 0,
+				 color,
+				 Vector2(xScale, yScale),
+				 transform);
+			
+			// center right
+			rectangle = Rectangle(textureRegion.bounds.x + topLeftSlice.X() + xMid,
+								  textureRegion.bounds.y + topLeftSlice.Y(),
+								  bottomRightSlice.X(),
+								  yMid);
+			
+			Draw(texture,
+				 Vector2(topLeftSlice.X() + xMidScaled, topLeftSlice.Y()),
+				 &rectangle,
+				 Vector2::ZERO,
+				 0,
+				 color,
+				 Vector2(1.0f, yScale),
+				 transform);
+			
+			// bottom left
+			rectangle = Rectangle(textureRegion.bounds.x,
+								  textureRegion.bounds.y + topLeftSlice.Y() + yMid,
+								  topLeftSlice.X(),
+								  bottomRightSlice.Y());
+			
+			Draw(texture,
+				 Vector2(0, topLeftSlice.Y() + yMidScaled),
+				 &rectangle,
+				 Vector2::ZERO,
+				 0,
+				 color,
+				 Vector2(1.0f, 1.0f),
+				 transform);
+			
+			// bottom mid
+			rectangle = Rectangle(textureRegion.bounds.x + topLeftSlice.X(),
+								  textureRegion.bounds.y + topLeftSlice.Y() + yMid,
+								  xMid,
+								  bottomRightSlice.Y());
+			
+			Draw(texture,
+				 Vector2(topLeftSlice.X(), topLeftSlice.Y() + yMidScaled),
+				 &rectangle,
+				 Vector2::ZERO,
+				 0,
+				 color,
+				 Vector2(xScale, 1.0f),
+				 transform);
+			
+			// bottom right
+			rectangle = Rectangle(textureRegion.bounds.x + topLeftSlice.X() + xMid,
+								  textureRegion.bounds.y + topLeftSlice.Y() + yMid,
+								  bottomRightSlice.X(),
+								  bottomRightSlice.Y());
+			
+			Draw(texture,
+				 Vector2(topLeftSlice.X() + xMidScaled, topLeftSlice.Y() + yMidScaled),
+				 &rectangle,
+				 Vector2::ZERO,
+				 0,
+				 color,
+				 Vector2(1.0f, 1.0f),
+				 transform);			
+		}
+	}
 
 	void SpriteBatch::DrawString(Font *font, Texture *texture, const std::string &s, const Vector2 &position, const Color &color)
 	{
