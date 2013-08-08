@@ -18,7 +18,6 @@ obj/
 gen/
 *.o
 *.o.d
-*.a
 *.so
 *.prefs
 gdb.setup
