@@ -22,4 +22,7 @@ public class NinjaJni
 	public static native void touchUp(int id, int x, int y);
 	public static native void touchMove(int id, int x, int y);
 	public static native void touchCancel(int id);
+
+	public static native void facebookLogin(boolean success, String accessToken);
+	public static native void facebookLogout();
 }

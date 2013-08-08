@@ -204,6 +204,7 @@ LOCAL_SRC_FILES +=\
 
 # Internet
 LOCAL_SRC_FILES +=\
+	$(S_PATH)/Internet/FacebookManager.cpp \
 	$(S_PATH)/Internet/HttpRequestManager.cpp
 
 # Math

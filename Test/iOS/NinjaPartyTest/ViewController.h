@@ -3,4 +3,10 @@
 
 @interface ViewController : GLKViewController <AVAudioSessionDelegate>
 
++ (ViewController*) instance;
+
+- (void) FacebookLogin;
+- (void) FacebookLogout;
+- (bool) FacebookIsLoggedIn;
+
 @end

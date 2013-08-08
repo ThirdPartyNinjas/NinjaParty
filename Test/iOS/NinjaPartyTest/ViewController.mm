@@ -3,9 +3,11 @@
 #import <Foundation/NSNotification.h>
 #import <UIKit/UIKit.h>
 
+#import <FacebookSDK/FacebookSDK.h>
+
 #import "ViewController.h"
 
-#define TEST_HTTPREQUEST
+#define TEST_FACEBOOK
 
 #if defined(TEST_EMPTYGAME)
 #include "../../Tests/EmptyGame.hpp"
@@ -25,7 +27,11 @@
 #include "../../Tests/Assets.hpp"
 #elif defined(TEST_HTTPREQUEST)
 #include "../../Tests/HttpRequest.hpp"
+#elif defined(TEST_FACEBOOK)
+#include "../../Tests/Facebook.hpp"
 #endif
+
+static ViewController *globalInstance = nil;
 
 @interface ViewController ()
 {
@@ -35,6 +41,11 @@
 @end
 
 @implementation ViewController
+
++ (ViewController*)instance
+{
+	return globalInstance;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -67,6 +78,8 @@
 	{
 		NSLog(@"Failed to create OpenGLES2 context");
 	}
+
+	globalInstance = self;
 	
 	GLKView *view = (GLKView*)self.view;
 	view.context = context;
@@ -89,6 +102,8 @@
 	
 	game = new Tests::TestGame(screenWidth, screenHeight);
 	game->LoadContent("Assets/", "Assets/Assets.zip");
+	
+	[self openFacebookSession:NO];
 }
 
 // This function was deprecated in iOS 6.0, but we need it for versions < 6.0
@@ -188,8 +203,68 @@
 	float scale = [UIScreen mainScreen].scale;
     CGPoint touchPoint = [recognizer locationInView:self.view];
     game->HandleTap((int)(touchPoint.x * scale), (int)(touchPoint.y * scale));
-	
-	printf("tap");
+}
+
+- (void) facebookSessionStateChanged:(FBSession*)session state:(FBSessionState)state error:(NSError*)error
+{
+	switch(state)
+	{
+		case FBSessionStateClosed:
+			// logout
+			[FBSession.activeSession closeAndClearTokenInformation];
+			[FBSession setActiveSession:nil];
+			game->FacebookLogout();
+			break;
+			
+		case FBSessionStateOpen:
+			// login
+			game->FacebookLogin(true, [[[[FBSession activeSession] accessTokenData] accessToken] UTF8String]);
+			break;
+			
+		case FBSessionStateClosedLoginFailed:
+			// login failed/cancelled
+			game->FacebookLogin(false, "");
+			break;
+			
+		default:
+			break;
+	}
+}
+
+- (void) openFacebookSession:(BOOL)allowUI
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:allowUI completionHandler:^(FBSession *session, FBSessionState state, NSError *error)
+		 {
+			 [self facebookSessionStateChanged:session state:state error:error];
+		 }];
+	});
+}
+
+- (void) FacebookLogin
+{
+	if([self FacebookIsLoggedIn])
+		game->FacebookLogin(true, [[[[FBSession activeSession] accessTokenData] accessToken] UTF8String]);
+	else
+		[self openFacebookSession:YES];
+}
+
+- (void) FacebookLogout
+{
+	if([self FacebookIsLoggedIn])
+	{
+		[FBSession.activeSession closeAndClearTokenInformation];
+		[FBSession setActiveSession:nil];
+	}
+	else
+	{
+		game->FacebookLogout();
+	}
+}
+
+- (bool) FacebookIsLoggedIn
+{
+	return [FBSession.activeSession isOpen];
 }
 
 @end

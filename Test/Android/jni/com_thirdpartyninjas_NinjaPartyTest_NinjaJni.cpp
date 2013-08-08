@@ -14,7 +14,7 @@
 
 #include "com_thirdpartyninjas_NinjaPartyTest_NinjaJni.h"
 
-#define TEST_HTTPREQUEST
+#define TEST_FACEBOOK
 
 #if defined(TEST_EMPTYGAME)
 #include "../../Tests/EmptyGame.hpp"
@@ -36,15 +36,95 @@
 #include "../../Tests/Assets.hpp"
 #elif defined(TEST_HTTPREQUEST)
 #include "../../Tests/HttpRequest.hpp"
+#elif defined(TEST_FACEBOOK)
+#include "../../Tests/Facebook.hpp"
 #endif
 
 std::string g_apkPath = "";
 JavaVM *g_javaVM = nullptr;
 Tests::TestGame *game = nullptr;
 
+extern "C"
+{
+	void FacebookLogin()
+	{
+		LOGI("C_FacebookLogin");
+
+		JNIEnv *env = nullptr;
+		jint envResult = g_javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
+		if(envResult != JNI_OK)
+			g_javaVM->AttachCurrentThread(&env, NULL);
+
+		jclass clazz = env->FindClass("com/thirdpartyninjas/NinjaPartyTest/NinjaActivity");
+		if(clazz == nullptr)
+			throw;
+
+		jmethodID methodId = env->GetStaticMethodID(clazz, "FacebookLogin", "()V");
+		env->CallStaticVoidMethod(clazz, methodId);
+
+		if(envResult != JNI_OK)
+			g_javaVM->DetachCurrentThread();
+	}
+
+	void FacebookLogout()
+	{
+		LOGI("C_FacebookLogout");
+
+		JNIEnv *env = nullptr;
+		jint envResult = g_javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
+		if(envResult != JNI_OK)
+			g_javaVM->AttachCurrentThread(&env, NULL);
+
+		jclass clazz = env->FindClass("com/thirdpartyninjas/NinjaPartyTest/NinjaActivity");
+		if(clazz == nullptr)
+			throw;
+
+		jmethodID methodId = env->GetStaticMethodID(clazz, "FacebookLogout", "()V");
+		env->CallStaticVoidMethod(clazz, methodId);
+
+		if(envResult != JNI_OK)
+			g_javaVM->DetachCurrentThread();
+	}
+
+	bool FacebookIsLoggedIn()
+	{
+		return false;
+		
+		LOGI("C_FacebookIsLoggedIn");
+
+		JNIEnv *env = nullptr;
+		jint envResult = g_javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
+		if(envResult != JNI_OK)
+			g_javaVM->AttachCurrentThread(&env, NULL);
+
+		LOGI("0");
+
+		jclass clazz = env->FindClass("com/thirdpartyninjas/NinjaPartyTest/NinjaActivity");
+		if(clazz == nullptr)
+		{
+			LOGI("1");
+			throw;
+		}
+
+		LOGI("1a");
+
+		jmethodID methodId = env->GetStaticMethodID(clazz, "FacebookIsLoggedIn", "()Z");
+		bool result = env->CallStaticBooleanMethod(clazz, methodId);
+
+		LOGI("2");
+
+		if(envResult != JNI_OK)
+			g_javaVM->DetachCurrentThread();
+
+		LOGI("3");
+
+		return result;
+	}
+}
+
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_init(JNIEnv *env, jclass, jint width, jint height, jstring javaApkPath)
 {
-	jboolean isCopy;    
+	jboolean isCopy;
 	const char *nativeApkPath = env->GetStringUTFChars(javaApkPath, &isCopy);
 	g_apkPath = nativeApkPath;
 	env->ReleaseStringUTFChars(javaApkPath, nativeApkPath);
@@ -53,6 +133,8 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_init(JN
 
 	glEnable(GL_BLEND);
 	glViewport(0, 0, width, height);
+
+	LOGI("Init");
 
 	try
 	{
@@ -138,4 +220,16 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_touchMo
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_touchCancel(JNIEnv *, jclass, jint id)
 {
 	game->TouchCancelled((void*)id);
+}
+
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_facebookLogin(JNIEnv *env, jclass, jboolean success, jstring javaAccessToken)
+{
+	const char *nativeAccessToken = env->GetStringUTFChars(javaAccessToken, nullptr);
+	game->FacebookLogin(success, nativeAccessToken);
+	env->ReleaseStringUTFChars(javaAccessToken, nativeAccessToken);
+}
+
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_facebookLogout(JNIEnv *, jclass)
+{
+	game->FacebookLogout();
 }

@@ -24,6 +24,8 @@
 		3035FE0F17AC1DCB007BA60A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3035FE0E17AC1DCB007BA60A /* AVFoundation.framework */; };
 		3035FE1317AC409C007BA60A /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3035FE1217AC409C007BA60A /* OpenAL.framework */; };
 		3035FF8517AC4769007BA60A /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 3035FF8417AC4769007BA60A /* Assets */; };
+		30B82AB817B3EB9500924448 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30B82AB717B3EB9500924448 /* FacebookSDK.framework */; };
+		30B82AC117B4295300924448 /* facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B82AC017B4295300924448 /* facebook.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,9 @@
 		3035FF8317AC45B4007BA60A /* Touch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Touch.hpp; sourceTree = "<group>"; };
 		3035FF8417AC4769007BA60A /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../Assets; sourceTree = "<group>"; };
 		307012D917AF3DE6006A9315 /* HttpRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HttpRequest.hpp; sourceTree = "<group>"; };
+		30B82AB717B3EB9500924448 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Dependencies/facebook/iOS/FacebookSDK.framework; sourceTree = "<group>"; };
+		30B82ABF17B427CB00924448 /* Facebook.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Facebook.hpp; sourceTree = "<group>"; };
+		30B82AC017B4295300924448 /* facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = facebook.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +90,7 @@
 				3035FDD717AC1A90007BA60A /* UIKit.framework in Frameworks */,
 				3035FDD917AC1A90007BA60A /* Foundation.framework in Frameworks */,
 				3035FDDB17AC1A90007BA60A /* CoreGraphics.framework in Frameworks */,
+				30B82AB817B3EB9500924448 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +123,7 @@
 				3035FE0E17AC1DCB007BA60A /* AVFoundation.framework */,
 				3035FE0B17AC1D7C007BA60A /* CoreAudio.framework */,
 				3035FDDA17AC1A90007BA60A /* CoreGraphics.framework */,
+				30B82AB717B3EB9500924448 /* FacebookSDK.framework */,
 				3035FDD817AC1A90007BA60A /* Foundation.framework */,
 				3035FE0417AC1CFC007BA60A /* GLKit.framework */,
 				3035FE1217AC409C007BA60A /* OpenAL.framework */,
@@ -131,6 +138,7 @@
 			children = (
 				3035FDF317AC1B3B007BA60A /* AppDelegate.h */,
 				3035FDF417AC1B3B007BA60A /* AppDelegate.m */,
+				30B82AC017B4295300924448 /* facebook.m */,
 				3035FDF517AC1B3B007BA60A /* main.m */,
 				3035FDDD17AC1A90007BA60A /* Supporting Files */,
 				3035FDF617AC1B3B007BA60A /* ViewController.h */,
@@ -158,6 +166,7 @@
 				3035FF7C17AC45B4007BA60A /* Audio.hpp */,
 				3035FF7D17AC45B4007BA60A /* Demina.hpp */,
 				3035FDFC17AC1BC6007BA60A /* EmptyGame.hpp */,
+				30B82ABF17B427CB00924448 /* Facebook.hpp */,
 				3035FF7E17AC45B4007BA60A /* Gleed.hpp */,
 				307012D917AF3DE6006A9315 /* HttpRequest.hpp */,
 				3035FF7F17AC45B4007BA60A /* RenderTexture.hpp */,
@@ -263,6 +272,7 @@
 				3035FDF817AC1B3B007BA60A /* AppDelegate.m in Sources */,
 				3035FDF917AC1B3B007BA60A /* main.m in Sources */,
 				3035FDFA17AC1B3B007BA60A /* ViewController.mm in Sources */,
+				30B82AC117B4295300924448 /* facebook.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +349,10 @@
 		3035FDF117AC1A90007BA60A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Dependencies/facebook/iOS\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				HEADER_SEARCH_PATHS = (
 					../../Include,
@@ -355,6 +369,10 @@
 		3035FDF217AC1A90007BA60A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Dependencies/facebook/iOS\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				HEADER_SEARCH_PATHS = (
 					../../Include,

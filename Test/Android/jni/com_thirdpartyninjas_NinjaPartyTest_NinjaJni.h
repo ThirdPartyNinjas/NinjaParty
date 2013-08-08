@@ -95,6 +95,22 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_touchMo
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_touchCancel
   (JNIEnv *, jclass, jint);
 
+/*
+ * Class:     com_thirdpartyninjas_NinjaPartyTest_NinjaJni
+ * Method:    facebookLogin
+ * Signature: (ZLjava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_facebookLogin
+  (JNIEnv *, jclass, jboolean, jstring);
+
+/*
+ * Class:     com_thirdpartyninjas_NinjaPartyTest_NinjaJni
+ * Method:    facebookLogout
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_facebookLogout
+  (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif
