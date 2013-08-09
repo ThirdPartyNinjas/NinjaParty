@@ -19,21 +19,24 @@ public class NinjaActivity extends Activity
 
 	private UiLifecycleHelper lifecycleHelper;
 
+	public NinjaActivity()
+	{
+		super();
+		instance = this;
+	}
+
 	public static void FacebookLogin()
 	{
-		Log.i("NinjaPartyTest", "FacebookLogin");
 		instance.facebookLogin();
 	}
 
 	public static void FacebookLogout()
 	{
-		Log.i("NinjaPartyTest", "FacebookLogout");
 		instance.facebookLogout();
 	}
 
 	public static boolean FacebookIsLoggedIn()
 	{
-		Log.i("NinjaPartyTest", "FacebookIsLoggedIn");
 		return instance.facebookIsLoggedIn();
 	}
 
@@ -139,21 +142,17 @@ public class NinjaActivity extends Activity
 
 	private void onSessionStateChanged(Session session, SessionState state, Exception exception)
 	{
-		Log.i("NinjaPartyTest", "onSessionStateChanged");
 		switch(state)
 		{
 			case CLOSED:
-				Log.i("NinjaPartyTest", "CLOSED");
 				NinjaJni.facebookLogout();
 				break;
 
 			case OPENED:
-				Log.i("NinjaPartyTest", "OPENED");
 				NinjaJni.facebookLogin(true, session.getAccessToken());
 				break;
 
 			case CLOSED_LOGIN_FAILED:
-				Log.i("NinjaPartyTest", "CLOSED_LOGIN_FAILED");
 				NinjaJni.facebookLogin(false, "");
 				break;
 		}

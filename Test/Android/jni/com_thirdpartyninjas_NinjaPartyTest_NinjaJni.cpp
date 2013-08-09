@@ -1,6 +1,6 @@
+#include <queue>
 #include <string>
 #include <vector>
-
 
 #include <NinjaParty/AssetManager.hpp>
 #include <NinjaParty/SpriteBatch.hpp>
@@ -40,86 +40,65 @@
 #include "../../Tests/Facebook.hpp"
 #endif
 
+enum class LocalCommand
+{
+	None = 0,
+	FacebookLogin,
+	FacebookLogout,
+};
+
 std::string g_apkPath = "";
 JavaVM *g_javaVM = nullptr;
 Tests::TestGame *game = nullptr;
+std::queue<LocalCommand> g_localCommands;
 
 extern "C"
 {
 	void FacebookLogin()
 	{
-		LOGI("C_FacebookLogin");
-
-		JNIEnv *env = nullptr;
-		jint envResult = g_javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
-		if(envResult != JNI_OK)
-			g_javaVM->AttachCurrentThread(&env, NULL);
-
-		jclass clazz = env->FindClass("com/thirdpartyninjas/NinjaPartyTest/NinjaActivity");
-		if(clazz == nullptr)
-			throw;
-
-		jmethodID methodId = env->GetStaticMethodID(clazz, "FacebookLogin", "()V");
-		env->CallStaticVoidMethod(clazz, methodId);
-
-		if(envResult != JNI_OK)
-			g_javaVM->DetachCurrentThread();
+		g_localCommands.push(LocalCommand::FacebookLogin);
 	}
 
 	void FacebookLogout()
 	{
-		LOGI("C_FacebookLogout");
-
-		JNIEnv *env = nullptr;
-		jint envResult = g_javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
-		if(envResult != JNI_OK)
-			g_javaVM->AttachCurrentThread(&env, NULL);
-
-		jclass clazz = env->FindClass("com/thirdpartyninjas/NinjaPartyTest/NinjaActivity");
-		if(clazz == nullptr)
-			throw;
-
-		jmethodID methodId = env->GetStaticMethodID(clazz, "FacebookLogout", "()V");
-		env->CallStaticVoidMethod(clazz, methodId);
-
-		if(envResult != JNI_OK)
-			g_javaVM->DetachCurrentThread();
+		g_localCommands.push(LocalCommand::FacebookLogout);
 	}
+}
 
-	bool FacebookIsLoggedIn()
-	{
-		return false;
-		
-		LOGI("C_FacebookIsLoggedIn");
+void PerformFacebookLoginCommand()
+{
+	JNIEnv *env = nullptr;
+	jint envResult = g_javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
+	if(envResult != JNI_OK)
+		g_javaVM->AttachCurrentThread(&env, NULL);
 
-		JNIEnv *env = nullptr;
-		jint envResult = g_javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
-		if(envResult != JNI_OK)
-			g_javaVM->AttachCurrentThread(&env, NULL);
+	jclass clazz = env->FindClass("com/thirdpartyninjas/NinjaPartyTest/NinjaActivity");
+	if(clazz == nullptr)
+		throw;
 
-		LOGI("0");
+	jmethodID methodId = env->GetStaticMethodID(clazz, "FacebookLogin", "()V");
+	env->CallStaticVoidMethod(clazz, methodId);
 
-		jclass clazz = env->FindClass("com/thirdpartyninjas/NinjaPartyTest/NinjaActivity");
-		if(clazz == nullptr)
-		{
-			LOGI("1");
-			throw;
-		}
+	if(envResult != JNI_OK)
+		g_javaVM->DetachCurrentThread();
+}
 
-		LOGI("1a");
+void PerformFacebookLogoutCommand()
+{
+	JNIEnv *env = nullptr;
+	jint envResult = g_javaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
+	if(envResult != JNI_OK)
+		g_javaVM->AttachCurrentThread(&env, NULL);
 
-		jmethodID methodId = env->GetStaticMethodID(clazz, "FacebookIsLoggedIn", "()Z");
-		bool result = env->CallStaticBooleanMethod(clazz, methodId);
+	jclass clazz = env->FindClass("com/thirdpartyninjas/NinjaPartyTest/NinjaActivity");
+	if(clazz == nullptr)
+		throw;
 
-		LOGI("2");
+	jmethodID methodId = env->GetStaticMethodID(clazz, "FacebookLogout", "()V");
+	env->CallStaticVoidMethod(clazz, methodId);
 
-		if(envResult != JNI_OK)
-			g_javaVM->DetachCurrentThread();
-
-		LOGI("3");
-
-		return result;
-	}
+	if(envResult != JNI_OK)
+		g_javaVM->DetachCurrentThread();
 }
 
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_init(JNIEnv *env, jclass, jint width, jint height, jstring javaApkPath)
@@ -133,8 +112,6 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_init(JN
 
 	glEnable(GL_BLEND);
 	glViewport(0, 0, width, height);
-
-	LOGI("Init");
 
 	try
 	{
@@ -162,6 +139,7 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_destroy
 		game = nullptr;
 	}
 
+	std::queue<LocalCommand>().swap(g_localCommands);
 	g_apkPath = "";
 }
 
@@ -177,6 +155,23 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_update(
 {
 	if(game)
 	{
+		while(!g_localCommands.empty())
+		{
+			LocalCommand localCommand = g_localCommands.front();
+			g_localCommands.pop();
+
+			switch(localCommand)
+			{
+				case LocalCommand::FacebookLogin:
+					PerformFacebookLoginCommand();
+					break;
+
+				case LocalCommand::FacebookLogout:
+					PerformFacebookLogoutCommand();
+					break;
+			}
+		}
+
 		game->Update(deltaSeconds);
 	}
 }
@@ -224,9 +219,18 @@ JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_touchCa
 
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_facebookLogin(JNIEnv *env, jclass, jboolean success, jstring javaAccessToken)
 {
-	const char *nativeAccessToken = env->GetStringUTFChars(javaAccessToken, nullptr);
-	game->FacebookLogin(success, nativeAccessToken);
-	env->ReleaseStringUTFChars(javaAccessToken, nativeAccessToken);
+	// if game == null, queue up a facebook login once it's activated
+	if(game == nullptr)
+	{
+		g_localCommands.push(LocalCommand::FacebookLogin);
+		return;
+	}
+	else
+	{
+		const char *nativeAccessToken = env->GetStringUTFChars(javaAccessToken, nullptr);
+		game->FacebookLogin(success, nativeAccessToken);
+		env->ReleaseStringUTFChars(javaAccessToken, nativeAccessToken);
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_thirdpartyninjas_NinjaPartyTest_NinjaJni_facebookLogout(JNIEnv *, jclass)

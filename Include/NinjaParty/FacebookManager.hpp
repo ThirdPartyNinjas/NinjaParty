@@ -21,7 +21,7 @@ namespace NinjaParty
 		FacebookManager();
 		~FacebookManager();
 		
-		bool IsLoggedIn() const;
+		bool IsLoggedIn() const { return isLoggedIn; }
 		
 		void Login();
 		void Logout();
@@ -36,8 +36,13 @@ namespace NinjaParty
 		
 		std::string accessToken;
 		
+		bool isLoggedIn;
+		
 		std::mutex mutex;
 		HttpRequestHandle requestHandle;
+		
+		FacebookUserInfo userInfo;
+		std::vector<FacebookUserInfo> friendsUserInfo;
 		
 		friend class Game;
 	};

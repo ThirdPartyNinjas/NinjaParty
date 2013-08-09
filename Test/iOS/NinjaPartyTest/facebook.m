@@ -9,8 +9,3 @@ void FacebookLogout()
 {
 	[[ViewController instance] FacebookLogout];
 }
-
-bool FacebookIsLoggedIn()
-{
-	return [[ViewController instance] FacebookIsLoggedIn];
-}

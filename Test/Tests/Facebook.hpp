@@ -40,7 +40,6 @@ namespace Tests
 					facebookManager.Logout();
 				else
 					facebookManager.Login();
-				
 			}
 		}
     };

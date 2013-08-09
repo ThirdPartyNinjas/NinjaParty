@@ -1,5 +1,7 @@
 #include <functional>
 
+#include <json/json.h>
+
 #include <NinjaParty/FacebookManager.hpp>
 #include <NinjaParty/HttpRequestManager.hpp>
 
@@ -7,7 +9,6 @@ extern "C"
 {
 	void FacebookLogin();
 	void FacebookLogout();
-	bool FacebookIsLoggedIn();
 }
 
 //Expired token
@@ -34,18 +35,14 @@ namespace NinjaParty
 	FacebookManager::FacebookManager()
 	{
 		requestHandle = HttpRequestHandle();
+		isLoggedIn = false;
 	}
 	
 	FacebookManager::~FacebookManager()
 	{
-		
+		HttpRequestManager::Instance()->Cancel(requestHandle);
 	}
 
-	bool FacebookManager::IsLoggedIn() const
-	{
-		return FacebookIsLoggedIn();
-	}
-	
 	void FacebookManager::Login()
 	{
 		FacebookLogin();
@@ -69,19 +66,49 @@ namespace NinjaParty
 	
 	void FacebookManager::FB_Login(bool success, const std::string &accessToken)
 	{
+		isLoggedIn = success;
 		this->accessToken = accessToken;
 	}
 	
 	void FacebookManager::FB_Logout()
 	{
+		isLoggedIn = false;
 		this->accessToken = "";
 	}
 	
 	void FacebookManager::FB_InfoResponse(bool success, const std::string &response)
 	{
 		std::lock_guard<std::mutex> lock(mutex);
+
+		Json::Value root;
+		Json::Reader reader;
 		
-		// parse the response
-		printf("%s\n", response.c_str());
+		bool parsingSuccessful = reader.parse(reinterpret_cast<const char*>(response.c_str()), root);
+		
+		if(!parsingSuccessful)
+		{
+			// handle error
+			return;
+		}
+		
+		Json::Value error = root["error"];
+		if(!error.isNull())
+		{
+			// handle error
+			return;
+		}
+		
+		userInfo.userId = root["id"].asString();
+		userInfo.profilePictureUrl = root["picture"]["data"]["url"].asString();
+		
+		Json::Value friendData = root["friends"]["data"];
+		friendsUserInfo.reserve(friendData.size());
+		for(int index = 0; index < friendData.size(); ++index)
+		{
+			FacebookUserInfo info;
+			info.userId = friendData[index]["id"].asString();
+			info.profilePictureUrl = friendData[index]["picture"]["data"]["url"].asString();
+			friendsUserInfo.push_back(info);
+		}
 	}
 }
