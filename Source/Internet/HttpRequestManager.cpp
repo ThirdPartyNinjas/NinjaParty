@@ -53,17 +53,6 @@ namespace NinjaParty
 			g_sslMutexes[n].unlock();
 	}
 	
-	HttpRequestManager *HttpRequestManager::instance = nullptr;
-	
-	HttpRequestManager* HttpRequestManager::Instance()
-	{
-		if(instance == nullptr)
-		{
-			instance = new HttpRequestManager();
-		}
-		return instance;
-	}
-	
 	HttpRequestManager::HttpRequestManager()
 	{
 		if(g_sslMutexes != nullptr)

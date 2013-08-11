@@ -25,13 +25,17 @@ namespace NinjaParty
 		
 		void Login();
 		void Logout();
+
+		// todo:
+		// QueryPermissions (using graph api me/permissions)
+		// RequestPublishPermission (require calling up iOS/Android API)
 		
 		void RequestInfo();
 
-	private:
-		void FB_Login(bool success, const std::string &accessToken);
-		void FB_Logout();
+		void InjectLogin(bool success, const std::string &accessToken);
+		void InjectLogout();
 		
+	private:
 		void FB_InfoResponse(bool success, const std::string &response);
 		
 		std::string accessToken;
@@ -43,8 +47,6 @@ namespace NinjaParty
 		
 		FacebookUserInfo userInfo;
 		std::vector<FacebookUserInfo> friendsUserInfo;
-		
-		friend class Game;
 	};
 }
 

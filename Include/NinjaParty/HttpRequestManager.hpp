@@ -16,7 +16,11 @@ namespace NinjaParty
 	class HttpRequestManager
 	{
 	public:
-		static HttpRequestManager* Instance();
+		static HttpRequestManager& Instance()
+		{
+			static HttpRequestManager instance;
+			return instance;
+		}
 		
 		~HttpRequestManager();
 

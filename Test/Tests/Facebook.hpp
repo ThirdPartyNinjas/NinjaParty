@@ -1,6 +1,7 @@
 #include <functional>
 #include <memory>
 
+#include <NinjaParty/FacebookManager.hpp>
 #include <NinjaParty/Game.hpp>
 
 namespace Tests
@@ -42,5 +43,18 @@ namespace Tests
 					facebookManager.Login();
 			}
 		}
+		
+		void FacebookLogin(bool success, const std::string &accessToken)
+		{
+			facebookManager.InjectLogin(success, accessToken);
+		}
+		
+		void FacebookLogout()
+		{
+			facebookManager.InjectLogout();
+		}
+		
+	private:
+		NinjaParty::FacebookManager facebookManager;
     };
 }

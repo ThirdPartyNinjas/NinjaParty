@@ -40,7 +40,7 @@ namespace NinjaParty
 	
 	FacebookManager::~FacebookManager()
 	{
-		HttpRequestManager::Instance()->Cancel(requestHandle);
+		HttpRequestManager::Instance().Cancel(requestHandle);
 	}
 
 	void FacebookManager::Login()
@@ -57,20 +57,20 @@ namespace NinjaParty
 	{
 		if(IsLoggedIn())
 		{
-			HttpRequestManager::Instance()->Cancel(requestHandle);
+			HttpRequestManager::Instance().Cancel(requestHandle);
 			
 			std::string requestPath = "https://graph.facebook.com/me?fields=friends.fields(picture),picture&access_token=";
-			requestHandle = HttpRequestManager::Instance()->PerformGet(requestPath + accessToken, std::bind(&FacebookManager::FB_InfoResponse, this, std::placeholders::_1, std::placeholders::_2));
+			requestHandle = HttpRequestManager::Instance().PerformGet(requestPath + accessToken, std::bind(&FacebookManager::FB_InfoResponse, this, std::placeholders::_1, std::placeholders::_2));
 		}
 	}
 	
-	void FacebookManager::FB_Login(bool success, const std::string &accessToken)
+	void FacebookManager::InjectLogin(bool success, const std::string &accessToken)
 	{
 		isLoggedIn = success;
 		this->accessToken = accessToken;
 	}
 	
-	void FacebookManager::FB_Logout()
+	void FacebookManager::InjectLogout()
 	{
 		isLoggedIn = false;
 		this->accessToken = "";
@@ -94,7 +94,52 @@ namespace NinjaParty
 		Json::Value error = root["error"];
 		if(!error.isNull())
 		{
-			// handle error
+			int errorCode = error["code"].asInt();
+			int errorSubcode = error["error_subcode"].isNull() ? 0 : error["error_subcode"].asInt();
+			
+			switch(errorCode)
+			{
+				case 1:
+				case 2:
+				case 4:
+				case 17:
+					// todo: wait a short duration and try again
+					break;
+					
+				case 102:
+				case 190:
+					switch(errorSubcode)
+					{
+						case 460:
+							// if we are on iOS version >= 6.0 direct user to update their facebook password on device
+							// otherwise, reauthorize
+							break;
+
+						case 458:
+						case 463:
+						case 467:
+							// todo: reauthorize
+							break;
+							
+						case 459:
+						case 464:
+							// todo: notify user to log onto facebook.com
+							break;
+					}
+					break;
+					
+				case 10:
+					// todo: need to request permissions
+					break;
+					
+				default:
+					if(errorCode >= 200 && errorCode <= 299)
+					{
+						// todo: need to request permissions
+					}
+					break;
+			}
+			
 			return;
 		}
 		

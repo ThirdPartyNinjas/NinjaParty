@@ -54,15 +54,8 @@ namespace NinjaParty
 
         virtual void HandleTap(int x, int y) { }
 		
-		void FacebookLogin(bool success, const std::string &accessToken)
-		{
-			facebookManager.FB_Login(success, accessToken);
-		}
-		
-		void FacebookLogout()
-		{
-			facebookManager.FB_Logout();
-		}
+		virtual void FacebookLogin(bool success, const std::string &accessToken) { }
+		virtual void FacebookLogout() { }
 
 	private:
 		bool exit;
@@ -72,7 +65,6 @@ namespace NinjaParty
 
 	protected:
 		ScreenManager screenManager;
-		FacebookManager facebookManager;
 	};
 }
 
