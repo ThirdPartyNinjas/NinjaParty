@@ -38,6 +38,19 @@ namespace NinjaParty
 	private:
 		void FB_InfoResponse(bool success, const std::string &response);
 		
+		// Unspecified error
+		virtual void HandleGenericError() { }
+		// Retry after app-defined delay
+		virtual void HandleDelayRetryError() { }
+		// Reauthorize user, access token invalid or expired
+		virtual void HandleReauthorizeError() { }
+		// Reauthorize user, unless on iOS and version >= 6.0, then send to iOS settings to change password
+		virtual void HandleReauthorizeSpecialError() { }
+		// Send user to login to the facebook website http://m.facebook.com
+		virtual void HandleFacebookWebsiteLoginError() { }
+		// We lack the appropriate permissions
+		virtual void HandleNeedPermissionsError() { }
+		
 		std::string accessToken;
 		
 		bool isLoggedIn;

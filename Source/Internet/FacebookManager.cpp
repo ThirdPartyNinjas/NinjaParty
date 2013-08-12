@@ -11,25 +11,6 @@ extern "C"
 	void FacebookLogout();
 }
 
-//Expired token
-//{
-//	"error": {
-//		"message": "Error validating access token: Session has expired at unix time 1375992000. The current unix time is 1375992383.",
-//		"type": "OAuthException",
-//		"code": 190,
-//		"error_subcode": 463
-//	}
-//}
-
-//Invalid token
-//{
-//	"error": {
-//		"message": "Malformed access token CEose0cBANxVcP2bPKZAwP6rlXmv7YWHGq6hab8kTLTTvogKWGuZCZAWYqQaQjlWoExyBUZCk5wW5ZClkrQC5FSoOb78BpurRaK92idv35DRFycXoyLLlAyBQ288OOv2Co96qZA0bQihvnQZCbBZBtuMvnhbyZCv7ejpPwShpUwZDZD",
-//		"type": "OAuthException",
-//		"code": 190
-//	}
-//}
-
 namespace NinjaParty
 {
 	FacebookManager::FacebookManager()
@@ -87,7 +68,7 @@ namespace NinjaParty
 		
 		if(!parsingSuccessful)
 		{
-			// handle error
+			HandleGenericError();
 			return;
 		}
 		
@@ -103,7 +84,7 @@ namespace NinjaParty
 				case 2:
 				case 4:
 				case 17:
-					// todo: wait a short duration and try again
+					HandleDelayRetryError();
 					break;
 					
 				case 102:
@@ -113,29 +94,34 @@ namespace NinjaParty
 						case 460:
 							// if we are on iOS version >= 6.0 direct user to update their facebook password on device
 							// otherwise, reauthorize
+							HandleReauthorizeSpecialError();
 							break;
 
 						case 458:
 						case 463:
 						case 467:
 							// todo: reauthorize
+							HandleReauthorizeError();
 							break;
 							
 						case 459:
 						case 464:
 							// todo: notify user to log onto facebook.com
+							HandleFacebookWebsiteLoginError();
 							break;
 					}
 					break;
 					
 				case 10:
 					// todo: need to request permissions
+					HandleNeedPermissionsError();
 					break;
 					
 				default:
 					if(errorCode >= 200 && errorCode <= 299)
 					{
 						// todo: need to request permissions
+						HandleNeedPermissionsError();
 					}
 					break;
 			}
