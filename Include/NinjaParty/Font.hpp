@@ -24,6 +24,7 @@ namespace NinjaParty
 		int size, lineHeight;
 	};
 	
+	NinjaParty::Vector2 MeasureString(Font *font, const std::string &string);
 	void MeasureString(Font *font, const std::string &string, NinjaParty::Vector2 &maximum);
 	std::string WordWrapString(Font *font, const std::string &string, float width);
 }

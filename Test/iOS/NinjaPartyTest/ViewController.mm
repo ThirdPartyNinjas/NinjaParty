@@ -7,7 +7,7 @@
 
 #import "ViewController.h"
 
-#define TEST_FACEBOOK
+#define TEST_FONT
 
 #if defined(TEST_EMPTYGAME)
 #include "../../Tests/EmptyGame.hpp"
@@ -29,6 +29,8 @@
 #include "../../Tests/HttpRequest.hpp"
 #elif defined(TEST_FACEBOOK)
 #include "../../Tests/Facebook.hpp"
+#elif defined(TEST_FONT)
+#include "../../Tests/Font.hpp"
 #endif
 
 static ViewController *globalInstance = nil;

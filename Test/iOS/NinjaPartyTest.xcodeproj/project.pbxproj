@@ -70,6 +70,7 @@
 		3035FF8217AC45B4007BA60A /* TextureDictionary.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureDictionary.hpp; sourceTree = "<group>"; };
 		3035FF8317AC45B4007BA60A /* Touch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Touch.hpp; sourceTree = "<group>"; };
 		3035FF8417AC4769007BA60A /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../Assets; sourceTree = "<group>"; };
+		30424BA517BB2993004A29D8 /* Font.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Font.hpp; sourceTree = "<group>"; };
 		307012D917AF3DE6006A9315 /* HttpRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HttpRequest.hpp; sourceTree = "<group>"; };
 		30B82AB717B3EB9500924448 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Dependencies/facebook/iOS/FacebookSDK.framework; sourceTree = "<group>"; };
 		30B82ABF17B427CB00924448 /* Facebook.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Facebook.hpp; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 				3035FF7D17AC45B4007BA60A /* Demina.hpp */,
 				3035FDFC17AC1BC6007BA60A /* EmptyGame.hpp */,
 				30B82ABF17B427CB00924448 /* Facebook.hpp */,
+				30424BA517BB2993004A29D8 /* Font.hpp */,
 				3035FF7E17AC45B4007BA60A /* Gleed.hpp */,
 				307012D917AF3DE6006A9315 /* HttpRequest.hpp */,
 				3035FF7F17AC45B4007BA60A /* RenderTexture.hpp */,

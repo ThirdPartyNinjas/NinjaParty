@@ -6,37 +6,39 @@
 
 namespace NinjaParty
 {
-	void MeasureString(Font *font, const std::string &string, NinjaParty::Vector2 &maximum)
+	NinjaParty::Vector2 MeasureString(Font *font, const std::string &string)
 	{
-		float x = 0, y = 0;
-		float maxHeight = 0;
+		NinjaParty::Vector2 measurement;
+		MeasureString(font, string, measurement);
+		return measurement;
+	}
+	
+	void MeasureString(Font *font, const std::string &string, NinjaParty::Vector2 &measurement)
+	{
+		float x = 0;
 
-		maximum = Vector2::ZERO;
+		measurement = Vector2::ZERO;
 
 		for(size_t i=0; i<string.size(); i++)
 		{
 			if(string[i] == '\n')
 			{
-				y += font->lineHeight;
-				maxHeight = 0;
+				measurement.Y() += font->lineHeight;
 			}
 			else if(string[i] == '\r')
 			{
+				measurement.X() = std::max<float>(measurement.X(), x);
 				x = 0;
 			}
 			else
 			{
 				CharacterData &cd = (font->characters.count(string[i]) == 1) ? font->characters[string[i]] : font->characters[' '];
-
 				x += cd.advanceX;
-				maxHeight = std::max<float>(maxHeight, cd.height);
 			}
-
-			maximum.X() = std::max<float>(maximum.X(), x);
-			maximum.Y() = y;
 		}
 		
-		maximum.Y() += maxHeight;//font->height;
+		measurement.X() = std::max<float>(measurement.X(), x);		
+		measurement.Y() += font->lineHeight;
 	}
 	
 	std::string WordWrapString(Font *font, const std::string &string, float width)

@@ -103,4 +103,36 @@ namespace NinjaParty
 		}
 		return texture;
 	}
+	
+	Texture* Texture::FromColors(const Color *colors, int width, int height, TextureFilter textureFilter)
+	{
+		GLuint textureId;
+		
+		std::unique_ptr<uint8_t[]> buffer(new uint8_t[width * height * 4]);
+		
+		for(int y=0; y<height; y++)
+		{
+			for(int x=0; x<width; x++)
+			{
+				buffer[y * (width * 4) + (x * 4) + 0] = (uint8_t)(colors[y * width + x].R() * 255.0f);
+				buffer[y * (width * 4) + (x * 4) + 1] = (uint8_t)(colors[y * width + x].G() * 255.0f);
+				buffer[y * (width * 4) + (x * 4) + 2] = (uint8_t)(colors[y * width + x].B() * 255.0f);
+				buffer[y * (width * 4) + (x * 4) + 3] = (uint8_t)(colors[y * width + x].A() * 255.0f);
+			}
+		}
+		
+		glGenTextures(1, &textureId);
+		glBindTexture(GL_TEXTURE_2D, textureId);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
+		
+		Texture *texture = new Texture();
+		texture->textureId = textureId;
+		texture->width = width;
+		texture->height = height;
+		texture->SetFilter(textureFilter);
+		
+		return texture;
+	}
+	
 }

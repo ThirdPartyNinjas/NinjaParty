@@ -32,6 +32,7 @@ namespace NinjaParty
 		static Texture* FromOpenGL(unsigned int textureId, int width, int height, TextureFilter textureFilter = TextureFilter::Linear);
 		static Texture* FromFile(const std::string &fileName, TextureRegion *textureRegion = nullptr);
 		static Texture* FromBuffer(const unsigned char *buffer, int length, TextureRegion *textureRegion = nullptr);
+		static Texture* FromColors(const Color *colors, int width, int height, TextureFilter textureFilter = TextureFilter::Linear);
 		
 	protected:
 		Texture();
