@@ -53,7 +53,8 @@ namespace spine
                           NinjaParty::Vector2(offsetX * m00 + offsetY * m01 + x, offsetX * m10 + offsetY * m11 + y),
                           NinjaParty::Vector2(0.5f, 0.5f),
                           -(slot->bone->worldRotation + regionAttachment->rotation) * 3.14159f / 180.0f,
-                          NinjaParty::Color(slot->r * tintColor.R(), slot->g * tintColor.G(), slot->b * tintColor.B(), slot->a * tintColor.A()));
+                          NinjaParty::Color(slot->r * tintColor.R(), slot->g * tintColor.G(), slot->b * tintColor.B(), slot->a * tintColor.A()),
+						  NinjaParty::Vector2(slot->bone->scaleX, slot->bone->scaleY));
     }
 
     void TextureRegionAttachment_dispose(Attachment *attachment)
