@@ -39,9 +39,6 @@ namespace NinjaParty
 		virtual void Pause() { }
 		virtual void Resume() { }
 
-		virtual void BeginAudioInterruption() { }
-		virtual void EndAudioInterruption() { }
-
 		virtual void HandleLostGraphicsContext() { }
 
 		virtual void TextInput(const std::string &text) { }
@@ -52,8 +49,6 @@ namespace NinjaParty
 		virtual void TouchMoved(void *touchHandle, int x, int y) { }
 		virtual void TouchCancelled(void *touchHandle) { }
 
-        virtual void HandleTap(int x, int y) { }
-		
 		virtual void FacebookLogin(bool success, const std::string &accessToken) { }
 		virtual void FacebookLogout() { }
 

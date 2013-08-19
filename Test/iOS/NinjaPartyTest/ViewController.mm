@@ -98,10 +98,6 @@ static ViewController *globalInstance = nil;
 	[view bindDrawable];
 	glEnable(GL_BLEND);
     
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
-    tapRecognizer.numberOfTapsRequired = 1;
-    [view addGestureRecognizer:tapRecognizer];
-	
 	game = new Tests::TestGame(screenWidth, screenHeight);
 	game->LoadContent("Assets/", "Assets/Assets.zip");
 	
@@ -198,13 +194,6 @@ static ViewController *globalInstance = nil;
 	{
 		game->TouchCancelled(touch);
 	}
-}
-
-- (IBAction)respondToTapGesture:(UITapGestureRecognizer*)recognizer
-{
-	float scale = [UIScreen mainScreen].scale;
-    CGPoint touchPoint = [recognizer locationInView:self.view];
-    game->HandleTap((int)(touchPoint.x * scale), (int)(touchPoint.y * scale));
 }
 
 - (void) facebookSessionStateChanged:(FBSession*)session state:(FBSessionState)state error:(NSError*)error
