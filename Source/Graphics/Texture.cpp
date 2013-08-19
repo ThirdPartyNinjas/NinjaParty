@@ -1,3 +1,4 @@
+#include <memory>
 #include <stdexcept>
 
 #include <NinjaParty/IncludeGL.h>
@@ -5,7 +6,6 @@
 #include <NinjaParty/Texture.hpp>
 #include <NinjaParty/TextureRegion.hpp>
 #include <NinjaParty/Vector2.hpp>
-
 
 namespace NinjaParty
 {
