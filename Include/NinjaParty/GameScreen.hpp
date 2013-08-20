@@ -20,8 +20,6 @@ namespace NinjaParty
 		GameScreen(const GameScreen&) = delete;
 		virtual ~GameScreen();
 		
-		virtual void ReloadGraphics() { }
-
 		GameScreen& operator=(const GameScreen&) = delete;
 
 		bool IsExclusive() const { return isExclusive; }

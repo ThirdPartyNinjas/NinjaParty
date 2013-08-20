@@ -44,7 +44,9 @@ namespace NinjaParty
 		std::string GetAssetPath() const { return assetPath; }
 		std::string GetAssetRootPath() const { return assetRootPath; }
 		
-		Texture* LoadTexture(const std::string &fileName, bool forceReload = false);
+		Texture* LoadTexture(const std::string &fileName);
+		void ReloadTextures();
+		
 		TextureDictionary* LoadTextureDictionary(const std::string &fileName);
 		
 		Song* LoadSong(const std::string &fileName);
@@ -52,6 +54,7 @@ namespace NinjaParty
 
 		Font* LoadFont(const std::string &fileName);
 
+		// todo: These need an overhaul, because the passed textures will be invalidated on a lost graphics context (and reload)
 		DeminaAnimation* LoadDeminaAnimation(const std::string &fileName, Texture *texture, TextureDictionary *textureDictionary);
 		SpriteAnimation* LoadSpriteAnimation(const std::string &fileName, Texture *texture, TextureDictionary *textureDictionary);
 

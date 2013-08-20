@@ -15,8 +15,6 @@ namespace NinjaParty
 		ScreenManager(Game*);
 		~ScreenManager();
 		
-		void ReloadGraphics();
-
 		void Update(float deltaSeconds);
 		
 		void Draw();

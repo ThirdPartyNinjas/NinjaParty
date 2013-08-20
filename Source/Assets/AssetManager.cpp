@@ -131,19 +131,13 @@ namespace NinjaParty
         mappedMemoryLength = 0;
     }
 
-	Texture* AssetManager::LoadTexture(std::string const &fileName, bool forceReload)
+	Texture* AssetManager::LoadTexture(std::string const &fileName)
 	{
 		auto iterator = textures.find(fileName);
 		
 		if(iterator != textures.end())
         {
-            if(forceReload)
-            {
-            	iterator->second->Invalidate();
-                delete iterator->second;
-            }
-            else
-                return iterator->second;
+			return iterator->second;
         }
 		
 		Texture *texture = nullptr;
@@ -163,6 +157,32 @@ namespace NinjaParty
 		
 		textures[fileName] = texture;
 		return texture;
+	}
+	
+	void AssetManager::ReloadTextures()
+	{
+		for(auto &texturePair : textures)
+		{
+			texturePair.second->Invalidate();
+			delete texturePair.second;
+			
+			Texture *texture = nullptr;
+			
+			if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + texturePair.first) == archiveInfo.end())
+			{
+				texture = Texture::FromFile(assetRootPath + texturePair.first);
+			}
+			else
+			{
+				auto &info = archiveInfo[assetPath + texturePair.first];
+				texture = Texture::FromBuffer(mappedAssetArchive + info.first, info.second);
+			}
+            
+			if(texture == nullptr)
+				throw std::runtime_error(std::string("Failed to load texture: ") + texturePair.first);
+
+			texturePair.second = texture;
+		}
 	}
 
 	TextureDictionary* AssetManager::LoadTextureDictionary(std::string const &fileName)
