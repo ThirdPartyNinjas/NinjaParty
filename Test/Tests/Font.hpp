@@ -6,7 +6,7 @@
 #include <NinjaParty/Game.hpp>
 #include <NinjaParty/SpriteBatch.hpp>
 #include <NinjaParty/Texture.hpp>
-#include <NinjaParty/Vector2.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace Tests
 {

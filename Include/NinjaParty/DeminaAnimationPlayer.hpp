@@ -7,8 +7,7 @@
 
 #include <NinjaParty/AnimationPlayer.hpp>
 
-#include <NinjaParty/Vector2.hpp>
-#include <NinjaParty/Matrix3.hpp>
+#include <NinjaParty/Math.hpp>
 
 #include <NinjaParty/TextureRegion.hpp>
 

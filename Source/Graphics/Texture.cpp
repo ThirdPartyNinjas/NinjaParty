@@ -5,7 +5,7 @@
 #include <NinjaParty/LoadTexture.hpp>
 #include <NinjaParty/Texture.hpp>
 #include <NinjaParty/TextureRegion.hpp>
-#include <NinjaParty/Vector2.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace NinjaParty
 {

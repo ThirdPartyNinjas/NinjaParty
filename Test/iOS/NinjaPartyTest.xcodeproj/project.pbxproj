@@ -52,7 +52,7 @@
 		3035FDF417AC1B3B007BA60A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3035FDF517AC1B3B007BA60A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3035FDF617AC1B3B007BA60A /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		3035FDF717AC1B3B007BA60A /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		3035FDF717AC1B3B007BA60A /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; wrapsLines = 0; };
 		3035FDFC17AC1BC6007BA60A /* EmptyGame.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EmptyGame.hpp; sourceTree = "<group>"; };
 		3035FDFD17AC1CA5007BA60A /* NinjaParty.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NinjaParty.xcodeproj; path = ../../Build/iOS/NinjaParty.xcodeproj; sourceTree = "<group>"; };
 		3035FE0417AC1CFC007BA60A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -68,7 +68,7 @@
 		3035FF8017AC45B4007BA60A /* Spine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Spine.hpp; sourceTree = "<group>"; };
 		3035FF8117AC45B4007BA60A /* SpriteBatch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SpriteBatch.hpp; sourceTree = "<group>"; };
 		3035FF8217AC45B4007BA60A /* TextureDictionary.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TextureDictionary.hpp; sourceTree = "<group>"; };
-		3035FF8317AC45B4007BA60A /* Touch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Touch.hpp; sourceTree = "<group>"; };
+		3035FF8317AC45B4007BA60A /* Touch.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Touch.hpp; sourceTree = "<group>"; wrapsLines = 0; };
 		3035FF8417AC4769007BA60A /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = ../Assets; sourceTree = "<group>"; };
 		30424BA517BB2993004A29D8 /* Font.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Font.hpp; sourceTree = "<group>"; };
 		307012D917AF3DE6006A9315 /* HttpRequest.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HttpRequest.hpp; sourceTree = "<group>"; };

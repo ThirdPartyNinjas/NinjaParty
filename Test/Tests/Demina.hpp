@@ -7,7 +7,7 @@
 #include <NinjaParty/MathHelpers.hpp>
 #include <NinjaParty/SpriteBatch.hpp>
 #include <NinjaParty/Texture.hpp>
-#include <NinjaParty/Vector2.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace Tests
 {
@@ -41,7 +41,7 @@ namespace Tests
             spriteBatch.reset(new NinjaParty::SpriteBatch(GetScreenWidth(), GetScreenHeight()));
             
             NinjaParty::TextureDictionary *textureDictionary = assetManager->LoadTextureDictionary("demina_guy.json");
-            texture = assetManager->LoadTexture("demina_guy.png", true);
+            texture = assetManager->LoadTexture("demina_guy.png");//, true);
             
             deminaPlayer.AddAnimation("Walk", assetManager->LoadDeminaAnimation("guy_walk.anim", texture, textureDictionary));
         }

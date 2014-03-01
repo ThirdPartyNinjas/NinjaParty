@@ -159,6 +159,9 @@ namespace NinjaParty
 		return texture;
 	}
 	
+    // todo: change ReloadTextures to use the same Texture objects, just update the
+    // opengl ids inside
+    
 	void AssetManager::ReloadTextures()
 	{
 		for(auto &texturePair : textures)

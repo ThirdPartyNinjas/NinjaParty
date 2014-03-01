@@ -1,9 +1,25 @@
 #ifndef NINJAPARTY_GAME_HPP
 #define NINJAPARTY_GAME_HPP
 
+#include <memory>
+
 #include <NinjaParty/Color.hpp>
+#include <NinjaParty/Event.hpp>
 #include <NinjaParty/FacebookManager.hpp>
 #include <NinjaParty/ScreenManager.hpp>
+
+/* Events:
+
+ TextInput
+ 
+ ResolutionChanged
+ 
+ LostGraphicsContext
+ 
+ Possible:
+ Facebook
+ GameCenter
+*/
 
 namespace NinjaParty
 {
@@ -16,6 +32,8 @@ namespace NinjaParty
 		
 		Game& operator=(const Game&) = delete;
 
+        void PostEvent(const std::shared_ptr<IEvent> &event, EventPriority eventPriority = EventPriority::Normal);
+        
 		virtual void SetResolution(int screenWidth, int screenHeight)
 		{
 			this->screenWidth = screenWidth;
@@ -44,15 +62,16 @@ namespace NinjaParty
 		virtual void TextInput(const std::string &text) { }
 		virtual void TextBackspace() { }
 
-		virtual void TouchBegan(void *touchHandle, int tapCount, int x, int y) { }
-		virtual void TouchEnded(void *touchHandle, int x, int y) { }
-		virtual void TouchMoved(void *touchHandle, int x, int y) { }
-		virtual void TouchCancelled(void *touchHandle) { }
-
 		virtual void FacebookLogin(bool success, const std::string &accessToken) { }
 		virtual void FacebookLogout() { }
 
+        int GetEventCount() const;
+        std::shared_ptr<IEvent> GetEvent();
+        
 	private:
+        struct impl;
+        std::unique_ptr<impl> pimpl;
+        
 		bool exit;
 		
 		int screenWidth;

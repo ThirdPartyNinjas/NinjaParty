@@ -1,14 +1,45 @@
-//
-//  Event.hpp
-//  NinjaParty
-//
-//  Created by Jesse Chounard on 2/27/14.
-//  Copyright (c) 2014 Third Party Ninjas. All rights reserved.
-//
+#ifndef NINJAPARTY_EVENT_HPP
+#define NINJAPARTY_EVENT_HPP
 
-#ifndef NinjaParty_Event_hpp
-#define NinjaParty_Event_hpp
+#include <stdint.h>
 
-
-
-#endif
+namespace NinjaParty
+{
+    typedef uint32_t EventId;
+    
+    struct IEvent
+    {
+    public:
+        virtual EventId GetId() = 0;
+        
+    protected:
+        static EventId nextId;
+    };
+    
+    template <class Derived>
+    class Event : public IEvent
+    {
+    public:
+        virtual ~Event()
+        {
+        }
+        
+        static EventId GetEventId()
+        {
+            static EventId eventId = ++nextId;
+            return eventId;
+        }
+        
+        EventId GetId()
+        {
+            return GetEventId();
+        }
+    };
+    
+    enum class EventPriority
+    {
+        Normal = 0,
+        High,
+    };
+}
+#endif//NINJAPARTY_EVENT_HPP

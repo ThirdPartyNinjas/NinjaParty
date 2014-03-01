@@ -1,15 +1,13 @@
 #ifndef NINJAPARTY_SPRITESHADER_HPP
 #define NINJAPARTY_SPRITESHADER_HPP
 
-#include <string>
+#include <memory>
+#include <stdint.h>
 
-#include <NinjaParty/IncludeGL.h>
+#include <NinjaParty/Math.hpp>
 
 namespace NinjaParty
 {
-	struct Vertex;
-	class Texture;
-
 	enum class ShaderAttributes
 	{
 		Position = 0,
@@ -18,32 +16,29 @@ namespace NinjaParty
 		NumAttributes,
 	};
 
-	enum class ShaderUniforms
-	{
-		Projection = 0,
-		Sampler,
-		NumUniforms,
-	};
-	
 	class SpriteShader
 	{
 	public:
-		SpriteShader();
-		SpriteShader(const std::string &vertexShaderFile, const std::string &fragmentShaderFile);
-		
+		SpriteShader();		
 		~SpriteShader();
 
-		void Draw(Vertex *vertices, int vertexCount, GLuint textureId);
-
-		void SetProjectionMatrix(GLfloat matrix[16]) { for(int i=0; i<16; i++) projectionMatrix[i] = matrix[i]; }
-
-		void SetOrthoMatrix(int width, int height);
+        void SetParameter(const std::string &parameterName, const int32_t &value);
+        void SetParameter(const std::string &parameterName, const float &value);
+        
+        void SetParameter(const std::string &parameterName, const Vector2 &value);
+        void SetParameter(const std::string &parameterName, const Vector3 &value);
+        void SetParameter(const std::string &parameterName, const Vector4 &value);
+        
+        void SetParameter(const std::string &parameterName, const Matrix2 &value);
+        void SetParameter(const std::string &parameterName, const Matrix3 &value);
+        void SetParameter(const std::string &parameterName, const Matrix4 &value);
+        
+        void Apply();
+        
 
 	protected:
-		unsigned int shaderId;
-
-		GLfloat projectionMatrix[16];
-		int uniforms[(int)ShaderUniforms::NumUniforms];
+        struct impl;
+        std::unique_ptr<impl> pimpl;
 	};
 }
 

@@ -1,7 +1,7 @@
 #ifndef NINJAPARTY_TEXTUREREGION_HPP
 #define NINJAPARTY_TEXTUREREGION_HPP
 
-#include <NinjaParty/Vector2.hpp>
+#include <NinjaParty/Math.hpp>
 #include <NinjaParty/Rectangle.hpp>
 
 namespace NinjaParty

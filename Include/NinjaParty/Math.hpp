@@ -1,14 +1,31 @@
-//
-//  Math.hpp
-//  NinjaParty
-//
-//  Created by Jesse Chounard on 2/28/14.
-//  Copyright (c) 2014 Third Party Ninjas. All rights reserved.
-//
+#ifndef NINJAPARTY_MATH_HPP
+#define NINJAPARTY_MATH_HPP
 
-#ifndef NinjaParty_Math_hpp
-#define NinjaParty_Math_hpp
+#include "../../Dependencies/Wm5/Wm5Vector2.h"
+#include "../../Dependencies/Wm5/Wm5Vector3.h"
+#include "../../Dependencies/Wm5/Wm5Vector4.h"
 
+#include "../../Dependencies/Wm5/Wm5Matrix2.h"
+#include "../../Dependencies/Wm5/Wm5Matrix3.h"
+#include "../../Dependencies/Wm5/Wm5Matrix4.h"
 
+namespace NinjaParty
+{
+	typedef Wm5::Vector2<float> Vector2;
+	typedef Wm5::Vector3<float> Vector3;
+	typedef Wm5::Vector4<float> Vector4;
 
-#endif
+	typedef Wm5::Matrix2<float> Matrix2;
+	typedef Wm5::Matrix3<float> Matrix3;
+	typedef Wm5::Matrix4<float> Matrix4;
+    
+    Vector2 CatmullRom(const Vector2 &v0, const Vector2 &v1, const Vector2 &v2, const Vector2 &v3, float t);
+
+	Matrix3 CreateScaleMatrix(float x, float y);
+	Matrix3 CreateTranslationMatrix(float x, float y);
+	Matrix3 CreateRotationMatrix(float r);
+    
+    Matrix4 CreateOrthographicProjectionMatrix(float left, float right, float top, float bottom, float near, float far);
+}
+
+#endif//NINJAPARTY_MATH_HPP

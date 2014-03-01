@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <string>
 
-#include <NinjaParty/Vector2.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace NinjaParty
 {

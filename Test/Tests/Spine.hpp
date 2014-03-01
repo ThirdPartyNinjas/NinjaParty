@@ -9,7 +9,7 @@
 #include <NinjaParty/SpriteBatch.hpp>
 #include <NinjaParty/Texture.hpp>
 #include <NinjaParty/TextureDictionary.hpp>
-#include <NinjaParty/Vector2.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace Tests
 {
@@ -45,7 +45,7 @@ namespace Tests
         void HandleLostGraphicsContext()
         {
             spriteBatch.reset(new NinjaParty::SpriteBatch(GetScreenWidth(), GetScreenHeight()));
-            texture = assetManager->LoadTexture("Graphics.png", true);
+            texture = assetManager->LoadTexture("Graphics.png");//, true);
             spineAnimationPlayer.SetTexture(texture);
         }
 

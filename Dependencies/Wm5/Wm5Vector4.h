@@ -9,6 +9,8 @@
 #ifndef WM5VECTOR4_H
 #define WM5VECTOR4_H
 
+#include <ostream>
+
 //#include "Wm5MathematicsLIB.h"
 #include "Wm5Tuple.h"
 #include "Wm5Math.h"

@@ -4,7 +4,7 @@
 #include <string>
 
 #include <NinjaParty/Color.hpp>
-#include <NinjaParty/Vector2.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace NinjaParty
 {

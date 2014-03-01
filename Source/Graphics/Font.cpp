@@ -2,7 +2,7 @@
 
 #include <NinjaParty/Font.hpp>
 #include <NinjaParty/Path.hpp>
-#include <NinjaParty/Vector2.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace NinjaParty
 {

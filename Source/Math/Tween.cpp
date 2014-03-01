@@ -67,7 +67,8 @@ namespace NinjaParty
 				return std::sin(time * PIOVERTWO);
 				
 			case TweenFunction::Circular:
-				return std::sqrt(1 - (time -= 1) * time);
+                time -= 1;
+				return std::sqrt(1 - time * time);
 				
 			case TweenFunction::Back:
 				time -= 1;
@@ -75,13 +76,24 @@ namespace NinjaParty
 				
 			case TweenFunction::Bounce:
 				if (time < 1 / 2.75f)
+                {
 					return (7.5625f * time * time);
+                }
 				else if (time < 2 / 2.75)
-					return (7.5625f * (time -= (1.5f / 2.75f)) * time + 0.75f);
+                {
+                    time -= (1.5f / 2.75f);
+					return (7.5625f * time * time + 0.75f);
+                }
 				else if (time < 2.5 / 2.75)
-					return (7.5625f * (time -= (2.25f / 2.75f)) * time + 0.9375f);
+                {
+                    time -= (2.25f / 2.75f);
+					return (7.5625f * time * time + 0.9375f);
+                }
 				else
-					return (7.5625f * (time -= (2.625f / 2.75f)) * time + 0.984375f);
+                {
+                    time -= (2.625f / 2.75f);
+					return (7.5625f * time * time + 0.984375f);
+                }
 				
 			default:
 				return 0;
@@ -128,7 +140,8 @@ namespace NinjaParty
 			case TweenFunction::Back:
 				if ((time *= 2) < 1)
 					return 0.5f * (time * time * (((BackConstant * (1.525f)) + 1) * time - BackConstant * 1.525f));
-				return 0.5f * ((time -= 2) * time * (((BackConstant * (1.525f)) + 1) * time + BackConstant * 1.525f) + 2);
+                time -= 2;
+				return 0.5f * (time * time * (((BackConstant * (1.525f)) + 1) * time + BackConstant * 1.525f) + 2);
 				
 			case TweenFunction::Bounce:
 				if (time < 0.5f)

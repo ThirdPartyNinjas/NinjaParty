@@ -1,11 +1,11 @@
 #ifndef NINJAPARTY_SPRITEBATCH_HPP
 #define NINJAPARTY_SPRITEBATCH_HPP
 
+#include <memory>
 #include <string>
 
-#include <NinjaParty/Matrix3.hpp>
+#include <NinjaParty/Math.hpp>
 #include <NinjaParty/Rectangle.hpp>
-#include <NinjaParty/Vector2.hpp>
 
 #include <NinjaParty/Color.hpp>
 #include <NinjaParty/SpriteShader.hpp>
@@ -33,6 +33,7 @@ namespace NinjaParty
 		~SpriteBatch();
 
 		void Begin(BlendMode blendMode = BlendMode::Alpha, const Matrix3 &batchTransform = Matrix3::IDENTITY, bool updateResolution = true);
+		void Begin(BlendMode blendMode, const Matrix3 &batchTransform, const Matrix4 &projectionMatrix, bool updateResolution);
 		void End();
 
 		void Draw(Texture *texture,
@@ -74,28 +75,15 @@ namespace NinjaParty
 						const Color &color = Color::White,
 						const Vector2 &scale = Vector2::ONE);
 
-        const Matrix3& GetBatchTransform() const { return batchTransform; }
-        void SetBatchTransform(const Matrix3 &transform) { batchTransform = transform; }
-        void ApplyTransform(const Matrix3 transform) { batchTransform = transform * batchTransform; }
+        const Matrix3& GetBatchTransform() const;
+        void SetBatchTransform(const Matrix3 &transform);
+        void ApplyTransform(const Matrix3 transform);
         
 		void SetResolution(int screenWidth, int screenHeight);
 
 	private:
-		void DrawBuffer();
-		
-		unsigned int currentTextureId;
-		SpriteShader *currentShader;
-		SpriteShader defaultShader;
-		
-		int screenWidth, screenHeight;
-		
-		BlendMode blendMode;
-		
-		Vertex *vertices;
-		int maxVertices;
-		int activeVertices;
-		
-		Matrix3 batchTransform;
+        struct impl;
+        std::unique_ptr<impl> pimpl;
 	};
 }
 

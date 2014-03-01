@@ -1,8 +1,7 @@
 #ifndef NINJAPARTY_CAMERA_HPP
 #define NINJAPARTY_CAMERA_HPP
 
-#include <NinjaParty/Vector2.hpp>
-#include <NinjaParty/Matrix3.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace NinjaParty
 {

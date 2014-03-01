@@ -6,7 +6,7 @@
 //
 // File Version: 5.0.0 (2010/01/01)
 
-#include "Wm5MathematicsPCH.h"
+//#include "Wm5MathematicsPCH.h"
 #include "Wm5Vector4.h"
 
 namespace Wm5

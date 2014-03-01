@@ -6,7 +6,7 @@
 #include <NinjaParty/MathHelpers.hpp>
 #include <NinjaParty/SpriteBatch.hpp>
 #include <NinjaParty/Texture.hpp>
-#include <NinjaParty/Vector2.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace Tests
 {
@@ -35,11 +35,16 @@ namespace Tests
         {
             spriteBatch.reset(nullptr);
             spriteBatch.reset(new NinjaParty::SpriteBatch(GetScreenWidth(), GetScreenHeight()));
-            texture = assetManager->LoadTexture("Star.png", true);
+            //texture = assetManager->LoadTexture("Star.png", true);
         }
 
         void Update(float deltaSeconds)
         {
+            while(GetEventCount() > 0)
+            {
+                auto event = GetEvent();
+            }
+            
             rotation += deltaSeconds * NinjaParty::PI;
         }
         

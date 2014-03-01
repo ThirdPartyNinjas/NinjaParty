@@ -1,30 +1,60 @@
 #include <stdexcept>
 
 #include <NinjaParty/Font.hpp>
+#include <NinjaParty/IncludeGL.h>
 #include <NinjaParty/MathHelpers.hpp>
 #include <NinjaParty/SpriteBatch.hpp>
-#include <NinjaParty/Vector3.hpp>
+#include <NinjaParty/Math.hpp>
 
 namespace NinjaParty
 {
+    struct SpriteBatch::impl
+    {
+        Matrix4 defaultProjectionMatrix;
+        Matrix4 currentProjectionMatrix;
+        
+		unsigned int currentTextureId;
+		SpriteShader *currentShader;
+		SpriteShader defaultShader;
+		
+		int screenWidth, screenHeight;
+		
+		BlendMode blendMode;
+		
+        // todo: unique_ptr this
+		Vertex *vertices;
+		int maxVertices;
+		int activeVertices;
+		
+		Matrix3 batchTransform;
+        
+		void DrawBuffer();
+    };
+    
 	SpriteBatch::SpriteBatch(int screenWidth, int screenHeight, int maxSpritesPerDraw)
+    : pimpl(new impl)
 	{
-		currentShader = &defaultShader;
+		pimpl->currentShader = &pimpl->defaultShader;
 		SetResolution(screenWidth, screenHeight);
 		
-		currentTextureId = 0;
-		
-		maxVertices = maxSpritesPerDraw * 6;
-		activeVertices = 0;
-		vertices = new Vertex[maxVertices];
+		pimpl->currentTextureId = 0;
+        
+		pimpl->maxVertices = maxSpritesPerDraw * 6;
+		pimpl->activeVertices = 0;
+		pimpl->vertices = new Vertex[pimpl->maxVertices];
 	}
 	
 	SpriteBatch::~SpriteBatch()
 	{
-		delete[] vertices;
+		delete[] pimpl->vertices;
 	}
+    
+    void SpriteBatch::Begin(BlendMode blendMode, const Matrix3 &batchTransform, bool updateResolution)
+    {
+        Begin(blendMode, batchTransform, pimpl->defaultProjectionMatrix, updateResolution);
+    }
 	
-	void SpriteBatch::Begin(BlendMode blendMode, const Matrix3 &batchTransform, bool updateResolution)
+	void SpriteBatch::Begin(BlendMode blendMode, const Matrix3 &batchTransform, const Matrix4 &projectionMatrix, bool updateResolution)
 	{
 		if(updateResolution)
 		{
@@ -33,39 +63,42 @@ namespace NinjaParty
 			SetResolution(viewport[2], viewport[3]);
 		}
 		
-		this->blendMode = blendMode;
-		this->batchTransform = batchTransform;
-		currentTextureId = 0;
-		activeVertices = 0;
+		pimpl->blendMode = blendMode;
+		pimpl->batchTransform = batchTransform;
+		pimpl->currentTextureId = 0;
+		pimpl->activeVertices = 0;
+        
+        pimpl->currentProjectionMatrix = projectionMatrix;
+        
+        pimpl->currentShader->Apply();
 	}
 	
 	void SpriteBatch::End()
 	{
-		if(activeVertices < 6)
+		if(pimpl->activeVertices < 3)
 			return;
 		
-		if(activeVertices >= 0)
-			DrawBuffer();
+        pimpl->DrawBuffer();
 		
-		currentTextureId = 0;
-		activeVertices = 0;
+		pimpl->currentTextureId = 0;
+		pimpl->activeVertices = 0;
 	}
 	
 	void SpriteBatch::SetResolution(int screenWidth, int screenHeight)
 	{
-		this->screenWidth = screenWidth;
-		this->screenHeight = screenHeight;
+		pimpl->screenWidth = screenWidth;
+		pimpl->screenHeight = screenHeight;
 		
-		currentShader->SetOrthoMatrix(screenWidth, screenHeight);
+        pimpl->defaultProjectionMatrix = CreateOrthographicProjectionMatrix(0, screenWidth, 0, screenHeight, 1, -1);
 	}
 	
 	void SpriteBatch::Draw(Texture *texture, const Vector2 &position, const Rectangle *sourceRectangle,
 						   const Vector2 &origin, const float rotation, const Color &color, const Vector2 &scale, const Matrix3 &transformMatrix)
 	{
-		if(activeVertices == maxVertices || (currentTextureId != 0 && currentTextureId != texture->GetTextureId()))
-			DrawBuffer();
+		if(pimpl->activeVertices == pimpl->maxVertices || (pimpl->currentTextureId != 0 && pimpl->currentTextureId != texture->GetTextureId()))
+			pimpl->DrawBuffer();
 		
-		currentTextureId = texture->GetTextureId();
+		pimpl->currentTextureId = texture->GetTextureId();
 		
 		Rectangle textureRect(0, 0, texture->GetWidth(), texture->GetHeight());
 		
@@ -79,13 +112,16 @@ namespace NinjaParty
 		int textureHeight = texture->GetHeight();
 		
 		Vector3 v;
-		Matrix3 transform = batchTransform * transformMatrix * CreateTranslationMatrix(position.X(), position.Y()) *
+		Matrix3 transform = pimpl->batchTransform * transformMatrix * CreateTranslationMatrix(position.X(), position.Y()) *
             CreateRotationMatrix(rotation) * CreateScaleMatrix(scale.X(), scale.Y());
 		
 		v.X() = -width * origin.X();
 		v.Y() = -height * origin.Y();
 		v.Z() = 1;
 		v = transform * v;
+        
+        Vertex *vertices = pimpl->vertices;
+        int &activeVertices = pimpl->activeVertices;
 		
 		vertices[activeVertices].x = v.X();
 		vertices[activeVertices].y = v.Y();
@@ -150,10 +186,10 @@ namespace NinjaParty
 						   const Vector2 &scale,
 						   const Matrix3 &transformMatrix)
 	{
-		if(activeVertices == maxVertices || (currentTextureId != 0 && currentTextureId != texture->GetTextureId()))
-			DrawBuffer();
+		if(pimpl->activeVertices == pimpl->maxVertices || (pimpl->currentTextureId != 0 && pimpl->currentTextureId != texture->GetTextureId()))
+			pimpl->DrawBuffer();
 		
-		currentTextureId = texture->GetTextureId();
+		pimpl->currentTextureId = texture->GetTextureId();
 		
 		const Rectangle *sourceRectangle = &textureRegion.bounds;
 		Vector2 origin;
@@ -168,7 +204,7 @@ namespace NinjaParty
 		int textureHeight = texture->GetHeight();
 		
 		Vector3 v;
-		Matrix3 transform = batchTransform * transformMatrix * CreateTranslationMatrix(position.X(), position.Y()) *
+		Matrix3 transform = pimpl->batchTransform * transformMatrix * CreateTranslationMatrix(position.X(), position.Y()) *
 		CreateRotationMatrix(rotation) * CreateScaleMatrix(scale.X(), scale.Y());
 		
 		v.X() = -width * origin.X();
@@ -176,6 +212,9 @@ namespace NinjaParty
 		v.Z() = 1;
 		v = transform * v;
 		
+        Vertex *vertices = pimpl->vertices;
+        int &activeVertices = pimpl->activeVertices;
+
 		vertices[activeVertices].x = v.X();
 		vertices[activeVertices].y = v.Y();
 		vertices[activeVertices].r = color.R();
@@ -432,12 +471,15 @@ namespace NinjaParty
 
 	void SpriteBatch::DrawString(Font *font, Texture *texture, const std::string &s, const Vector2 &position, const Color &color)
 	{
-		if(activeVertices == maxVertices || (currentTextureId != 0 && currentTextureId != texture->GetTextureId()))
-			DrawBuffer();
+		if(pimpl->activeVertices == pimpl->maxVertices || (pimpl->currentTextureId != 0 && pimpl->currentTextureId != texture->GetTextureId()))
+			pimpl->DrawBuffer();
 		
-		currentTextureId = texture->GetTextureId();
+		pimpl->currentTextureId = texture->GetTextureId();
 		
 		float x = 0, y = 0;
+
+        Vertex *vertices = pimpl->vertices;
+        int &activeVertices = pimpl->activeVertices;
 		
 		for(size_t i=0; i<s.size(); i++)
 		{
@@ -460,8 +502,8 @@ namespace NinjaParty
 				continue;
 			}
 			
-			if(activeVertices == maxVertices)
-				DrawBuffer();
+			if(activeVertices == pimpl->maxVertices)
+				pimpl->DrawBuffer();
 			
 			const Vector2 &origin = Vector2::ZERO;
 			
@@ -472,7 +514,7 @@ namespace NinjaParty
 			int textureHeight = texture->GetHeight();
 			
 			Vector3 v;
-			Matrix3 transform = batchTransform * CreateTranslationMatrix(position.X() + x + cd.offsetX, position.Y() + y + cd.offsetY);
+			Matrix3 transform = pimpl->batchTransform * CreateTranslationMatrix(position.X() + x + cd.offsetX, position.Y() + y + cd.offsetY);
 			
 			v.X() = -width * origin.X();
 			v.Y() = -height * origin.Y();
@@ -551,11 +593,14 @@ namespace NinjaParty
 		NinjaParty::Vector2 o;
 		o.X() = maximum.X() * origin.X();
 		o.Y() = maximum.Y() * origin.Y();
+
+        Vertex *vertices = pimpl->vertices;
+        int &activeVertices = pimpl->activeVertices;
 		
-		if(activeVertices == maxVertices || (currentTextureId != 0 && currentTextureId != texture->GetTextureId()))
-			DrawBuffer();
+		if(activeVertices == pimpl->maxVertices || (pimpl->currentTextureId != 0 && pimpl->currentTextureId != texture->GetTextureId()))
+			pimpl->DrawBuffer();
 		
-		currentTextureId = texture->GetTextureId();
+		pimpl->currentTextureId = texture->GetTextureId();
 		
 		float x = 0, y = 0;
 		
@@ -580,8 +625,8 @@ namespace NinjaParty
 				continue;
 			}
 			
-			if(activeVertices == maxVertices)
-				DrawBuffer();
+			if(activeVertices == pimpl->maxVertices)
+				pimpl->DrawBuffer();
 			
 			int width = cd.width;
 			int height = cd.height;
@@ -658,8 +703,23 @@ namespace NinjaParty
 			x += cd.advanceX;
 		}
 	}
-
-	void SpriteBatch::DrawBuffer()
+    
+    const Matrix3& SpriteBatch::GetBatchTransform() const
+    {
+        return pimpl->batchTransform;
+    }
+    
+    void SpriteBatch::SetBatchTransform(const Matrix3 &transform)
+    {
+        pimpl->batchTransform = transform;
+    }
+    
+    void SpriteBatch::ApplyTransform(const Matrix3 transform)
+    {
+        pimpl->batchTransform = transform * pimpl->batchTransform;
+    }
+    
+    void SpriteBatch::impl::DrawBuffer()
 	{
 		switch(blendMode)
 		{
@@ -681,7 +741,21 @@ namespace NinjaParty
 				break;
 		}
 		
-		currentShader->Draw(vertices, activeVertices, currentTextureId);
+        currentShader->SetParameter("ProjectionMatrix", currentProjectionMatrix);
+
+        currentShader->SetParameter("TextureSampler", 0);
+        
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, currentTextureId);
+
+		glVertexAttribPointer((GLuint)ShaderAttributes::Position, 2, GL_FLOAT, 0, sizeof(Vertex), &vertices[0].x);
+		glEnableVertexAttribArray((GLuint)ShaderAttributes::Position);
+		glVertexAttribPointer((GLuint)ShaderAttributes::TexCoord, 2, GL_FLOAT, 0, sizeof(Vertex), &vertices[0].u);
+		glEnableVertexAttribArray((GLuint)ShaderAttributes::TexCoord);
+		glVertexAttribPointer((GLuint)ShaderAttributes::Color, 4, GL_FLOAT, 0, sizeof(Vertex), &vertices[0].r);
+		glEnableVertexAttribArray((GLuint)ShaderAttributes::Color);
+		
+		glDrawArrays(GL_TRIANGLES, 0, activeVertices);
 		
 		activeVertices = 0;
 	}
