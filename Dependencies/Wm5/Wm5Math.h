@@ -1,5 +1,5 @@
 // Geometric Tools, LLC
-// Copyright (c) 1998-2010
+// Copyright (c) 1998-2014
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 // http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
@@ -18,7 +18,9 @@
 // TODO.  Provide SIMD versions of the implementations for whatever platforms
 // we support.
 
+#ifndef WM5_MATHEMATICS_ITEM
 #define WM5_MATHEMATICS_ITEM
+#endif//WM5_MATHEMATICS_ITEM
 
 namespace Wm5
 {

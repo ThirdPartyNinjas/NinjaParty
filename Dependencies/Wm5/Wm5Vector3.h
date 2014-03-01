@@ -1,5 +1,5 @@
 // Geometric Tools, LLC
-// Copyright (c) 1998-2010
+// Copyright (c) 1998-2014
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 // http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
@@ -9,13 +9,11 @@
 #ifndef WM5VECTOR3_H
 #define WM5VECTOR3_H
 
-#include <iostream>
+#include <ostream>
 
 //#include "Wm5MathematicsLIB.h"
 #include "Wm5Tuple.h"
 #include "Wm5Math.h"
-
-#define WM5_MATHEMATICS_ITEM
 
 namespace Wm5
 {
@@ -41,8 +39,6 @@ public:
     inline Real& Y ();
     inline Real Z () const;
     inline Real& Z ();
-
-	inline static Real Distance(const Vector3 &v1, const Vector3 &v2);
 
     // Arithmetic operations.
     inline Vector3 operator+ (const Vector3& vec) const;

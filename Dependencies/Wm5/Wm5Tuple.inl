@@ -1,10 +1,10 @@
 // Geometric Tools, LLC
-// Copyright (c) 1998-2010
+// Copyright (c) 1998-2014
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 // http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
 //
-// File Version: 5.0.1 (2011/03/27)
+// File Version: 5.0.2 (2012/03/09)
 
 //----------------------------------------------------------------------------
 template <int DIMENSION, typename TYPE>
@@ -65,36 +65,98 @@ Tuple<DIMENSION,TYPE>& Tuple<DIMENSION,TYPE>::operator= (const Tuple& tuple)
 template <int DIMENSION, typename TYPE>
 bool Tuple<DIMENSION,TYPE>::operator== (const Tuple& tuple) const
 {
-    return memcmp(mTuple, tuple.mTuple, DIMENSION*sizeof(TYPE)) == 0;
+    for (int i = 0; i < DIMENSION; ++i)
+    {
+        if (mTuple[i] != tuple.mTuple[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 //----------------------------------------------------------------------------
 template <int DIMENSION, typename TYPE>
 bool Tuple<DIMENSION,TYPE>::operator!= (const Tuple& tuple) const
 {
-    return memcmp(mTuple, tuple.mTuple, DIMENSION*sizeof(TYPE)) != 0;
+    for (int i = 0; i < DIMENSION; ++i)
+    {
+        if (mTuple[i] != tuple.mTuple[i])
+        {
+            return true;
+        }
+    }
+    return false;
 }
 //----------------------------------------------------------------------------
 template <int DIMENSION, typename TYPE>
 bool Tuple<DIMENSION,TYPE>::operator< (const Tuple& tuple) const
 {
-    return memcmp(mTuple, tuple.mTuple, DIMENSION*sizeof(TYPE)) < 0;
+    for (int i = 0; i < DIMENSION; ++i)
+    {
+        if (mTuple[i] < tuple.mTuple[i])
+        {
+            return true;
+        }
+
+        if (mTuple[i] > tuple.mTuple[i])
+        {
+            return false;
+        }
+    }
+    return false;
 }
 //----------------------------------------------------------------------------
 template <int DIMENSION, typename TYPE>
 bool Tuple<DIMENSION,TYPE>::operator<= (const Tuple& tuple) const
 {
-    return memcmp(mTuple, tuple.mTuple, DIMENSION*sizeof(TYPE)) <= 0;
+    for (int i = 0; i < DIMENSION; ++i)
+    {
+        if (mTuple[i] < tuple.mTuple[i])
+        {
+            return true;
+        }
+
+        if (mTuple[i] > tuple.mTuple[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 //----------------------------------------------------------------------------
 template <int DIMENSION, typename TYPE>
 bool Tuple<DIMENSION,TYPE>::operator> (const Tuple& tuple) const
 {
-    return memcmp(mTuple, tuple.mTuple, DIMENSION*sizeof(TYPE)) > 0;
+    for (int i = 0; i < DIMENSION; ++i)
+    {
+        if (mTuple[i] > tuple.mTuple[i])
+        {
+            return true;
+        }
+
+        if (mTuple[i] < tuple.mTuple[i])
+        {
+            return false;
+        }
+    }
+    return false;
 }
 //----------------------------------------------------------------------------
 template <int DIMENSION, typename TYPE>
 bool Tuple<DIMENSION,TYPE>::operator>= (const Tuple& tuple) const
 {
-    return memcmp(mTuple, tuple.mTuple, DIMENSION*sizeof(TYPE)) >= 0;
+    for (int i = 0; i < DIMENSION; ++i)
+    {
+        if (mTuple[i] > tuple.mTuple[i])
+        {
+            return true;
+        }
+
+        if (mTuple[i] < tuple.mTuple[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 //----------------------------------------------------------------------------

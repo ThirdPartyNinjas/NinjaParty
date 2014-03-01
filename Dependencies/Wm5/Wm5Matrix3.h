@@ -1,5 +1,5 @@
 // Geometric Tools, LLC
-// Copyright (c) 1998-2010
+// Copyright (c) 1998-2014
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 // http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
@@ -26,7 +26,6 @@
 
 //#include "Wm5MathematicsLIB.h"
 #include "Wm5Table.h"
-#include "Wm5Vector2.h"
 #include "Wm5Vector3.h"
 //#include "Wm5SingularValueDecomposition.h"
 
@@ -96,7 +95,6 @@ public:
     Matrix3& operator/= (Real scalar);
 
     // M*vec
-    Vector2<Real> operator* (const Vector2<Real>& vec) const;
     Vector3<Real> operator* (const Vector3<Real>& vec) const;
 
     // u^T*M*v

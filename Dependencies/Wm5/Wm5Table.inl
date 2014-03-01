@@ -1,10 +1,10 @@
 // Geometric Tools, LLC
-// Copyright (c) 1998-2010
+// Copyright (c) 1998-2014
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 // http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
 //
-// File Version: 5.0.2 (2011/03/27)
+// File Version: 5.0.4 (2012/07/08)
 
 //----------------------------------------------------------------------------
 template <int NUMROWS, int NUMCOLS, typename TYPE>
@@ -121,36 +121,98 @@ Table<NUMROWS,NUMCOLS,TYPE>& Table<NUMROWS,NUMCOLS,TYPE>::operator= (
 template <int NUMROWS, int NUMCOLS, typename TYPE>
 bool Table<NUMROWS,NUMCOLS,TYPE>::operator== (const Table& table) const
 {
-    return memcmp(mEntry, table.mEntry, NUMENTRIES*sizeof(TYPE)) == 0;
+    for (int i = 0; i < NUMENTRIES; ++i)
+    {
+        if (mEntry[i] != table.mEntry[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 //----------------------------------------------------------------------------
 template <int NUMROWS, int NUMCOLS, typename TYPE>
 bool Table<NUMROWS,NUMCOLS,TYPE>::operator!= (const Table& table) const
 {
-    return memcmp(mEntry, table.mEntry, NUMENTRIES*sizeof(TYPE)) != 0;
+    for (int i = 0; i < NUMENTRIES; ++i)
+    {
+        if (mEntry[i] != table.mEntry[i])
+        {
+            return true;
+        }
+    }
+    return false;
 }
 //----------------------------------------------------------------------------
 template <int NUMROWS, int NUMCOLS, typename TYPE>
 bool Table<NUMROWS,NUMCOLS,TYPE>::operator<  (const Table& table) const
 {
-    return memcmp(mEntry, table.mEntry, NUMENTRIES*sizeof(TYPE)) < 0;
+    for (int i = 0; i < NUMENTRIES; ++i)
+    {
+        if (mEntry[i] < table.mEntry[i])
+        {
+            return true;
+        }
+
+        if (mEntry[i] > table.mEntry[i])
+        {
+            return false;
+        }
+    }
+    return false;
 }
 //----------------------------------------------------------------------------
 template <int NUMROWS, int NUMCOLS, typename TYPE>
 bool Table<NUMROWS,NUMCOLS,TYPE>::operator<= (const Table& table) const
 {
-    return memcmp(mEntry, table.mEntry, NUMENTRIES*sizeof(TYPE)) <= 0;
+    for (int i = 0; i < NUMENTRIES; ++i)
+    {
+        if (mEntry[i] < table.mEntry[i])
+        {
+            return true;
+        }
+
+        if (mEntry[i] > table.mEntry[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 //----------------------------------------------------------------------------
 template <int NUMROWS, int NUMCOLS, typename TYPE>
 bool Table<NUMROWS,NUMCOLS,TYPE>::operator>  (const Table& table) const
 {
-    return memcmp(mEntry, table.mEntry, NUMENTRIES*sizeof(TYPE)) > 0;
+    for (int i = 0; i < NUMENTRIES; ++i)
+    {
+        if (mEntry[i] > table.mEntry[i])
+        {
+            return true;
+        }
+
+        if (mEntry[i] < table.mEntry[i])
+        {
+            return false;
+        }
+    }
+    return false;
 }
 //----------------------------------------------------------------------------
 template <int NUMROWS, int NUMCOLS, typename TYPE>
 bool Table<NUMROWS,NUMCOLS,TYPE>::operator>= (const Table& table) const
 {
-    return memcmp(mEntry, table.mEntry, NUMENTRIES*sizeof(TYPE)) >= 0;
+    for (int i = 0; i < NUMENTRIES; ++i)
+    {
+        if (mEntry[i] > table.mEntry[i])
+        {
+            return true;
+        }
+
+        if (mEntry[i] < table.mEntry[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 //----------------------------------------------------------------------------

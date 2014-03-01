@@ -1,10 +1,10 @@
 // Geometric Tools, LLC
-// Copyright (c) 1998-2010
+// Copyright (c) 1998-2014
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 // http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
 //
-// File Version: 5.0.1 (2010/10/15)
+// File Version: 5.0.2 (2012/07/29)
 
 //----------------------------------------------------------------------------
 template <typename Real>
@@ -439,17 +439,6 @@ Matrix3<Real>& Matrix3<Real>::operator/= (Real scalar)
     }
 
     return *this;
-}
-//----------------------------------------------------------------------------
-template <typename Real>
-Vector2<Real> Matrix3<Real>::operator* (const Vector2<Real>& vec) const
-{
-	// treat the "third" compontent of the vector2 as 1.0f
-    return Vector2<Real>
-    (
-        mEntry[0]*vec[0] + mEntry[1]*vec[1] + mEntry[2]*1.0f,
-        mEntry[3]*vec[0] + mEntry[4]*vec[1] + mEntry[5]*1.0f
-    );
 }
 //----------------------------------------------------------------------------
 template <typename Real>
@@ -1886,146 +1875,146 @@ Matrix3<Real>& Matrix3<Real>::Slerp (Real t, const Matrix3& rot0,
 //    // deal with non-full rank.
 //
 //    GMatrix<Real> M(3, 3);
-//    memcpy((Real*)M, mEntry, 9*sizeof(double));
+//    memcpy(M.GetElements(), mEntry, 9*sizeof(Real));
 //
 //    GMatrix<Real> tmpL(3, 3), tmpD(3, 3), tmpRTranspose(3, 3);
 //    Wm5::SingularValueDecomposition<Real>(M, tmpL, tmpD, tmpRTranspose);
 //
-//    memcpy(left.mEntry, (Real*)tmpL, 9*sizeof(Real));
-//    memcpy(diag.mEntry,(Real*)tmpD, 9*sizeof(Real));
-//    memcpy(rightTranspose.mEntry, (Real*)tmpRTranspose, 9*sizeof(Real));
+//    memcpy(left.mEntry, tmpL.GetElements(), 9*sizeof(Real));
+//    memcpy(diag.mEntry, tmpD.GetElements(), 9*sizeof(Real));
+//    memcpy(rightTranspose.mEntry, tmpRTranspose.GetElements(), 9*sizeof(Real));
 //}
 //----------------------------------------------------------------------------
-//template <typename Real>
-//void Matrix3<Real>::PolarDecomposition (Matrix3& qMat, Matrix3& sMat)
-//{
-//    // Decompose M = L*D*R^T.
-//    Matrix3 left, diag, rightTranspose;
-//    SingularValueDecomposition(left, diag, rightTranspose);
-//
-//    // Compute Q = L*R^T.
-//    qMat = left*rightTranspose;
-//
-//    // Compute S = R*D*R^T.
-//    sMat = rightTranspose.TransposeTimes(diag*rightTranspose);
-//
-//    // Numerical round-off errors can cause S not to be symmetric in the
-//    // sense that S[i][j] and S[j][i] are slightly different for i != j.
-//    // Correct this by averaging S = (S + S^T)/2.
-//    sMat[0][1] = ((Real)0.5)*(sMat[0][1] + sMat[1][0]);
-//    sMat[1][0] = sMat[0][1];
-//    sMat[0][2] = ((Real)0.5)*(sMat[0][2] + sMat[2][0]);
-//    sMat[2][0] = sMat[0][2];
-//    sMat[1][2] = ((Real)0.5)*(sMat[1][2] + sMat[2][1]);
-//    sMat[2][1] = sMat[1][2];
-//}
+template <typename Real>
+void Matrix3<Real>::PolarDecomposition (Matrix3& qMat, Matrix3& sMat)
+{
+    // Decompose M = L*D*R^T.
+    Matrix3 left, diag, rightTranspose;
+    SingularValueDecomposition(left, diag, rightTranspose);
+
+    // Compute Q = L*R^T.
+    qMat = left*rightTranspose;
+
+    // Compute S = R*D*R^T.
+    sMat = rightTranspose.TransposeTimes(diag*rightTranspose);
+
+    // Numerical round-off errors can cause S not to be symmetric in the
+    // sense that S[i][j] and S[j][i] are slightly different for i != j.
+    // Correct this by averaging S = (S + S^T)/2.
+    sMat[0][1] = ((Real)0.5)*(sMat[0][1] + sMat[1][0]);
+    sMat[1][0] = sMat[0][1];
+    sMat[0][2] = ((Real)0.5)*(sMat[0][2] + sMat[2][0]);
+    sMat[2][0] = sMat[0][2];
+    sMat[1][2] = ((Real)0.5)*(sMat[1][2] + sMat[2][1]);
+    sMat[2][1] = sMat[1][2];
+}
 //----------------------------------------------------------------------------
-//template <typename Real>
-//void Matrix3<Real>::QDUDecomposition (Matrix3& qMat, Matrix3& diag,
-//    Matrix3& uMat) const
-//{
-//    // Factor M = QR = QDU where Q is orthogonal (rotation), D is diagonal
-//    // (scaling),  and U is upper triangular with ones on its diagonal
-//    // (shear).  Algorithm uses Gram-Schmidt orthogonalization (the QR
-//    // algorithm).
-//    //
-//    // If M = [ m0 | m1 | m2 ] and Q = [ q0 | q1 | q2 ], then
-//    //
-//    //   q0 = m0/|m0|
-//    //   q1 = (m1-(q0*m1)q0)/|m1-(q0*m1)q0|
-//    //   q2 = (m2-(q0*m2)q0-(q1*m2)q1)/|m2-(q0*m2)q0-(q1*m2)q1|
-//    //
-//    // where |V| indicates length of vector V and A*B indicates dot
-//    // product of vectors A and B.  The matrix R has entries
-//    //
-//    //   r00 = q0*m0  r01 = q0*m1  r02 = q0*m2
-//    //   r10 = 0      r11 = q1*m1  r12 = q1*m2
-//    //   r20 = 0      r21 = 0      r22 = q2*m2
-//    //
-//    // so D = diag(r00,r11,r22) and U has entries u01 = r01/r00,
-//    // u02 = r02/r00, and u12 = r12/r11.
-//
-//    // Build orthogonal matrix Q.
-//    Real invLength = Math<Real>::InvSqrt(mEntry[0]*mEntry[0] +
-//        mEntry[3]*mEntry[3] + mEntry[6]*mEntry[6]);
-//    qMat[0][0] = mEntry[0]*invLength;
-//    qMat[1][0] = mEntry[3]*invLength;
-//    qMat[2][0] = mEntry[6]*invLength;
-//
-//    Real fDot = qMat[0][0]*mEntry[1] + qMat[1][0]*mEntry[4] +
-//        qMat[2][0]*mEntry[7];
-//    qMat[0][1] = mEntry[1]-fDot*qMat[0][0];
-//    qMat[1][1] = mEntry[4]-fDot*qMat[1][0];
-//    qMat[2][1] = mEntry[7]-fDot*qMat[2][0];
-//    invLength = Math<Real>::InvSqrt(qMat[0][1]*qMat[0][1] +
-//        qMat[1][1]*qMat[1][1] + qMat[2][1]*qMat[2][1]);
-//    qMat[0][1] *= invLength;
-//    qMat[1][1] *= invLength;
-//    qMat[2][1] *= invLength;
-//
-//    fDot = qMat[0][0]*mEntry[2] + qMat[1][0]*mEntry[5] +
-//        qMat[2][0]*mEntry[8];
-//    qMat[0][2] = mEntry[2]-fDot*qMat[0][0];
-//    qMat[1][2] = mEntry[5]-fDot*qMat[1][0];
-//    qMat[2][2] = mEntry[8]-fDot*qMat[2][0];
-//    fDot = qMat[0][1]*mEntry[2] + qMat[1][1]*mEntry[5] +
-//        qMat[2][1]*mEntry[8];
-//    qMat[0][2] -= fDot*qMat[0][1];
-//    qMat[1][2] -= fDot*qMat[1][1];
-//    qMat[2][2] -= fDot*qMat[2][1];
-//    invLength = Math<Real>::InvSqrt(qMat[0][2]*qMat[0][2] +
-//        qMat[1][2]*qMat[1][2] + qMat[2][2]*qMat[2][2]);
-//    qMat[0][2] *= invLength;
-//    qMat[1][2] *= invLength;
-//    qMat[2][2] *= invLength;
-//
-//    // Guarantee that orthogonal matrix has determinant 1 (no reflections).
-//    Real det =
-//        qMat[0][0]*qMat[1][1]*qMat[2][2] + qMat[0][1]*qMat[1][2]*qMat[2][0] +
-//        qMat[0][2]*qMat[1][0]*qMat[2][1] - qMat[0][2]*qMat[1][1]*qMat[2][0] -
-//        qMat[0][1]*qMat[1][0]*qMat[2][2] - qMat[0][0]*qMat[1][2]*qMat[2][1];
-//
-//    if (det < (Real)0)
-//    {
-//        for (int row = 0; row < 3; ++row)
-//        {
-//            for (int col = 0; col < 3; ++col)
-//            {
-//                qMat[row][col] = -qMat[row][col];
-//            }
-//        }
-//    }
-//
-//    // Build "right" matrix R.
-//    Matrix3 right;
-//    right[0][0] = qMat[0][0]*mEntry[0] + qMat[1][0]*mEntry[3] +
-//        qMat[2][0]*mEntry[6];
-//    right[0][1] = qMat[0][0]*mEntry[1] + qMat[1][0]*mEntry[4] +
-//        qMat[2][0]*mEntry[7];
-//    right[1][1] = qMat[0][1]*mEntry[1] + qMat[1][1]*mEntry[4] +
-//        qMat[2][1]*mEntry[7];
-//    right[0][2] = qMat[0][0]*mEntry[2] + qMat[1][0]*mEntry[5] +
-//        qMat[2][0]*mEntry[8];
-//    right[1][2] = qMat[0][1]*mEntry[2] + qMat[1][1]*mEntry[5] +
-//        qMat[2][1]*mEntry[8];
-//    right[2][2] = qMat[0][2]*mEntry[2] + qMat[1][2]*mEntry[5] +
-//        qMat[2][2]*mEntry[8];
-//
-//    // The scaling component.
-//    diag.MakeDiagonal(right[0][0], right[1][1], right[2][2]);
-//
-//    // the shear component
-//    Real invD00 = ((Real)1)/diag[0][0];
-//    uMat[0][0] = (Real)1;
-//    uMat[0][1] = right[0][1]*invD00;
-//    uMat[0][2] = right[0][2]*invD00;
-//    uMat[1][0] = (Real)0;
-//    uMat[1][1] = (Real)1;
-//    uMat[1][2] = right[1][2]/diag[1][1];
-//    uMat[2][0] = (Real)0;
-//    uMat[2][1] = (Real)0;
-//    uMat[2][2] = (Real)1;
-//}
+template <typename Real>
+void Matrix3<Real>::QDUDecomposition (Matrix3& qMat, Matrix3& diag,
+    Matrix3& uMat) const
+{
+    // Factor M = QR = QDU where Q is orthogonal (rotation), D is diagonal
+    // (scaling),  and U is upper triangular with ones on its diagonal
+    // (shear).  Algorithm uses Gram-Schmidt orthogonalization (the QR
+    // algorithm).
+    //
+    // If M = [ m0 | m1 | m2 ] and Q = [ q0 | q1 | q2 ], then
+    //
+    //   q0 = m0/|m0|
+    //   q1 = (m1-(q0*m1)q0)/|m1-(q0*m1)q0|
+    //   q2 = (m2-(q0*m2)q0-(q1*m2)q1)/|m2-(q0*m2)q0-(q1*m2)q1|
+    //
+    // where |V| indicates length of vector V and A*B indicates dot
+    // product of vectors A and B.  The matrix R has entries
+    //
+    //   r00 = q0*m0  r01 = q0*m1  r02 = q0*m2
+    //   r10 = 0      r11 = q1*m1  r12 = q1*m2
+    //   r20 = 0      r21 = 0      r22 = q2*m2
+    //
+    // so D = diag(r00,r11,r22) and U has entries u01 = r01/r00,
+    // u02 = r02/r00, and u12 = r12/r11.
+
+    // Build orthogonal matrix Q.
+    Real invLength = Math<Real>::InvSqrt(mEntry[0]*mEntry[0] +
+        mEntry[3]*mEntry[3] + mEntry[6]*mEntry[6]);
+    qMat[0][0] = mEntry[0]*invLength;
+    qMat[1][0] = mEntry[3]*invLength;
+    qMat[2][0] = mEntry[6]*invLength;
+
+    Real fDot = qMat[0][0]*mEntry[1] + qMat[1][0]*mEntry[4] +
+        qMat[2][0]*mEntry[7];
+    qMat[0][1] = mEntry[1]-fDot*qMat[0][0];
+    qMat[1][1] = mEntry[4]-fDot*qMat[1][0];
+    qMat[2][1] = mEntry[7]-fDot*qMat[2][0];
+    invLength = Math<Real>::InvSqrt(qMat[0][1]*qMat[0][1] +
+        qMat[1][1]*qMat[1][1] + qMat[2][1]*qMat[2][1]);
+    qMat[0][1] *= invLength;
+    qMat[1][1] *= invLength;
+    qMat[2][1] *= invLength;
+
+    fDot = qMat[0][0]*mEntry[2] + qMat[1][0]*mEntry[5] +
+        qMat[2][0]*mEntry[8];
+    qMat[0][2] = mEntry[2]-fDot*qMat[0][0];
+    qMat[1][2] = mEntry[5]-fDot*qMat[1][0];
+    qMat[2][2] = mEntry[8]-fDot*qMat[2][0];
+    fDot = qMat[0][1]*mEntry[2] + qMat[1][1]*mEntry[5] +
+        qMat[2][1]*mEntry[8];
+    qMat[0][2] -= fDot*qMat[0][1];
+    qMat[1][2] -= fDot*qMat[1][1];
+    qMat[2][2] -= fDot*qMat[2][1];
+    invLength = Math<Real>::InvSqrt(qMat[0][2]*qMat[0][2] +
+        qMat[1][2]*qMat[1][2] + qMat[2][2]*qMat[2][2]);
+    qMat[0][2] *= invLength;
+    qMat[1][2] *= invLength;
+    qMat[2][2] *= invLength;
+
+    // Guarantee that orthogonal matrix has determinant 1 (no reflections).
+    Real det =
+        qMat[0][0]*qMat[1][1]*qMat[2][2] + qMat[0][1]*qMat[1][2]*qMat[2][0] +
+        qMat[0][2]*qMat[1][0]*qMat[2][1] - qMat[0][2]*qMat[1][1]*qMat[2][0] -
+        qMat[0][1]*qMat[1][0]*qMat[2][2] - qMat[0][0]*qMat[1][2]*qMat[2][1];
+
+    if (det < (Real)0)
+    {
+        for (int row = 0; row < 3; ++row)
+        {
+            for (int col = 0; col < 3; ++col)
+            {
+                qMat[row][col] = -qMat[row][col];
+            }
+        }
+    }
+
+    // Build "right" matrix R.
+    Matrix3 right;
+    right[0][0] = qMat[0][0]*mEntry[0] + qMat[1][0]*mEntry[3] +
+        qMat[2][0]*mEntry[6];
+    right[0][1] = qMat[0][0]*mEntry[1] + qMat[1][0]*mEntry[4] +
+        qMat[2][0]*mEntry[7];
+    right[1][1] = qMat[0][1]*mEntry[1] + qMat[1][1]*mEntry[4] +
+        qMat[2][1]*mEntry[7];
+    right[0][2] = qMat[0][0]*mEntry[2] + qMat[1][0]*mEntry[5] +
+        qMat[2][0]*mEntry[8];
+    right[1][2] = qMat[0][1]*mEntry[2] + qMat[1][1]*mEntry[5] +
+        qMat[2][1]*mEntry[8];
+    right[2][2] = qMat[0][2]*mEntry[2] + qMat[1][2]*mEntry[5] +
+        qMat[2][2]*mEntry[8];
+
+    // The scaling component.
+    diag.MakeDiagonal(right[0][0], right[1][1], right[2][2]);
+
+    // the shear component
+    Real invD00 = ((Real)1)/diag[0][0];
+    uMat[0][0] = (Real)1;
+    uMat[0][1] = right[0][1]*invD00;
+    uMat[0][2] = right[0][2]*invD00;
+    uMat[1][0] = (Real)0;
+    uMat[1][1] = (Real)1;
+    uMat[1][2] = right[1][2]/diag[1][1];
+    uMat[2][0] = (Real)0;
+    uMat[2][1] = (Real)0;
+    uMat[2][2] = (Real)1;
+}
 //----------------------------------------------------------------------------
 template <typename Real>
 bool Matrix3<Real>::Tridiagonalize (Real diagonal[3], Real subdiagonal[2])

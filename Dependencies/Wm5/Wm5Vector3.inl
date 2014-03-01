@@ -1,5 +1,5 @@
 // Geometric Tools, LLC
-// Copyright (c) 1998-2010
+// Copyright (c) 1998-2014
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 // http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
@@ -89,15 +89,6 @@ template <typename Real>
 inline Real& Vector3<Real>::Z ()
 {
     return mTuple[2];
-}
-//----------------------------------------------------------------------------
-template <typename Real>
-inline Real Vector3<Real>::Distance(const Vector3 &v1, const Vector3 &v2)
-{
-	return Math<Real>::Sqrt(
-		(v1.mTuple[0] - v2.mTuple[0]) * (v1.mTuple[0] - v2.mTuple[0]) +
-		(v1.mTuple[1] - v2.mTuple[1]) * (v1.mTuple[1] - v2.mTuple[1]) +
-		(v1.mTuple[2] - v2.mTuple[2]) * (v1.mTuple[2] - v2.mTuple[2]));
 }
 //----------------------------------------------------------------------------
 template <typename Real>

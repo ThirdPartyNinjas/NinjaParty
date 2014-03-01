@@ -1,10 +1,10 @@
 // Geometric Tools, LLC
-// Copyright (c) 1998-2010
+// Copyright (c) 1998-2014
 // Distributed under the Boost Software License, Version 1.0.
 // http://www.boost.org/LICENSE_1_0.txt
 // http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
 //
-// File Version: 5.0.2 (2011/03/27)
+// File Version: 5.0.3 (2012/03/09)
 
 #ifndef WM5TUPLE_H
 #define WM5TUPLE_H
@@ -41,8 +41,7 @@ public:
     // Assignment.
     Tuple& operator= (const Tuple& tuple);
 
-    // Comparison.  The inequalities make the comparisons using memcmp, thus
-    // treating the tuple as an array of unsigned bytes.
+    // Comparison.
     bool operator== (const Tuple& tuple) const;
     bool operator!= (const Tuple& tuple) const;
     bool operator<  (const Tuple& tuple) const;
