@@ -24,6 +24,7 @@ class Vector2 : public Tuple<2,Real>
 public:
     // Construction.
     Vector2 ();  // uninitialized
+    Vector2 (Real r) : Vector2(r, r) { }
     Vector2 (const Vector2& vec);
     Vector2 (const Tuple<2,Real>& tuple);
     Vector2 (Real x, Real y);
@@ -57,6 +58,9 @@ public:
     inline Real Dot (const Vector2& vec) const;
     inline Real Normalize (const Real epsilon = Math<Real>::ZERO_TOLERANCE);
 
+    // JC
+    inline Vector2 Unit () const;
+    
     // Returns (y,-x).
     inline Vector2 Perp () const;
 

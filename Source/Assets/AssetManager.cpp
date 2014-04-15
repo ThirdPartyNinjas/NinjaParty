@@ -26,6 +26,7 @@
 #include <NinjaParty/AssetManager.hpp>
 #include <NinjaParty/DeminaAnimationPlayer.hpp>
 #include <NinjaParty/Font.hpp>
+#include <NinjaParty/FragmentShader.hpp>
 #include <NinjaParty/GleedLevel.hpp>
 #include <NinjaParty/Path.hpp>
 #include <NinjaParty/Song.hpp>
@@ -34,6 +35,7 @@
 #include <NinjaParty/SpriteAnimationPlayer.hpp>
 #include <NinjaParty/Texture.hpp>
 #include <NinjaParty/TextureDictionary.hpp>
+#include <NinjaParty/VertexShader.hpp>
 
 namespace spine
 {
@@ -208,11 +210,63 @@ namespace NinjaParty
         }
         
 		if(textureDictionary == nullptr)
-			throw std::runtime_error(std::string("Failed to load TextureDictionary: ") + fileName);
+			throw std::runtime_error(std::string("Failed to load FragmentShader: ") + fileName);
 		
 		textureDictionaries[fileName] = textureDictionary;
 		return textureDictionary;
 	}
+    
+    VertexShader* AssetManager::LoadVertexShader(const std::string &fileName)
+    {
+		auto iterator = vertexShaders.find(fileName);
+        
+		if(iterator != vertexShaders.end())
+            return iterator->second;
+		
+		VertexShader *vertexShader = nullptr;
+        
+        if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
+        {
+            vertexShader = VertexShader::FromFile(assetRootPath + fileName);
+        }
+        else
+        {
+            auto &info = archiveInfo[assetPath + fileName];
+            vertexShader = VertexShader::FromBuffer(mappedAssetArchive + info.first, info.second);
+        }
+        
+		if(vertexShader == nullptr)
+			throw std::runtime_error(std::string("Failed to load VertexShader: ") + fileName);
+		
+		vertexShaders[fileName] = vertexShader;
+		return vertexShader;
+    }
+    
+    FragmentShader* AssetManager::LoadFragmentShader(const std::string &fileName)
+    {
+		auto iterator = fragmentShaders.find(fileName);
+        
+		if(iterator != fragmentShaders.end())
+            return iterator->second;
+		
+		FragmentShader *fragmentShader = nullptr;
+        
+        if(mappedAssetArchive == nullptr || archiveInfo.find(assetPath + fileName) == archiveInfo.end())
+        {
+            fragmentShader = FragmentShader::FromFile(assetRootPath + fileName);
+        }
+        else
+        {
+            auto &info = archiveInfo[assetPath + fileName];
+            fragmentShader = FragmentShader::FromBuffer(mappedAssetArchive + info.first, info.second);
+        }
+        
+		if(fragmentShader == nullptr)
+			throw std::runtime_error(std::string("Failed to load TextureDictionary: ") + fileName);
+		
+		fragmentShaders[fileName] = fragmentShader;
+		return fragmentShader;
+    }
 
 	Song* AssetManager::LoadSong(const std::string &fileName)
 	{

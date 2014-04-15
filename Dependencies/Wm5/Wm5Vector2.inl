@@ -222,6 +222,13 @@ inline Real Vector2<Real>::Normalize (const Real epsilon)
 
     return length;
 }
+// JC ------------------------------------------------------------------------
+template <typename Real>
+inline Vector2<Real> Vector2<Real>::Unit () const
+{
+    Real length = Length();
+    return *this / length;
+}
 //----------------------------------------------------------------------------
 template <typename Real>
 inline Vector2<Real> Vector2<Real>::Perp () const

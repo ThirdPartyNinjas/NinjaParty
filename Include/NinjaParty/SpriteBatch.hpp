@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+#include <NinjaParty/BlendMode.hpp>
 #include <NinjaParty/Math.hpp>
 #include <NinjaParty/Rectangle.hpp>
 
@@ -16,14 +17,10 @@
 namespace NinjaParty
 {
 	struct Font;
-
-	enum class BlendMode
-	{
-		None = 0,
-		Alpha,
-		PremultipliedAlpha,
-		Additive,
-	};
+    
+    class FragmentShader;
+    class SpriteShader;
+    class VertexShader;
 
 	class SpriteBatch
 	{
@@ -32,8 +29,8 @@ namespace NinjaParty
 		SpriteBatch(int screenWidth, int screenHeight, int maxSpritesPerDraw = 1000);
 		~SpriteBatch();
 
-		void Begin(BlendMode blendMode = BlendMode::Alpha, const Matrix3 &batchTransform = Matrix3::IDENTITY, bool updateResolution = true);
-		void Begin(BlendMode blendMode, const Matrix3 &batchTransform, const Matrix4 &projectionMatrix, bool updateResolution);
+		void Begin(BlendMode blendMode = BlendMode::Alpha, const Matrix3 &batchTransform = Matrix3::IDENTITY, SpriteShader *spriteShader = nullptr, bool updateResolution = true);
+		void Begin(BlendMode blendMode, const Matrix3 &batchTransform, const Matrix4 &projectionMatrix, SpriteShader *spriteShader, bool updateResolution);
 		void End();
 
 		void Draw(Texture *texture,
@@ -80,6 +77,9 @@ namespace NinjaParty
         void ApplyTransform(const Matrix3 transform);
         
 		void SetResolution(int screenWidth, int screenHeight);
+        
+        VertexShader* DefaultVertexShader() const;
+        FragmentShader* DefaultFragmentShader() const;
 
 	private:
         struct impl;

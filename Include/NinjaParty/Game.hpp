@@ -9,7 +9,6 @@
 #include <NinjaParty/ScreenManager.hpp>
 
 /* Events:
-
  TextInput
  
  ResolutionChanged
@@ -34,17 +33,11 @@ namespace NinjaParty
 
         void PostEvent(const std::shared_ptr<IEvent> &event, EventPriority eventPriority = EventPriority::Normal);
         
-		virtual void SetResolution(int screenWidth, int screenHeight)
-		{
-			this->screenWidth = screenWidth;
-			this->screenHeight = screenHeight;
-		}
-
 		virtual void LoadContent(const std::string &assetPath = "Assets/", const std::string &assetArchivePath = "");
 		virtual void UnloadContent();
 
-		virtual void Update(float deltaSeconds);
-		virtual void Draw();
+		void UpdateFrame();
+		void DrawFrame();
 		
 		void ClearScreen(Color color);
 
@@ -64,9 +57,6 @@ namespace NinjaParty
 
 		virtual void FacebookLogin(bool success, const std::string &accessToken) { }
 		virtual void FacebookLogout() { }
-
-        int GetEventCount() const;
-        std::shared_ptr<IEvent> GetEvent();
         
 	private:
         struct impl;
@@ -78,7 +68,8 @@ namespace NinjaParty
 		int screenHeight;
 
 	protected:
-		ScreenManager screenManager;
+        virtual void Update(float deltaSeconds) = 0;
+        virtual void Draw() = 0;
 	};
 }
 

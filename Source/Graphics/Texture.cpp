@@ -51,31 +51,18 @@ namespace NinjaParty
 
 	Texture* Texture::FromFile(const std::string &fileName, TextureRegion *textureRegion)
 	{
-		int width, height;
-		int textureId = LoadTexture(fileName, width, height);
-		
-		if(textureId == 0)
-			throw std::runtime_error(std::string("Failed to load image: ") + fileName);
-		
-		Texture *texture = new Texture();
-		texture->textureId = static_cast<unsigned int>(textureId);
-		texture->width = width;
-		texture->height = height;
-		
-		if(textureRegion != nullptr)
-		{
-			textureRegion->bounds.x = textureRegion->bounds.y = 0;
-            textureRegion->originTopLeft = Vector2::ZERO;
-            textureRegion->originBottomRight = Vector2(1.0f, 1.0f);
-			textureRegion->originCenter = Vector2(0.5f, 0.5f);
-			textureRegion->bounds.width = texture->GetWidth();
-			textureRegion->bounds.height = texture->GetHeight();
-            
-            // todo: input
-            
-			textureRegion->rotated = false;
-		}
-		return texture;
+        std::FILE *file = std::fopen(fileName.c_str(), "rb");
+        if(!file)
+            throw std::runtime_error(std::string("Failed to load image: ") + fileName);
+        
+        std::fseek(file, 0, SEEK_END);
+        int fileLength = std::ftell(file);
+        std::rewind(file);
+        
+        std::unique_ptr<unsigned char[]> buffer(new unsigned char[fileLength]);
+        std::fread(buffer.get(), 1, fileLength, file);
+        
+        return FromBuffer(buffer.get(), fileLength, textureRegion);
 	}
 
 	Texture* Texture::FromBuffer(const unsigned char *buffer, int length, TextureRegion *textureRegion)
@@ -103,7 +90,7 @@ namespace NinjaParty
 		}
 		return texture;
 	}
-	
+
 	Texture* Texture::FromColors(const Color *colors, int width, int height, TextureFilter textureFilter)
 	{
 		GLuint textureId;

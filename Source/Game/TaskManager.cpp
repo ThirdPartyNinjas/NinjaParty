@@ -31,6 +31,11 @@ namespace NinjaParty
                     tasks.pop();
                 break;
         }
+        
+        if(ended)
+        {
+            std::queue<Task>().swap(tasks);
+        }
     }
 
     TaskQueue& TaskQueue::Perform(const Action &action)
@@ -54,6 +59,11 @@ namespace NinjaParty
     {
         tasks.push(Task(timedCondition));
         return *this;
+    }
+    
+    void TaskQueue::End()
+    {
+        ended = true;
     }
     
     TaskQueue::Task::Task(Action action)

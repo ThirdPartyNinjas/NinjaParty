@@ -1,23 +1,16 @@
-#ifndef NINJAPARTY_SPRITEANIMATION_HPP
-#define NINJAPARTY_SPRITEANIMATION_HPP
+#ifndef NINJAPARTY_SPRITEANIMATIONPLAYER_HPP
+#define NINJAPARTY_SPRITEANIMATIONPLAYER_HPP
 
 #include <map>
 #include <string>
 #include <vector>
 
 #include <NinjaParty/AnimationPlayer.hpp>
+#include <NinjaParty/SpriteAnimation.hpp>
 #include <NinjaParty/Texture.hpp>
 
 namespace NinjaParty
 {
-	struct SpriteAnimation
-	{
-		Texture *texture;
-		std::vector<TextureRegion> frames;
-		float frameSeconds;
-		bool loop;
-	};
-	
 	class SpriteAnimationPlayer : public AnimationPlayer
 	{
 	public:
@@ -49,4 +42,4 @@ namespace NinjaParty
 	};
 }
 
-#endif//NINJAPARTY_SPRITEANIMATION_HPP
+#endif//NINJAPARTY_SPRITEANIMATIONPLAYER_HPP

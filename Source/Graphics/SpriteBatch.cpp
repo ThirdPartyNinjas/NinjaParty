@@ -1,10 +1,12 @@
 #include <stdexcept>
 
 #include <NinjaParty/Font.hpp>
+#include <NinjaParty/FragmentShader.hpp>
 #include <NinjaParty/IncludeGL.h>
+#include <NinjaParty/Math.hpp>
 #include <NinjaParty/MathHelpers.hpp>
 #include <NinjaParty/SpriteBatch.hpp>
-#include <NinjaParty/Math.hpp>
+#include <NinjaParty/VertexShader.hpp>
 
 namespace NinjaParty
 {
@@ -15,7 +17,7 @@ namespace NinjaParty
         
 		unsigned int currentTextureId;
 		SpriteShader *currentShader;
-		SpriteShader defaultShader;
+        std::unique_ptr<SpriteShader> defaultShader;
 		
 		int screenWidth, screenHeight;
 		
@@ -25,6 +27,9 @@ namespace NinjaParty
 		Vertex *vertices;
 		int maxVertices;
 		int activeVertices;
+        
+        FragmentShader *defaultFragmentShader;
+        VertexShader *defaultVertexShader;
 		
 		Matrix3 batchTransform;
         
@@ -34,7 +39,6 @@ namespace NinjaParty
 	SpriteBatch::SpriteBatch(int screenWidth, int screenHeight, int maxSpritesPerDraw)
     : pimpl(new impl)
 	{
-		pimpl->currentShader = &pimpl->defaultShader;
 		SetResolution(screenWidth, screenHeight);
 		
 		pimpl->currentTextureId = 0;
@@ -42,19 +46,55 @@ namespace NinjaParty
 		pimpl->maxVertices = maxSpritesPerDraw * 6;
 		pimpl->activeVertices = 0;
 		pimpl->vertices = new Vertex[pimpl->maxVertices];
-	}
+        
+        std::string vertexShaderSource =
+            // input from CPU
+            "attribute vec4 position;\n"
+            "attribute vec4 color;\n"
+            "attribute vec2 texcoord;\n"
+            // output to fragment shader
+            "varying highp vec4 v_color;\n"
+            "varying highp vec2 v_texcoord;\n"
+            // custom input from program
+            "uniform mat4 ProjectionMatrix;\n"
+            //
+            "void main()\n"
+            "{\n"
+            "	gl_Position = ProjectionMatrix * position;\n"
+            "	v_color = color;\n"
+            "	v_texcoord = texcoord;\n"
+            "}\n";
+        
+        std::string fragmentShaderSource =
+            // input from vertex shader
+            "varying highp vec4 v_color;\n"
+            "varying highp vec2 v_texcoord;\n"
+            // custom input from program
+            "uniform sampler2D TextureSampler;\n"
+            //
+            "void main()\n"
+            "{\n"
+            "	gl_FragColor = texture2D(TextureSampler, v_texcoord) * v_color;\n"
+            "}\n";
+        
+        pimpl->defaultVertexShader = VertexShader::FromBuffer((const unsigned char*)vertexShaderSource.c_str(),
+                                                              vertexShaderSource.length());
+        pimpl->defaultFragmentShader = FragmentShader::FromBuffer((const unsigned char*)fragmentShaderSource.c_str(),
+                                                                  fragmentShaderSource.length());
+        pimpl->defaultShader.reset(new SpriteShader(pimpl->defaultVertexShader, pimpl->defaultFragmentShader));
+    }
 	
 	SpriteBatch::~SpriteBatch()
 	{
 		delete[] pimpl->vertices;
 	}
     
-    void SpriteBatch::Begin(BlendMode blendMode, const Matrix3 &batchTransform, bool updateResolution)
+    void SpriteBatch::Begin(BlendMode blendMode, const Matrix3 &batchTransform, SpriteShader *spriteShader, bool updateResolution)
     {
-        Begin(blendMode, batchTransform, pimpl->defaultProjectionMatrix, updateResolution);
+        Begin(blendMode, batchTransform, pimpl->defaultProjectionMatrix, spriteShader, updateResolution);
     }
 	
-	void SpriteBatch::Begin(BlendMode blendMode, const Matrix3 &batchTransform, const Matrix4 &projectionMatrix, bool updateResolution)
+	void SpriteBatch::Begin(BlendMode blendMode, const Matrix3 &batchTransform, const Matrix4 &projectionMatrix, SpriteShader *spriteShader, bool updateResolution)
 	{
 		if(updateResolution)
 		{
@@ -70,6 +110,7 @@ namespace NinjaParty
         
         pimpl->currentProjectionMatrix = projectionMatrix;
         
+        pimpl->currentShader = (spriteShader != nullptr) ? spriteShader : pimpl->defaultShader.get();
         pimpl->currentShader->Apply();
 	}
 	
@@ -203,6 +244,7 @@ namespace NinjaParty
 		int textureWidth = texture->GetWidth();
 		int textureHeight = texture->GetHeight();
 		
+        
 		Vector3 v;
 		Matrix3 transform = pimpl->batchTransform * transformMatrix * CreateTranslationMatrix(position.X(), position.Y()) *
 		CreateRotationMatrix(rotation) * CreateScaleMatrix(scale.X(), scale.Y());
@@ -636,7 +678,8 @@ namespace NinjaParty
 			
 			Vector3 v;			
 			Matrix3 transform =
-				CreateTranslationMatrix(position.X(), position.Y())
+                pimpl->batchTransform
+                * CreateTranslationMatrix(position.X(), position.Y())
 				* CreateRotationMatrix(rotation)
 				* CreateScaleMatrix(scale.X(), scale.Y())
 				* CreateTranslationMatrix(-o.X(), -o.Y())
@@ -741,13 +784,9 @@ namespace NinjaParty
 				break;
 		}
 		
+        currentShader->SetTexture("TextureSampler", currentTextureId, 0);
         currentShader->SetParameter("ProjectionMatrix", currentProjectionMatrix);
-
-        currentShader->SetParameter("TextureSampler", 0);
         
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, currentTextureId);
-
 		glVertexAttribPointer((GLuint)ShaderAttributes::Position, 2, GL_FLOAT, 0, sizeof(Vertex), &vertices[0].x);
 		glEnableVertexAttribArray((GLuint)ShaderAttributes::Position);
 		glVertexAttribPointer((GLuint)ShaderAttributes::TexCoord, 2, GL_FLOAT, 0, sizeof(Vertex), &vertices[0].u);
@@ -759,4 +798,14 @@ namespace NinjaParty
 		
 		activeVertices = 0;
 	}
+    
+    VertexShader* SpriteBatch::DefaultVertexShader() const
+    {
+        return pimpl->defaultVertexShader;
+    }
+    
+    FragmentShader* SpriteBatch::DefaultFragmentShader() const
+    {
+        return pimpl->defaultFragmentShader;
+    }
 }

@@ -115,8 +115,19 @@
 		3035FF7417AC444E007BA60A /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 3035FF0E17AC444E007BA60A /* stb_image.c */; };
 		3035FF7517AC444E007BA60A /* stb_vorbis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3035FF1217AC444E007BA60A /* stb_vorbis.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		304B4B5F18BF0D0100CDE611 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 304B4B5E18BF0D0100CDE611 /* Event.cpp */; };
+		30637DF718E0D7F80094C554 /* LimitedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30637DF618E0D7F80094C554 /* LimitedEmitter.cpp */; };
+		30637DFA18E0DEBB0094C554 /* ExplosionEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30637DF918E0DEBB0094C554 /* ExplosionEmitter.cpp */; };
 		307012D817AF3D81006A9315 /* HttpRequestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307012D717AF3D81006A9315 /* HttpRequestManager.cpp */; };
+		30B36C6B18F453F200189782 /* FragmentShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B36C6A18F453F200189782 /* FragmentShader.cpp */; };
+		30B36C6D18F481C600189782 /* VertexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B36C6C18F481C600189782 /* VertexShader.cpp */; };
 		30B82ABC17B4252B00924448 /* FacebookManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B82ABB17B4252B00924448 /* FacebookManager.cpp */; };
+		30DD1C7618DB6C94003E558E /* ConstantRateEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DD1C7218DB6C94003E558E /* ConstantRateEmitter.cpp */; };
+		30DD1C7718DB6C94003E558E /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DD1C7318DB6C94003E558E /* Emitter.cpp */; };
+		30DD1C7818DB6C94003E558E /* PointEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DD1C7418DB6C94003E558E /* PointEmitter.cpp */; };
+		30F2E4FB18DBB2B10031A43B /* VelocityEmitModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F2E4FA18DBB2B10031A43B /* VelocityEmitModifier.cpp */; };
+		30F2E4FD18DBDE140031A43B /* CircleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F2E4FC18DBDE140031A43B /* CircleEmitter.cpp */; };
+		30F2E4FF18DBE0530031A43B /* AlphaModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F2E4FE18DBE0530031A43B /* AlphaModifier.cpp */; };
+		30F2E50218DBEB7F0031A43B /* ConeEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F2E50118DBEB7F0031A43B /* ConeEmitter.cpp */; };
 		30F6482218C0F11D0098781F /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F6482118C0F11D0098781F /* Math.cpp */; };
 		30F6483F18C132870098781F /* Wm5Assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F6482418C132870098781F /* Wm5Assert.cpp */; };
 		30F6484018C132870098781F /* Wm5Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F6482618C132870098781F /* Wm5Math.cpp */; };
@@ -141,6 +152,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3013287918E1DEDB00B7AF8B /* ColorEmitModifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ColorEmitModifier.hpp; sourceTree = "<group>"; };
+		3013288218E35F1800B7AF8B /* RotationSpeedEmitModifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RotationSpeedEmitModifier.hpp; sourceTree = "<group>"; };
+		302E422718C8CA6400690715 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		3035FDA617AC128C007BA60A /* libNinjaParty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNinjaParty.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3035FDA917AC128C007BA60A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3035FE3017AC410F007BA60A /* AssetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AssetManager.cpp; path = ../../Source/Assets/AssetManager.cpp; sourceTree = "<group>"; };
@@ -154,7 +168,7 @@
 		3035FE3B17AC4121007BA60A /* Vorbis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Vorbis.hpp; path = ../../Source/Audio/Vorbis.hpp; sourceTree = "<group>"; };
 		3035FE3C17AC4121007BA60A /* Wav.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Wav.cpp; path = ../../Source/Audio/Wav.cpp; sourceTree = "<group>"; };
 		3035FE3D17AC4121007BA60A /* Wav.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Wav.hpp; path = ../../Source/Audio/Wav.hpp; sourceTree = "<group>"; };
-		3035FE4417AC4136007BA60A /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../Source/Game/Game.cpp; sourceTree = "<group>"; };
+		3035FE4417AC4136007BA60A /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../Source/Game/Game.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		3035FE4517AC4136007BA60A /* GameScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScreen.cpp; path = ../../Source/Game/GameScreen.cpp; sourceTree = "<group>"; };
 		3035FE4617AC4136007BA60A /* Juggler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Juggler.cpp; path = ../../Source/Game/Juggler.cpp; sourceTree = "<group>"; };
 		3035FE4717AC4136007BA60A /* ScreenManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScreenManager.cpp; path = ../../Source/Game/ScreenManager.cpp; sourceTree = "<group>"; };
@@ -319,11 +333,36 @@
 		304B4B5C18BF0C8B00CDE611 /* TouchEvents.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TouchEvents.hpp; path = ../../Include/NinjaParty/TouchEvents.hpp; sourceTree = "<group>"; };
 		304B4B5D18BF0CA600CDE611 /* Event.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Event.hpp; path = ../../Include/NinjaParty/Event.hpp; sourceTree = "<group>"; };
 		304B4B5E18BF0D0100CDE611 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Event.cpp; path = ../../Source/Game/Event.cpp; sourceTree = "<group>"; };
+		30637DF518E0D5D00094C554 /* LimitedEmitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LimitedEmitter.hpp; sourceTree = "<group>"; };
+		30637DF618E0D7F80094C554 /* LimitedEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LimitedEmitter.cpp; sourceTree = "<group>"; };
+		30637DF818E0DDA70094C554 /* ExplosionEmitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ExplosionEmitter.hpp; sourceTree = "<group>"; };
+		30637DF918E0DEBB0094C554 /* ExplosionEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExplosionEmitter.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		307012D617AF3C79006A9315 /* HttpRequestManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HttpRequestManager.hpp; path = ../../Include/NinjaParty/HttpRequestManager.hpp; sourceTree = "<group>"; };
 		307012D717AF3D81006A9315 /* HttpRequestManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestManager.cpp; sourceTree = "<group>"; };
 		307012DC17AF4618006A9315 /* Cacerts.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Cacerts.hpp; sourceTree = "<group>"; };
+		30B36C6818F452B300189782 /* FragmentShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FragmentShader.hpp; path = ../../Include/NinjaParty/FragmentShader.hpp; sourceTree = "<group>"; };
+		30B36C6918F452C100189782 /* VertexShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = VertexShader.hpp; path = ../../Include/NinjaParty/VertexShader.hpp; sourceTree = "<group>"; };
+		30B36C6A18F453F200189782 /* FragmentShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FragmentShader.cpp; path = ../../Source/Graphics/FragmentShader.cpp; sourceTree = "<group>"; };
+		30B36C6C18F481C600189782 /* VertexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VertexShader.cpp; path = ../../Source/Graphics/VertexShader.cpp; sourceTree = "<group>"; };
 		30B82ABA17B4023F00924448 /* FacebookManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FacebookManager.hpp; path = ../../Include/NinjaParty/FacebookManager.hpp; sourceTree = "<group>"; };
 		30B82ABB17B4252B00924448 /* FacebookManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FacebookManager.cpp; sourceTree = "<group>"; };
+		30DD1C6418DB51C9003E558E /* EmitModifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EmitModifier.hpp; sourceTree = "<group>"; };
+		30DD1C6518DB51C9003E558E /* VelocityEmitModifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VelocityEmitModifier.hpp; sourceTree = "<group>"; };
+		30DD1C6718DB51C9003E558E /* CircleEmitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CircleEmitter.hpp; sourceTree = "<group>"; };
+		30DD1C6818DB51C9003E558E /* ConstantRateEmitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConstantRateEmitter.hpp; sourceTree = "<group>"; };
+		30DD1C6918DB51C9003E558E /* Emitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Emitter.hpp; sourceTree = "<group>"; };
+		30DD1C6A18DB51C9003E558E /* PointEmitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PointEmitter.hpp; sourceTree = "<group>"; };
+		30DD1C6C18DB51C9003E558E /* AlphaModifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AlphaModifier.hpp; sourceTree = "<group>"; };
+		30DD1C6D18DB51C9003E558E /* Modifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Modifier.hpp; sourceTree = "<group>"; };
+		30DD1C6E18DB51C9003E558E /* Particle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Particle.hpp; sourceTree = "<group>"; };
+		30DD1C7218DB6C94003E558E /* ConstantRateEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConstantRateEmitter.cpp; sourceTree = "<group>"; };
+		30DD1C7318DB6C94003E558E /* Emitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Emitter.cpp; sourceTree = "<group>"; };
+		30DD1C7418DB6C94003E558E /* PointEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointEmitter.cpp; sourceTree = "<group>"; };
+		30F2E4FA18DBB2B10031A43B /* VelocityEmitModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VelocityEmitModifier.cpp; sourceTree = "<group>"; };
+		30F2E4FC18DBDE140031A43B /* CircleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CircleEmitter.cpp; sourceTree = "<group>"; };
+		30F2E4FE18DBE0530031A43B /* AlphaModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaModifier.cpp; sourceTree = "<group>"; };
+		30F2E50018DBEA2E0031A43B /* ConeEmitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConeEmitter.hpp; sourceTree = "<group>"; };
+		30F2E50118DBEB7F0031A43B /* ConeEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConeEmitter.cpp; sourceTree = "<group>"; };
 		30F6470318BFA5CF0098781F /* GestureEvents.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = GestureEvents.hpp; path = ../../Include/NinjaParty/GestureEvents.hpp; sourceTree = "<group>"; };
 		30F6480418C0E3360098781F /* Math.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Math.hpp; path = ../../Include/NinjaParty/Math.hpp; sourceTree = "<group>"; wrapsLines = 0; };
 		30F6482118C0F11D0098781F /* Math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Math.cpp; path = ../../Source/Math/Math.cpp; sourceTree = "<group>"; };
@@ -355,6 +394,8 @@
 		30F6483C18C132870098781F /* Wm5Vector4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wm5Vector4.cpp; sourceTree = "<group>"; };
 		30F6483D18C132870098781F /* Wm5Vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wm5Vector4.h; sourceTree = "<group>"; };
 		30F6483E18C132870098781F /* Wm5Vector4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Wm5Vector4.inl; sourceTree = "<group>"; };
+		30FA1C9218DA750500B86B4D /* BlendMode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = BlendMode.hpp; path = ../../Include/NinjaParty/BlendMode.hpp; sourceTree = "<group>"; };
+		30FA1C9318DA759300B86B4D /* SpriteAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SpriteAnimation.hpp; path = ../../Include/NinjaParty/SpriteAnimation.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -391,6 +432,7 @@
 		3035FDA817AC128C007BA60A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				302E422718C8CA6400690715 /* OpenAL.framework */,
 				3035FDA917AC128C007BA60A /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -454,7 +496,9 @@
 				3035FE4F17AC415F007BA60A /* Color.cpp */,
 				3035FE5017AC415F007BA60A /* DeminaAnimationPlayer.cpp */,
 				3035FE5117AC415F007BA60A /* Font.cpp */,
+				30B36C6A18F453F200189782 /* FragmentShader.cpp */,
 				3035FE5217AC415F007BA60A /* LoadTexture_stb.cpp */,
+				30DD1C6F18DB6C94003E558E /* Particles */,
 				3035FE5317AC415F007BA60A /* RenderTexture.cpp */,
 				3035FE5417AC415F007BA60A /* SpineAnimationPlayer.cpp */,
 				3035FE5517AC415F007BA60A /* SpriteAnimationPlayer.cpp */,
@@ -462,6 +506,7 @@
 				3035FE5717AC415F007BA60A /* SpriteShader.cpp */,
 				3035FE5817AC415F007BA60A /* Texture.cpp */,
 				3035FE5917AC415F007BA60A /* TextureDictionary.cpp */,
+				30B36C6C18F481C600189782 /* VertexShader.cpp */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -482,12 +527,14 @@
 				3035FE6F17AC43DF007BA60A /* AnimationPlayer.hpp */,
 				3035FE7017AC43DF007BA60A /* AssetManager.hpp */,
 				3035FE7117AC43DF007BA60A /* AudioRenderer.hpp */,
+				30FA1C9218DA750500B86B4D /* BlendMode.hpp */,
 				3035FE7217AC43DF007BA60A /* Camera.hpp */,
 				3035FE7317AC43DF007BA60A /* Color.hpp */,
 				3035FE7417AC43DF007BA60A /* DeminaAnimationPlayer.hpp */,
 				304B4B5D18BF0CA600CDE611 /* Event.hpp */,
 				30B82ABA17B4023F00924448 /* FacebookManager.hpp */,
 				3035FE7517AC43DF007BA60A /* Font.hpp */,
+				30B36C6818F452B300189782 /* FragmentShader.hpp */,
 				3035FE7617AC43DF007BA60A /* Game.hpp */,
 				3035FE7717AC43DF007BA60A /* GameScreen.hpp */,
 				30F6470318BFA5CF0098781F /* GestureEvents.hpp */,
@@ -500,6 +547,7 @@
 				3035FE7D17AC43DF007BA60A /* LoadTexture.hpp */,
 				30F6480418C0E3360098781F /* Math.hpp */,
 				3035FE7E17AC43DF007BA60A /* MathHelpers.hpp */,
+				30DD1C6218DB51C9003E558E /* Particles */,
 				3035FE8017AC43DF007BA60A /* Path.hpp */,
 				3035FE8117AC43DF007BA60A /* Random.hpp */,
 				3035FE8217AC43DF007BA60A /* Rectangle.hpp */,
@@ -510,6 +558,7 @@
 				3035FE8717AC43DF007BA60A /* SoundEffect.hpp */,
 				3035FE8817AC43DF007BA60A /* SoundInstance.hpp */,
 				3035FE8917AC43DF007BA60A /* SpineAnimationPlayer.hpp */,
+				30FA1C9318DA759300B86B4D /* SpriteAnimation.hpp */,
 				3035FE8A17AC43DF007BA60A /* SpriteAnimationPlayer.hpp */,
 				3035FE8B17AC43DF007BA60A /* SpriteBatch.hpp */,
 				3035FE8C17AC43DF007BA60A /* SpriteShader.hpp */,
@@ -520,6 +569,7 @@
 				304B4B5C18BF0C8B00CDE611 /* TouchEvents.hpp */,
 				3035FE9117AC43DF007BA60A /* Tween.hpp */,
 				3035FE9417AC43DF007BA60A /* Vertex.hpp */,
+				30B36C6918F452C100189782 /* VertexShader.hpp */,
 			);
 			name = Include;
 			sourceTree = "<group>";
@@ -763,6 +813,93 @@
 			path = ../../Source/Internet;
 			sourceTree = "<group>";
 		};
+		30DD1C6218DB51C9003E558E /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				30DD1C6318DB51C9003E558E /* EmitModifiers */,
+				30DD1C6618DB51C9003E558E /* Emitters */,
+				30DD1C6B18DB51C9003E558E /* Modifiers */,
+				30DD1C6E18DB51C9003E558E /* Particle.hpp */,
+			);
+			name = Particles;
+			path = ../../Include/NinjaParty/Particles;
+			sourceTree = "<group>";
+		};
+		30DD1C6318DB51C9003E558E /* EmitModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				3013287918E1DEDB00B7AF8B /* ColorEmitModifier.hpp */,
+				30DD1C6418DB51C9003E558E /* EmitModifier.hpp */,
+				3013288218E35F1800B7AF8B /* RotationSpeedEmitModifier.hpp */,
+				30DD1C6518DB51C9003E558E /* VelocityEmitModifier.hpp */,
+			);
+			path = EmitModifiers;
+			sourceTree = "<group>";
+		};
+		30DD1C6618DB51C9003E558E /* Emitters */ = {
+			isa = PBXGroup;
+			children = (
+				30DD1C6718DB51C9003E558E /* CircleEmitter.hpp */,
+				30F2E50018DBEA2E0031A43B /* ConeEmitter.hpp */,
+				30DD1C6818DB51C9003E558E /* ConstantRateEmitter.hpp */,
+				30DD1C6918DB51C9003E558E /* Emitter.hpp */,
+				30637DF818E0DDA70094C554 /* ExplosionEmitter.hpp */,
+				30637DF518E0D5D00094C554 /* LimitedEmitter.hpp */,
+				30DD1C6A18DB51C9003E558E /* PointEmitter.hpp */,
+			);
+			path = Emitters;
+			sourceTree = "<group>";
+		};
+		30DD1C6B18DB51C9003E558E /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				30DD1C6C18DB51C9003E558E /* AlphaModifier.hpp */,
+				30DD1C6D18DB51C9003E558E /* Modifier.hpp */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		30DD1C6F18DB6C94003E558E /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				30DD1C7018DB6C94003E558E /* EmitModifiers */,
+				30DD1C7118DB6C94003E558E /* Emitters */,
+				30DD1C7518DB6C94003E558E /* Modifiers */,
+			);
+			name = Particles;
+			path = ../../Source/Graphics/Particles;
+			sourceTree = "<group>";
+		};
+		30DD1C7018DB6C94003E558E /* EmitModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				30F2E4FA18DBB2B10031A43B /* VelocityEmitModifier.cpp */,
+			);
+			path = EmitModifiers;
+			sourceTree = "<group>";
+		};
+		30DD1C7118DB6C94003E558E /* Emitters */ = {
+			isa = PBXGroup;
+			children = (
+				30F2E4FC18DBDE140031A43B /* CircleEmitter.cpp */,
+				30F2E50118DBEB7F0031A43B /* ConeEmitter.cpp */,
+				30DD1C7218DB6C94003E558E /* ConstantRateEmitter.cpp */,
+				30DD1C7318DB6C94003E558E /* Emitter.cpp */,
+				30637DF918E0DEBB0094C554 /* ExplosionEmitter.cpp */,
+				30637DF618E0D7F80094C554 /* LimitedEmitter.cpp */,
+				30DD1C7418DB6C94003E558E /* PointEmitter.cpp */,
+			);
+			path = Emitters;
+			sourceTree = "<group>";
+		};
+		30DD1C7518DB6C94003E558E /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				30F2E4FE18DBE0530031A43B /* AlphaModifier.cpp */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 		30F6480518C0E96A0098781F /* Wm5 */ = {
 			isa = PBXGroup;
 			children = (
@@ -850,11 +987,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30F2E4FB18DBB2B10031A43B /* VelocityEmitModifier.cpp in Sources */,
 				3035FE3317AC410F007BA60A /* AssetManager.cpp in Sources */,
 				3035FE3417AC410F007BA60A /* GetRootPath_iOS.mm in Sources */,
 				3035FE3517AC410F007BA60A /* Path.cpp in Sources */,
+				30DD1C7618DB6C94003E558E /* ConstantRateEmitter.cpp in Sources */,
 				3035FE3E17AC4121007BA60A /* AudioRenderer.cpp in Sources */,
 				3035FE3F17AC4121007BA60A /* Song.cpp in Sources */,
+				30B36C6D18F481C600189782 /* VertexShader.cpp in Sources */,
 				3035FE4017AC4121007BA60A /* SoundEffect.cpp in Sources */,
 				3035FE4117AC4121007BA60A /* SoundInstance.cpp in Sources */,
 				3035FE4217AC4121007BA60A /* Vorbis.cpp in Sources */,
@@ -862,6 +1002,7 @@
 				30F6484318C132870098781F /* Wm5Matrix4.cpp in Sources */,
 				3035FE4917AC4136007BA60A /* Game.cpp in Sources */,
 				30F6483F18C132870098781F /* Wm5Assert.cpp in Sources */,
+				30B36C6B18F453F200189782 /* FragmentShader.cpp in Sources */,
 				3035FE4A17AC4136007BA60A /* GameScreen.cpp in Sources */,
 				3035FE4B17AC4136007BA60A /* Juggler.cpp in Sources */,
 				3035FE4C17AC4136007BA60A /* ScreenManager.cpp in Sources */,
@@ -898,10 +1039,13 @@
 				3035FF3417AC444E007BA60A /* zip_error.c in Sources */,
 				3035FF3517AC444E007BA60A /* zip_error_clear.c in Sources */,
 				3035FF3617AC444E007BA60A /* zip_error_get.c in Sources */,
+				30637DF718E0D7F80094C554 /* LimitedEmitter.cpp in Sources */,
 				3035FF3717AC444E007BA60A /* zip_error_get_sys_type.c in Sources */,
+				30F2E4FF18DBE0530031A43B /* AlphaModifier.cpp in Sources */,
 				3035FF3817AC444E007BA60A /* zip_error_strerror.c in Sources */,
 				3035FF3917AC444E007BA60A /* zip_error_to_str.c in Sources */,
 				3035FF3A17AC444E007BA60A /* zip_fclose.c in Sources */,
+				30637DFA18E0DEBB0094C554 /* ExplosionEmitter.cpp in Sources */,
 				3035FF3B17AC444E007BA60A /* zip_file_error_clear.c in Sources */,
 				3035FF3C17AC444E007BA60A /* zip_file_error_get.c in Sources */,
 				3035FF3D17AC444E007BA60A /* zip_file_get_offset.c in Sources */,
@@ -931,6 +1075,7 @@
 				3035FF5517AC444E007BA60A /* zip_source_filep.c in Sources */,
 				3035FF5617AC444E007BA60A /* zip_source_free.c in Sources */,
 				3035FF5717AC444E007BA60A /* zip_source_function.c in Sources */,
+				30DD1C7718DB6C94003E558E /* Emitter.cpp in Sources */,
 				3035FF5817AC444E007BA60A /* zip_source_zip.c in Sources */,
 				3035FF5917AC444E007BA60A /* zip_stat.c in Sources */,
 				3035FF5A17AC444E007BA60A /* zip_stat_index.c in Sources */,
@@ -957,13 +1102,16 @@
 				3035FF6D17AC444E007BA60A /* RegionAttachment.c in Sources */,
 				304B4B5F18BF0D0100CDE611 /* Event.cpp in Sources */,
 				3035FF6E17AC444E007BA60A /* Skeleton.c in Sources */,
+				30F2E4FD18DBDE140031A43B /* CircleEmitter.cpp in Sources */,
 				3035FF6F17AC444E007BA60A /* SkeletonData.c in Sources */,
 				30F6482218C0F11D0098781F /* Math.cpp in Sources */,
 				3035FF7017AC444E007BA60A /* SkeletonJson.c in Sources */,
 				3035FF7117AC444E007BA60A /* Skin.c in Sources */,
 				3035FF7217AC444E007BA60A /* Slot.c in Sources */,
+				30F2E50218DBEB7F0031A43B /* ConeEmitter.cpp in Sources */,
 				3035FF7317AC444E007BA60A /* SlotData.c in Sources */,
 				3035FF7417AC444E007BA60A /* stb_image.c in Sources */,
+				30DD1C7818DB6C94003E558E /* PointEmitter.cpp in Sources */,
 				3035FF7517AC444E007BA60A /* stb_vorbis.c in Sources */,
 				30F6484418C132870098781F /* Wm5Vector2.cpp in Sources */,
 				307012D817AF3D81006A9315 /* HttpRequestManager.cpp in Sources */,
@@ -1028,6 +1176,7 @@
 		3035FDB517AC128C007BA60A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				DSTROOT = /tmp/NinjaParty.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1050,6 +1199,7 @@
 					../../Dependencies/Wm5,
 					../../Include,
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-L../../Dependencies/openssl/lib/iOS",
@@ -1068,6 +1218,7 @@
 		3035FDB617AC128C007BA60A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				DSTROOT = /tmp/NinjaParty.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1090,6 +1241,7 @@
 					../../Dependencies/Wm5,
 					../../Include,
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-L../../Dependencies/openssl/lib/iOS",

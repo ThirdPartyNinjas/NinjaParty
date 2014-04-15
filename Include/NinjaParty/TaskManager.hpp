@@ -15,6 +15,8 @@ namespace NinjaParty
     class TaskQueue : public Jugglable
     {
     public:
+        TaskQueue() : ended(false) { }
+        
         bool IsComplete() const;
         
         void Update(float deltaSeconds);
@@ -23,6 +25,8 @@ namespace NinjaParty
         TaskQueue& Wait(float seconds);
         TaskQueue& WaitFor(const Condition &condition);
         TaskQueue& WaitUntil(const TimedCondition &timedCondition);
+        
+        void End();
         
     private:
         enum class TaskType
@@ -48,6 +52,7 @@ namespace NinjaParty
         };
         
         std::queue<Task> tasks;
+        bool ended;
     };
 }
 

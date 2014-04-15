@@ -23,6 +23,9 @@ namespace NinjaParty
 	
 	struct DeminaAnimation;
 	struct SpriteAnimation;
+    
+    struct VertexShader;
+    struct FragmentShader;
 
 	struct GleedLevel;
 	
@@ -48,6 +51,9 @@ namespace NinjaParty
 		void ReloadTextures();
 		
 		TextureDictionary* LoadTextureDictionary(const std::string &fileName);
+        
+        VertexShader* LoadVertexShader(const std::string &fileName);
+        FragmentShader* LoadFragmentShader(const std::string &fileName);
 		
 		Song* LoadSong(const std::string &fileName);
 		SoundEffect* LoadSoundEffect(const std::string &fileName);
@@ -81,6 +87,9 @@ namespace NinjaParty
 
 		std::map<std::string, Texture*> textures;
 		std::map<std::string, TextureDictionary*> textureDictionaries;
+        
+        std::map<std::string, FragmentShader*> fragmentShaders;
+        std::map<std::string, VertexShader*> vertexShaders;
 
 		std::map<std::string, Font*> fonts;
 

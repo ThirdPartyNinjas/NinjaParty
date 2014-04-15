@@ -32,8 +32,18 @@ namespace NinjaParty
 	float EaseOut(float time, TweenFunction tweenFunction);
 	float EaseInOut(float time, TweenFunction tweenFunction);
 	
+    class ITween : public Jugglable
+    {
+		virtual void Update(float deltaSeconds) = 0;
+		
+		virtual float GetPosition() const = 0;
+		virtual void SetPosition(float position) = 0;
+		
+		virtual bool IsComplete() const = 0;
+    };
+    
 	template <typename T>
-	class Tween : public Jugglable
+	class Tween : public ITween
 	{
 	public:
 		Tween(T &reference, const T &start, const T& finish, float duration, TweenType type, TweenFunction function)
