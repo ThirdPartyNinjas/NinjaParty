@@ -24,6 +24,11 @@ namespace NinjaParty
         return 3.0f * a * s * s + 2.0f * b * s + c;
     }
 
+    Vector2 FindVector(const float &angle)
+    {
+        return Vector2(std::cos(angle), std::sin(angle));
+    }
+    
     float FindAngle(const Vector2 &vector, const Vector2 &reference)
     {
         float angle = std::atan2(vector.Y(), vector.X()) - std::atan2(reference.Y(), reference.X());

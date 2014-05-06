@@ -174,6 +174,23 @@ namespace NinjaParty
 		
 		updateMutex.unlock();
 	}
+    
+    void AudioRenderer::SetVolume(const AudioReference &audioReference, float volume)
+    {
+		updateMutex.lock();
+		
+		for(int i=0; i<maxAudioSources; i++)
+		{
+			if(audioNodes[i].audioReference == audioReference)
+			{
+                alSourcef(audioNodes[i].audioSource, AL_GAIN, volume);
+                audioNodes[i].volume = volume;
+				break;
+			}
+		}
+		
+		updateMutex.unlock();
+    }
 
 	void AudioRenderer::Pause(const AudioReference &audioReference)
 	{

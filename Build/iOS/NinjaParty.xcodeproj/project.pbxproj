@@ -117,10 +117,8 @@
 		304B4B5F18BF0D0100CDE611 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 304B4B5E18BF0D0100CDE611 /* Event.cpp */; };
 		30637DF718E0D7F80094C554 /* LimitedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30637DF618E0D7F80094C554 /* LimitedEmitter.cpp */; };
 		30637DFA18E0DEBB0094C554 /* ExplosionEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30637DF918E0DEBB0094C554 /* ExplosionEmitter.cpp */; };
-		307012D817AF3D81006A9315 /* HttpRequestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307012D717AF3D81006A9315 /* HttpRequestManager.cpp */; };
 		30B36C6B18F453F200189782 /* FragmentShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B36C6A18F453F200189782 /* FragmentShader.cpp */; };
 		30B36C6D18F481C600189782 /* VertexShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B36C6C18F481C600189782 /* VertexShader.cpp */; };
-		30B82ABC17B4252B00924448 /* FacebookManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30B82ABB17B4252B00924448 /* FacebookManager.cpp */; };
 		30DD1C7618DB6C94003E558E /* ConstantRateEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DD1C7218DB6C94003E558E /* ConstantRateEmitter.cpp */; };
 		30DD1C7718DB6C94003E558E /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DD1C7318DB6C94003E558E /* Emitter.cpp */; };
 		30DD1C7818DB6C94003E558E /* PointEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DD1C7418DB6C94003E558E /* PointEmitter.cpp */; };
@@ -333,19 +331,16 @@
 		304B4B5C18BF0C8B00CDE611 /* TouchEvents.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = TouchEvents.hpp; path = ../../Include/NinjaParty/TouchEvents.hpp; sourceTree = "<group>"; };
 		304B4B5D18BF0CA600CDE611 /* Event.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Event.hpp; path = ../../Include/NinjaParty/Event.hpp; sourceTree = "<group>"; };
 		304B4B5E18BF0D0100CDE611 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Event.cpp; path = ../../Source/Game/Event.cpp; sourceTree = "<group>"; };
+		304FB77219129C9D004C2AE7 /* PlatformEvents.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = PlatformEvents.hpp; path = ../../Include/NinjaParty/PlatformEvents.hpp; sourceTree = "<group>"; };
 		30637DF518E0D5D00094C554 /* LimitedEmitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LimitedEmitter.hpp; sourceTree = "<group>"; };
 		30637DF618E0D7F80094C554 /* LimitedEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LimitedEmitter.cpp; sourceTree = "<group>"; };
 		30637DF818E0DDA70094C554 /* ExplosionEmitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ExplosionEmitter.hpp; sourceTree = "<group>"; };
 		30637DF918E0DEBB0094C554 /* ExplosionEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExplosionEmitter.cpp; sourceTree = "<group>"; wrapsLines = 0; };
-		307012D617AF3C79006A9315 /* HttpRequestManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = HttpRequestManager.hpp; path = ../../Include/NinjaParty/HttpRequestManager.hpp; sourceTree = "<group>"; };
-		307012D717AF3D81006A9315 /* HttpRequestManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestManager.cpp; sourceTree = "<group>"; };
 		307012DC17AF4618006A9315 /* Cacerts.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Cacerts.hpp; sourceTree = "<group>"; };
 		30B36C6818F452B300189782 /* FragmentShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FragmentShader.hpp; path = ../../Include/NinjaParty/FragmentShader.hpp; sourceTree = "<group>"; };
 		30B36C6918F452C100189782 /* VertexShader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = VertexShader.hpp; path = ../../Include/NinjaParty/VertexShader.hpp; sourceTree = "<group>"; };
 		30B36C6A18F453F200189782 /* FragmentShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FragmentShader.cpp; path = ../../Source/Graphics/FragmentShader.cpp; sourceTree = "<group>"; };
 		30B36C6C18F481C600189782 /* VertexShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VertexShader.cpp; path = ../../Source/Graphics/VertexShader.cpp; sourceTree = "<group>"; };
-		30B82ABA17B4023F00924448 /* FacebookManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FacebookManager.hpp; path = ../../Include/NinjaParty/FacebookManager.hpp; sourceTree = "<group>"; };
-		30B82ABB17B4252B00924448 /* FacebookManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FacebookManager.cpp; sourceTree = "<group>"; };
 		30DD1C6418DB51C9003E558E /* EmitModifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EmitModifier.hpp; sourceTree = "<group>"; };
 		30DD1C6518DB51C9003E558E /* VelocityEmitModifier.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VelocityEmitModifier.hpp; sourceTree = "<group>"; };
 		30DD1C6718DB51C9003E558E /* CircleEmitter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CircleEmitter.hpp; sourceTree = "<group>"; };
@@ -532,14 +527,12 @@
 				3035FE7317AC43DF007BA60A /* Color.hpp */,
 				3035FE7417AC43DF007BA60A /* DeminaAnimationPlayer.hpp */,
 				304B4B5D18BF0CA600CDE611 /* Event.hpp */,
-				30B82ABA17B4023F00924448 /* FacebookManager.hpp */,
 				3035FE7517AC43DF007BA60A /* Font.hpp */,
 				30B36C6818F452B300189782 /* FragmentShader.hpp */,
 				3035FE7617AC43DF007BA60A /* Game.hpp */,
 				3035FE7717AC43DF007BA60A /* GameScreen.hpp */,
 				30F6470318BFA5CF0098781F /* GestureEvents.hpp */,
 				3035FE7817AC43DF007BA60A /* GleedLevel.hpp */,
-				307012D617AF3C79006A9315 /* HttpRequestManager.hpp */,
 				3035FE7917AC43DF007BA60A /* IncludeAL.h */,
 				3035FE7A17AC43DF007BA60A /* IncludeGL.h */,
 				3035FE7B17AC43DF007BA60A /* Juggler.hpp */,
@@ -549,6 +542,7 @@
 				3035FE7E17AC43DF007BA60A /* MathHelpers.hpp */,
 				30DD1C6218DB51C9003E558E /* Particles */,
 				3035FE8017AC43DF007BA60A /* Path.hpp */,
+				304FB77219129C9D004C2AE7 /* PlatformEvents.hpp */,
 				3035FE8117AC43DF007BA60A /* Random.hpp */,
 				3035FE8217AC43DF007BA60A /* Rectangle.hpp */,
 				3035FE8317AC43DF007BA60A /* RenderTexture.hpp */,
@@ -806,8 +800,6 @@
 			isa = PBXGroup;
 			children = (
 				307012DC17AF4618006A9315 /* Cacerts.hpp */,
-				30B82ABB17B4252B00924448 /* FacebookManager.cpp */,
-				307012D717AF3D81006A9315 /* HttpRequestManager.cpp */,
 			);
 			name = Internet;
 			path = ../../Source/Internet;
@@ -962,7 +954,7 @@
 		3035FD9E17AC128C007BA60A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Third Party Ninjas";
 			};
 			buildConfigurationList = 3035FDA117AC128C007BA60A /* Build configuration list for PBXProject "NinjaParty" */;
@@ -1114,8 +1106,6 @@
 				30DD1C7818DB6C94003E558E /* PointEmitter.cpp in Sources */,
 				3035FF7517AC444E007BA60A /* stb_vorbis.c in Sources */,
 				30F6484418C132870098781F /* Wm5Vector2.cpp in Sources */,
-				307012D817AF3D81006A9315 /* HttpRequestManager.cpp in Sources */,
-				30B82ABC17B4252B00924448 /* FacebookManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1176,13 +1166,13 @@
 		3035FDB517AC128C007BA60A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				DSTROOT = /tmp/NinjaParty.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Dependencies/facebook/iOS\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../Dependencies/boost/include,
 					../../Dependencies/curl/include,
@@ -1218,13 +1208,13 @@
 		3035FDB617AC128C007BA60A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				DSTROOT = /tmp/NinjaParty.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Dependencies/facebook/iOS\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../Dependencies/boost/include,
 					../../Dependencies/curl/include,

@@ -23,6 +23,7 @@ namespace NinjaParty
     Vector2 CatmullRom(const Vector2 &v0, const Vector2 &v1, const Vector2 &v2, const Vector2 &v3, float s);
     Vector2 CatmullRomDerivative(const Vector2 &v0, const Vector2 &v1, const Vector2 &v2, const Vector2 &v3, float s);
 
+    Vector2 FindVector(const float &angle);
     float FindAngle(const Vector2 &vector, const Vector2 &reference);
     float WrapAngle(float value);
     

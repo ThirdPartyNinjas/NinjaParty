@@ -71,6 +71,8 @@ namespace NinjaParty
 		// if currently fading in, the fadeOutTime will be adjusted down so that
 		// we start at the current faded volume and fade to zero
 		void Stop(const AudioReference &audioReference, float fadeOutTime = 0);
+        
+        void SetVolume(const AudioReference &audioReference, float volume);
 
 		void Pause(const AudioReference &audioReference);
 		void Resume(const AudioReference &audioReference);
