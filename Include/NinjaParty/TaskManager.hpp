@@ -48,7 +48,6 @@ namespace NinjaParty
             Action action;
             Condition condition;
             TimedCondition timedCondition;
-            float currentTime;
         };
         
         std::queue<Task> tasks;

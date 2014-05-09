@@ -26,8 +26,7 @@ namespace NinjaParty
                 break;
                 
             case TaskType::TimedCondition:
-                task.currentTime += deltaSeconds;
-                if(task.timedCondition(task.currentTime))
+                if(task.timedCondition(deltaSeconds))
                     tasks.pop();
                 break;
         }
@@ -46,7 +45,11 @@ namespace NinjaParty
     
     TaskQueue& TaskQueue::Wait(float seconds)
     {
-        return WaitUntil([=](float s){return s > seconds;});
+        return WaitUntil([=](float deltaSeconds) mutable
+        {
+            seconds -= deltaSeconds;
+            return seconds <= 0;
+        });
     }
     
     TaskQueue& TaskQueue::WaitFor(const Condition &condition)
@@ -77,7 +80,7 @@ namespace NinjaParty
     }
     
     TaskQueue::Task::Task(TimedCondition timedCondition)
-        : taskType(TaskType::TimedCondition), timedCondition(timedCondition), currentTime(0)
+        : taskType(TaskType::TimedCondition), timedCondition(timedCondition)
     {
     }
     
@@ -94,7 +97,6 @@ namespace NinjaParty
                 break;
             case TaskType::TimedCondition:
                 timedCondition = task.timedCondition;
-                currentTime = task.currentTime;
                 break;
         }
     }
