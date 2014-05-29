@@ -12,11 +12,6 @@ namespace NinjaParty
 	{
 		int LoadTexture(const std::string &fileName, int &width, int &height)
 		{
-			GLuint textureId;
-			
-			glGenTextures(1, &textureId);
-			glBindTexture(GL_TEXTURE_2D, textureId);
-			
 			NSString *path = [NSString stringWithCString:fileName.c_str() encoding:NSUTF8StringEncoding];
 
 			GLKTextureInfo *texture = [GLKTextureLoader textureWithContentsOfFile:path options:nil error:nil];
@@ -27,12 +22,27 @@ namespace NinjaParty
 			
 			width = texture.width;
 			height = texture.height;
-			textureId = texture.name;
 			
-			return textureId;
+			return texture.name;
 		}
-        
-        // FIXME: If we want to use this file, we need to add in
-        // LoadTextureFromBuffer
 	}
+    
+    int LoadTextureFromBuffer(const unsigned char *buffer, int length, int &width, int &height, bool resample)
+    {
+        NSData *data = [NSData dataWithBytesNoCopy:(void*)buffer
+                                            length:length
+                                      freeWhenDone:NO];
+        
+        GLKTextureInfo *texture = [GLKTextureLoader textureWithContentsOfData:data options:nil error:nil];
+        
+        if(texture == nil)
+        {
+            return 0;
+        }
+        
+        width = texture.width;
+        height = texture.height;
+        
+        return texture.name;
+    }
 }

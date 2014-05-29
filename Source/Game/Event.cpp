@@ -95,7 +95,7 @@ namespace NinjaParty
         for(auto &event : temporaryList)
         {
             if(pimpl->eventReceivers.find(event->GetId()) == pimpl->eventReceivers.end())
-                return;
+                continue;
             
             for(auto p : pimpl->eventReceivers[event->GetId()])
             {

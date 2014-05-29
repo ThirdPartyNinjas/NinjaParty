@@ -11,6 +11,12 @@ namespace NinjaParty
     {
         if(tasks.empty())
             return;
+
+        if(ended)
+        {
+            std::queue<Task>().swap(tasks);
+            return;
+        }
         
         Task &task = tasks.front();
         switch(task.taskType)
@@ -29,11 +35,6 @@ namespace NinjaParty
                 if(task.timedCondition(deltaSeconds))
                     tasks.pop();
                 break;
-        }
-        
-        if(ended)
-        {
-            std::queue<Task>().swap(tasks);
         }
     }
 

@@ -26,7 +26,6 @@
 		3035FE5B17AC415F007BA60A /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3035FE4F17AC415F007BA60A /* Color.cpp */; };
 		3035FE5C17AC415F007BA60A /* DeminaAnimationPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3035FE5017AC415F007BA60A /* DeminaAnimationPlayer.cpp */; };
 		3035FE5D17AC415F007BA60A /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3035FE5117AC415F007BA60A /* Font.cpp */; };
-		3035FE5E17AC415F007BA60A /* LoadTexture_stb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3035FE5217AC415F007BA60A /* LoadTexture_stb.cpp */; };
 		3035FE5F17AC415F007BA60A /* RenderTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3035FE5317AC415F007BA60A /* RenderTexture.cpp */; };
 		3035FE6017AC415F007BA60A /* SpineAnimationPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3035FE5417AC415F007BA60A /* SpineAnimationPlayer.cpp */; };
 		3035FE6117AC415F007BA60A /* SpriteAnimationPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3035FE5517AC415F007BA60A /* SpriteAnimationPlayer.cpp */; };
@@ -122,6 +121,7 @@
 		30DD1C7618DB6C94003E558E /* ConstantRateEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DD1C7218DB6C94003E558E /* ConstantRateEmitter.cpp */; };
 		30DD1C7718DB6C94003E558E /* Emitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DD1C7318DB6C94003E558E /* Emitter.cpp */; };
 		30DD1C7818DB6C94003E558E /* PointEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30DD1C7418DB6C94003E558E /* PointEmitter.cpp */; };
+		30EB23D1191DF62B00A84954 /* LoadTexture_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30EB23D0191DF62B00A84954 /* LoadTexture_iOS.mm */; };
 		30F2E4FB18DBB2B10031A43B /* VelocityEmitModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F2E4FA18DBB2B10031A43B /* VelocityEmitModifier.cpp */; };
 		30F2E4FD18DBDE140031A43B /* CircleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F2E4FC18DBDE140031A43B /* CircleEmitter.cpp */; };
 		30F2E4FF18DBE0530031A43B /* AlphaModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30F2E4FE18DBE0530031A43B /* AlphaModifier.cpp */; };
@@ -175,7 +175,6 @@
 		3035FE4F17AC415F007BA60A /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Color.cpp; path = ../../Source/Graphics/Color.cpp; sourceTree = "<group>"; };
 		3035FE5017AC415F007BA60A /* DeminaAnimationPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DeminaAnimationPlayer.cpp; path = ../../Source/Graphics/DeminaAnimationPlayer.cpp; sourceTree = "<group>"; };
 		3035FE5117AC415F007BA60A /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Font.cpp; path = ../../Source/Graphics/Font.cpp; sourceTree = "<group>"; };
-		3035FE5217AC415F007BA60A /* LoadTexture_stb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LoadTexture_stb.cpp; path = ../../Source/Graphics/LoadTexture_stb.cpp; sourceTree = "<group>"; };
 		3035FE5317AC415F007BA60A /* RenderTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderTexture.cpp; path = ../../Source/Graphics/RenderTexture.cpp; sourceTree = "<group>"; };
 		3035FE5417AC415F007BA60A /* SpineAnimationPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpineAnimationPlayer.cpp; path = ../../Source/Graphics/SpineAnimationPlayer.cpp; sourceTree = "<group>"; };
 		3035FE5517AC415F007BA60A /* SpriteAnimationPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpriteAnimationPlayer.cpp; path = ../../Source/Graphics/SpriteAnimationPlayer.cpp; sourceTree = "<group>"; };
@@ -353,6 +352,7 @@
 		30DD1C7218DB6C94003E558E /* ConstantRateEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConstantRateEmitter.cpp; sourceTree = "<group>"; };
 		30DD1C7318DB6C94003E558E /* Emitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Emitter.cpp; sourceTree = "<group>"; };
 		30DD1C7418DB6C94003E558E /* PointEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointEmitter.cpp; sourceTree = "<group>"; };
+		30EB23D0191DF62B00A84954 /* LoadTexture_iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LoadTexture_iOS.mm; path = ../../Source/Graphics/LoadTexture_iOS.mm; sourceTree = "<group>"; };
 		30F2E4FA18DBB2B10031A43B /* VelocityEmitModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VelocityEmitModifier.cpp; sourceTree = "<group>"; };
 		30F2E4FC18DBDE140031A43B /* CircleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CircleEmitter.cpp; sourceTree = "<group>"; };
 		30F2E4FE18DBE0530031A43B /* AlphaModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaModifier.cpp; sourceTree = "<group>"; };
@@ -492,7 +492,7 @@
 				3035FE5017AC415F007BA60A /* DeminaAnimationPlayer.cpp */,
 				3035FE5117AC415F007BA60A /* Font.cpp */,
 				30B36C6A18F453F200189782 /* FragmentShader.cpp */,
-				3035FE5217AC415F007BA60A /* LoadTexture_stb.cpp */,
+				30EB23D0191DF62B00A84954 /* LoadTexture_iOS.mm */,
 				30DD1C6F18DB6C94003E558E /* Particles */,
 				3035FE5317AC415F007BA60A /* RenderTexture.cpp */,
 				3035FE5417AC415F007BA60A /* SpineAnimationPlayer.cpp */,
@@ -1005,7 +1005,6 @@
 				3035FE5C17AC415F007BA60A /* DeminaAnimationPlayer.cpp in Sources */,
 				3035FE5D17AC415F007BA60A /* Font.cpp in Sources */,
 				30F6484118C132870098781F /* Wm5Matrix2.cpp in Sources */,
-				3035FE5E17AC415F007BA60A /* LoadTexture_stb.cpp in Sources */,
 				3035FE5F17AC415F007BA60A /* RenderTexture.cpp in Sources */,
 				3035FE6017AC415F007BA60A /* SpineAnimationPlayer.cpp in Sources */,
 				30F6484218C132870098781F /* Wm5Matrix3.cpp in Sources */,
@@ -1096,6 +1095,7 @@
 				3035FF6E17AC444E007BA60A /* Skeleton.c in Sources */,
 				30F2E4FD18DBDE140031A43B /* CircleEmitter.cpp in Sources */,
 				3035FF6F17AC444E007BA60A /* SkeletonData.c in Sources */,
+				30EB23D1191DF62B00A84954 /* LoadTexture_iOS.mm in Sources */,
 				30F6482218C0F11D0098781F /* Math.cpp in Sources */,
 				3035FF7017AC444E007BA60A /* SkeletonJson.c in Sources */,
 				3035FF7117AC444E007BA60A /* Skin.c in Sources */,
@@ -1116,6 +1116,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv7,
+					armv7s,
+				);
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1145,6 +1149,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv7,
+					armv7s,
+				);
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1166,6 +1174,10 @@
 		3035FDB517AC128C007BA60A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv7s,
+				);
 				DSTROOT = /tmp/NinjaParty.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1208,6 +1220,10 @@
 		3035FDB617AC128C007BA60A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv7s,
+				);
 				DSTROOT = /tmp/NinjaParty.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
