@@ -33,6 +33,7 @@ namespace NinjaParty
 
 		const static Color White;
 		const static Color Black;
+        const static Color Gray;
 		const static Color Red;
 		const static Color Green;
 		const static Color Blue;

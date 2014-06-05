@@ -46,9 +46,28 @@ namespace NinjaParty
 	class Tween : public ITween
 	{
 	public:
+		Tween(T &reference, const T& finish, float duration, TweenType type, TweenFunction function)
+        : reference(reference), start(reference), finish(finish), position(0.0f), duration(duration), function(function)
+		{
+			switch(type)
+			{
+				case TweenType::EaseIn:
+					this->type = &EaseIn;
+					break;
+				case TweenType::EaseOut:
+					this->type = &EaseOut;
+					break;
+				case TweenType::EaseInOut:
+					this->type = &EaseInOut;
+					break;
+			}
+		}
+
 		Tween(T &reference, const T &start, const T& finish, float duration, TweenType type, TweenFunction function)
 			: reference(reference), start(start), finish(finish), position(0.0f), duration(duration), function(function)
 		{
+            reference = start;
+            
 			switch(type)
 			{
 				case TweenType::EaseIn:
